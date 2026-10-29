@@ -1,0 +1,153 @@
+{
+  "version": 2,
+  "output": "diagram.typ",
+  "autoExport": true,
+  "style": {
+    "styleVersion": 2,
+    "name": "GOST",
+    "font": [
+      "Times New Roman",
+      "Liberation Serif",
+      "serif"
+    ],
+    "fontSize": 13.0,
+    "nameFontSize": 14.0,
+    "stereotypeFontSize": 11.0,
+    "lineHeight": 18.0,
+    "paddingX": 8.0,
+    "paddingY": 4.0,
+    "borderWidth": 1.0,
+    "cornerRadius": 0.0,
+    "nameBold": true,
+    "kindBadge": false,
+    "colors": {
+      "text": "#000000",
+      "border": "#000000",
+      "fill": "#ffffff",
+      "headerFill": "#ffffff",
+      "edge": "#000000",
+      "badge": "#add1b2"
+    },
+    "orthogonalEdges": true,
+    "edgeMergeTargets": true,
+    "edgeEditable": true,
+    "edgeClearance": 12.0,
+    "edgePortSpacing": 20.0,
+    "edgeBendPenalty": 24.0,
+    "edgeSourceSide": "top",
+    "edgeTargetSide": "bottom",
+    "edgeWidth": 1.0,
+    "arrowSize": 12.0,
+    "edgeDashLength": 6.0,
+    "edgeDashGap": 4.0,
+    "interfaceHidesAttributes": true,
+    "showStereotype": true,
+    "templateNotation": "corner",
+    "memberIconStyle": "text",
+    "showMethodParams": true,
+    "showMethodReturnType": true
+  },
+  "positions": {
+    "classBus": {
+      "x": 552.9807701972958,
+      "y": 874.9152232025443
+    },
+    "classCargoVehicle": {
+      "x": 104.27725631350938,
+      "y": 509.9341313734136
+    },
+    "classDumpTruck": {
+      "x": 48.05509778102339,
+      "y": 864.384503443439
+    },
+    "classPassengerVehicle": {
+      "x": 790.4334133625972,
+      "y": 471.36224245703454
+    },
+    "classString": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "classTrolleybus": {
+      "x": 1084.3236022887002,
+      "y": 842.6240543584029
+    },
+    "classVehicle": {
+      "x": 373.58716724601777,
+      "y": 76.04013210977367
+    },
+    "structstd_1_1formatter_3_01String_01_4": {
+      "x": 888.0,
+      "y": 0.0
+    }
+  },
+  "collapsed": {
+    "classBus": {
+      "attributes": false,
+      "methods": false
+    },
+    "classCargoVehicle": {
+      "attributes": false,
+      "methods": false
+    },
+    "classDumpTruck": {
+      "attributes": false,
+      "methods": false
+    },
+    "classPassengerVehicle": {
+      "attributes": false,
+      "methods": false
+    },
+    "classString": {
+      "attributes": false,
+      "methods": false
+    },
+    "classTrolleybus": {
+      "attributes": false,
+      "methods": false
+    },
+    "classVehicle": {
+      "attributes": false,
+      "methods": false
+    },
+    "structstd_1_1formatter_3_01String_01_4": {
+      "attributes": false,
+      "methods": false
+    }
+  },
+  "hidden": {
+    "classBus": false,
+    "classCargoVehicle": false,
+    "classDumpTruck": false,
+    "classPassengerVehicle": false,
+    "classString": true,
+    "classTrolleybus": false,
+    "classVehicle": false,
+    "structstd_1_1formatter_3_01String_01_4": true
+  },
+  "connections": [
+    {
+      "source": "classPassengerVehicle",
+      "target": "classVehicle",
+      "type": "inheritance",
+      "anchors": {
+        "target": {
+          "side": "bottom",
+          "offset": 0.5
+        }
+      }
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-1793128050661-0",
+      "text": "",
+      "position": {
+        "x": -220.0,
+        "y": 0.0,
+        "width": 180.0,
+        "height": 90.0
+      }
+    }
+  ]
+}
