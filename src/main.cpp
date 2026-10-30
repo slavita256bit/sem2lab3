@@ -3,96 +3,203 @@
 #include "Trolleybus.h"
 #include <typeinfo>
 #include <cctype>
-#include <vector>
+#include <iterator>
+#define MAX_VEHICLE_LENGTH 20
 
 int main()
 {
-    Vehicle vehicle(String("Mercedes"), 2020);
-    CargoVehicle cargo(String("МАЗ"), 2021, 12.0);
-    DumpTruck dump(String("БелАЗ"), 2022, 40.0, 25.0);
-    PassengerVehicle passenger(String("ВАЗ"), 2023, 18);
-    Bus bus(String("FlixBus"), 2024, 30, 15);
-    Trolleybus trolleybus(String("Белкоммунмаш"), 2025, 40, 600);
+    Vehicle* objects[MAX_VEHICLE_LENGTH] = {
+        new Vehicle(String("Mercedes"), 2020),
+        new Vehicle(String("Toyota"), 2021),
+        new CargoVehicle(String("МАЗ"), 2021, 12.0),
+        new CargoVehicle(String("КамАЗ"), 2022, 15.0),
+        new DumpTruck(String("БелАЗ"), 2022, 40.0, 25.0),
+        new DumpTruck(String("Caterpillar"), 2023, 50.0, 30.0),
+        new PassengerVehicle(String("ВАЗ"), 2023, 18),
+        new PassengerVehicle(String("Ford"), 2024, 16),
+        new Bus(String("FlixBus"), 2024, 30, 15),
+        new Bus(String("Неман"), 2025, 45, 7),
+        new Trolleybus(String("Белкоммунмаш"), 2025, 40, 80.0),
+        new Trolleybus(String("Транс-Альфа"), 2024, 35, 60.0)
+    };
 
-    /*
-    Vehicle vehicle;             // Транспорт
-    CargoVehicle cargo;          // Грузовой
-    DumpTruck dump;              // Самосвал
-    PassengerVehicle passenger;  // Пассажирский
-    Bus bus;                     // Автобус
-    Trolleybus trolleybus;       // Троллейбус
+    std::size_t count = 0;
+    while (count < MAX_VEHICLE_LENGTH && objects[count])
+        count++;
 
-    std::cout << "Транспорт (марка, год выпуска): ";
-    std::cin >> vehicle;
-    std::cout << "Грузовой (марка, год, грузоподъёмность (т)): ";
-    std::cin >> cargo;
-    std::cout << "Самосвал (марка, год, грузоподъёмность (т), объём кузова (м3)): ";
-    std::cin >> dump;
-    std::cout << "Пассажирский (марка, год, количество мест): ";
-    std::cin >> passenger;
-    std::cout << "Автобус (марка, год, количество мест, номер маршрута): ";
-    std::cin >> bus;
-    std::cout << "Троллейбус (марка, год, количество мест, напряжение сети (В)): ";
-    std::cin >> trolleybus;
-    */
+    const std::type_info* class_types[] = {&typeid(Vehicle), &typeid(CargoVehicle), &typeid(DumpTruck), &typeid(PassengerVehicle), &typeid(Bus), &typeid(Trolleybus)};
 
     while (true)
     {
-        std::vector<Vehicle*> objects = {&vehicle, &cargo, &dump, &passenger, &bus, &trolleybus};
-
-        auto& base = static_cast<Vehicle&>(dump);
         std::cout << std::endl;
-        std::cout << "typeid после static_cast к Vehicle: " << typeid(base).name() << '\n';
-        std::cout << "dynamic_cast автобуса к грузовому: " << (dynamic_cast<CargoVehicle*>(objects[4]) ? "good" : "nullptr") << '\n';
-        std::cout << "dynamic_cast автобуса к грузовому: " << typeid(dynamic_cast<PassengerVehicle*>(objects[4])).name() << '\n';
-        std::cout << std::endl << std::endl;
+        std::cout << "1 — выбрать таблицу класса\n";
+        std::cout << "2 — добавить объект\n";
+        std::cout << "3 — изменить объект\n";
+        std::cout << "0 — завершить программу\n";
+        std::cout << "Действие: ";
+        int action = 0;
+        std::cin >> action;
 
-        Vehicle::print_table(std::cout, objects);
-
-        while (true)
+        if (action == 0)
         {
-            std::cout << "Номер объекта (1–" << objects.size() << ", 0—отмена): ";
-            int index = 0;
-            std::cin >> index;
-            if (index == 0)
-                break;
+            // char choice = 'y';
+            // std::cout << "Завершить программу? (y/n): ";
+            // std::cin >> choice;
+            // std::cout << '\n';
+            //
+            // if (std::tolower(static_cast<unsigned char>(choice)) == 'y')
+            //     break;
 
-            if (index < 1 || static_cast<std::size_t>(index) > objects.size())
+            // continue;
+
+            return 0;
+        }
+
+        if (action < 1 || action > 3)
+        {
+            std::cout << "Нет действия с таким номером.\n";
+            continue;
+        }
+
+        std::cout << std::endl;
+        std::cout << "1 — транспорт (Vehicle)\n";
+        std::cout << "2 — грузовой (CargoVehicle)\n";
+        std::cout << "3 — самосвал (DumpTruck)\n";
+        std::cout << "4 — пассажирский (PassengerVehicle)\n";
+        std::cout << "5 — автобус (Bus)\n";
+        std::cout << "6 — троллейбус (Trolleybus)\n";
+        std::cout << "Класс (0 — отмена): ";
+
+        int type = 0;
+        std::cin >> type;
+        if (type == 0)
+            continue;
+
+        if (type < 1 || static_cast<std::size_t>(type) > std::size(class_types))
+        {
+            std::cout << "Нет класса с таким номером.\n";
+            continue;
+        }
+
+        if (action == 2)
+        {
+            if (count == MAX_VEHICLE_LENGTH)
             {
-                std::cout << "Нет объекта с таким номером.\n";
+                std::cout << "Массив транспорта заполнен.\n";
                 continue;
             }
 
-            std::cout << "1 — марка\n";
-            std::cout << "2 — год\n";
-            std::cout << "3 — грузоподъёмность\n";
-            std::cout << "4 — объём кузова\n";
-            std::cout << "5 — число мест\n";
-            std::cout << "6 — маршрут\n";
-            std::cout << "7 — напряжение сети\n";
-            std::cout << "Параметр: ";
+            Vehicle* new_object = nullptr;
+            switch (type)
+            {
+            case 1:
+            {
+                auto* object = new Vehicle;
+                std::cin >> object->print_read_info(std::cout);
+                new_object = object;
+                break;
+            }
 
-            int field = 0;
-            std::cin >> field;
-            objects[index - 1]->change_field(field);
-            Vehicle::print_table(std::cout, objects);
+            case 2:
+            {
+                auto* object = new CargoVehicle;
+                std::cin >> object->print_read_info(std::cout);
+                new_object = object;
+                break;
+            }
+
+            case 3:
+            {
+                auto* object = new DumpTruck;
+                std::cin >> object->print_read_info(std::cout);
+                new_object = object;
+                break;
+            }
+
+            case 4:
+            {
+                auto* object = new PassengerVehicle;
+                std::cin >> object->print_read_info(std::cout);
+                new_object = object;
+                break;
+            }
+
+            case 5:
+            {
+                auto* object = new Bus;
+                std::cin >> object->print_read_info(std::cout);
+                new_object = object;
+                break;
+            }
+
+            case 6:
+            {
+                auto* object = new Trolleybus;
+                std::cin >> object->print_read_info(std::cout);
+                new_object = object;
+                break;
+            }
+
+            default:
+                continue;
+            }
+
+            objects[count++] = new_object;
         }
 
-        char choice = 'y';
-        std::cout << "\nЗавершить программу? (y/n): ";
-        std::cin >> choice;
-        std::cout << '\n';
+        std::cout << std::endl;
+        Vehicle::print_table(std::cout, objects, count, *class_types[type - 1]);
 
-        if (std::tolower(choice) == 'y')
-            break;
+        if (action != 3)
+            continue;
+
+        std::cout << "Номер объекта (0 — отмена): ";
+        int index = 0;
+        std::cin >> index;
+
+        if (index == 0)
+            continue;
+
+        if (index < 1 || static_cast<std::size_t>(index) > count)
+        {
+            std::cout << "Нет объекта с таким номером.\n";
+            continue;
+        }
+
+        if (typeid(*objects[index - 1]) != *class_types[type - 1])
+        {
+            std::cout << "Объект не относится к выбранному классу.\n";
+            continue;
+        }
+
+        std::cout << static_cast<int>(VehicleField::Brand) << " — марка\n";
+        std::cout << static_cast<int>(VehicleField::Year) << " — год\n";
+        std::cout << static_cast<int>(VehicleField::Payload) << " — грузоподъёмность\n";
+        std::cout << static_cast<int>(VehicleField::BodyVolume) << " — объём кузова\n";
+        std::cout << static_cast<int>(VehicleField::Seats) << " — число мест\n";
+        std::cout << static_cast<int>(VehicleField::Route) << " — маршрут\n";
+        std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " — ёмкость аккумулятора\n";
+        std::cout << "Параметр (0 — отмена): ";
+        int field_number = 0;
+        std::cin >> field_number;
+        if (field_number == 0)
+            continue;
+
+        objects[index - 1]->change_field(static_cast<VehicleField>(field_number));
+        Vehicle::print_table(std::cout, objects, count, *class_types[type - 1]);
     }
+
+    for (std::size_t i = count; i > 0; i--)
+        delete objects[i - 1];
 
     return 0;
 }
 
 /*
-3 4 32.5
-5 6 42
-0
-y
+2 3 Belaz 2024 40 25
+1 3
+3 3 13 4 32.5
+2 6 BKM 2025 40 85.5
+3 6 14 7 90
+0 y
 */

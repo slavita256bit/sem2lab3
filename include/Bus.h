@@ -1,10 +1,12 @@
 #pragma once
 #include "PassengerVehicle.h"
 
+#define BUS_TABLE_FORMAT "{:<7.7}  "
+
 class Bus : virtual public PassengerVehicle
 {
 private:
-    int route = 0;  // Номер маршрута
+    int route = 0;                                                                                  // Номер маршрута
 
 public:
     Bus() : Bus(String("Без марки"), 2020, 1, 1) {}
@@ -14,6 +16,8 @@ public:
         std::cout << "+ Bus [" << this->get_brand() << "]" << '\n';
     }
 
+    Bus(const Bus& other) : Bus(other.get_brand(), other.get_year(), other.get_seats(), other.get_route()) {}
+
     ~Bus() override
     {
         std::cout << "- Bus [" << this->get_brand() << "]" << '\n';
@@ -22,10 +26,10 @@ public:
     int get_route() const;                                                                          // Получение номера маршрута
     void set_route(int value);                                                                      // Изменение номера маршрута
 
-    void change_field(int field) override;                                                          // Изменение выбранного поля
-    void read(std::istream& stream) override;                                                       // Ввод полей
-    void write(std::ostream& stream) const override;                                                // Вывод строки таблицы
+    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
+    Bus& print_read_info(std::ostream& stream) override;                                            // Вывод подсказки ввода
+    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
-    friend std::istream& operator>>(std::istream& stream, Bus& object);                             // Ввод объекта
-    friend std::ostream& operator<<(std::ostream& stream, const Bus& object);                       // Вывод объекта
+    friend std::istream& operator>>(std::istream& stream, Bus& object);
+    friend std::ostream& operator<<(std::ostream& stream, const Bus& object);
 };

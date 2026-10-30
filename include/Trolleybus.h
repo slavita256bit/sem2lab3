@@ -1,30 +1,35 @@
 #pragma once
 #include "PassengerVehicle.h"
 
+#define TROLLEYBUS_TABLE_FORMAT "{:<12}  "
+
 class Trolleybus : virtual public PassengerVehicle
 {
 private:
-    int voltage = 0;
+    double battery_capacity = 0;  // Ёмкость аккумулятора, кВт·ч
 
 public:
-    Trolleybus() : Trolleybus(String("Без марки"), 2020, 1, 600) {}
-    Trolleybus(const String& brand, int year, int seats, int voltage) : PassengerVehicle(brand, year, seats), voltage(voltage)
+    Trolleybus() : Trolleybus(String("Без марки"), 2020, 1, 60.0) {}
+    Trolleybus(const String& brand, int year, int seats, double battery_capacity)
+        : PassengerVehicle(brand, year, seats), battery_capacity(battery_capacity)
     {
         std::cout << "+ Trolleybus [" << this->get_brand() << "]" << '\n';
     }
+
+    Trolleybus(const Trolleybus& other) : Trolleybus(other.get_brand(), other.get_year(), other.get_seats(), other.get_battery_capacity()) {}
 
     ~Trolleybus() override
     {
         std::cout << "- Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 
-    int get_voltage() const;                                                          // Получение напряжения сети
-    void set_voltage(int value);                                                      // Изменение напряжения сети
+    double get_battery_capacity() const;                                                            // Получение ёмкости аккумулятора
+    void set_battery_capacity(double value);                                                        // Изменение ёмкости аккумулятора
 
-    void change_field(int field) override;                                            // Изменение выбранного поля
-    void read(std::istream& stream) override;                                         // Ввод полей
-    void write(std::ostream& stream) const override;                                  // Вывод строки таблицы
+    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
+    Trolleybus& print_read_info(std::ostream& stream) override;                                     // Вывод подсказки ввода
+    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
-    friend std::istream& operator>>(std::istream& stream, Trolleybus& object);        // Ввод объекта
-    friend std::ostream& operator<<(std::ostream& stream, const Trolleybus& object);  // Вывод объекта
+    friend std::istream& operator>>(std::istream& stream, Trolleybus& object);
+    friend std::ostream& operator<<(std::ostream& stream, const Trolleybus& object);
 };

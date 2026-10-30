@@ -14,9 +14,9 @@ void CargoVehicle::set_payload(double value)
 }
 
 // Изменение выбранного поля
-void CargoVehicle::change_field(int field)
+void CargoVehicle::change_field(VehicleField field)
 {
-    if (field != 3)
+    if (field != VehicleField::Payload)
     {
         Vehicle::change_field(field);
         return;
@@ -28,38 +28,34 @@ void CargoVehicle::change_field(int field)
     this->set_payload(value);
 }
 
-// Ввод полей
-void CargoVehicle::read(std::istream& stream)
+// Вывод подсказки ввода
+CargoVehicle& CargoVehicle::print_read_info(std::ostream& stream)
 {
-    Vehicle::read(stream);
-    double new_payload = 0;
-    stream >> new_payload;
-    this->set_payload(new_payload);
+    stream << "Грузовой (марка, год, грузоподъёмность (т)): ";
+
+    return *this;
 }
 
-// Вывод строки таблицы
-void CargoVehicle::write(std::ostream& stream) const
+// Вывод шапки таблицы
+void CargoVehicle::print_header(std::ostream& stream) const
 {
-    stream << std::format(VEHICLE_TABLE_FORMAT,
-        "Грузовой",
-        this->get_brand(),
-        this->get_year(),
-        std::format("{:.1f}", this->get_payload()),
-        "", "", "", "");
+    Vehicle::print_header(stream);
+    stream << std::format(CARGO_VEHICLE_TABLE_FORMAT, "Груз (т)");
 }
 
-// Ввод объекта
+
 std::istream& operator>>(std::istream& stream, CargoVehicle& object)
 {
-    object.read(stream);
+    stream >> static_cast<Vehicle&>(object) >> object.payload;
 
     return stream;
 }
 
-// Вывод объекта
+
 std::ostream& operator<<(std::ostream& stream, const CargoVehicle& object)
 {
-    object.write(stream);
+    stream << static_cast<const Vehicle&>(object);
+    stream << std::format(CARGO_VEHICLE_TABLE_FORMAT, std::format("{:.1f}", object.get_payload()));
 
     return stream;
 }

@@ -1,10 +1,12 @@
 #pragma once
 #include "Vehicle.h"
 
+#define PASSENGER_VEHICLE_TABLE_FORMAT "{:<5}  "
+
 class PassengerVehicle : public Vehicle
 {
 private:
-    int seats = 0;                                                                                  // Количество мест
+    int seats = 0;  // Количество мест
 
 public:
     PassengerVehicle() : PassengerVehicle(String("Без марки"), 2020, 1) {}
@@ -14,18 +16,20 @@ public:
         std::cout << "+ PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 
+    PassengerVehicle(const PassengerVehicle& other) : PassengerVehicle(other.get_brand(), other.get_year(), other.get_seats()) {}
+
     ~PassengerVehicle() override
     {
         std::cout << "- PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 
-    int get_seats() const;                                                                 // Получение числа мест
-    void set_seats(int value);                                                             // Изменение числа мест
+    int get_seats() const;                                                                          // Получение числа мест
+    void set_seats(int value);                                                                      // Изменение числа мест
 
-    void change_field(int field) override;                                                 // Изменение выбранного поля
-    void read(std::istream& stream) override;                                              // Ввод полей
-    void write(std::ostream& stream) const override;                                       // Вывод строки таблицы
+    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
+    PassengerVehicle& print_read_info(std::ostream& stream) override;                               // Вывод подсказки ввода
+    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
-    friend std::istream& operator>>(std::istream& stream, PassengerVehicle& object);       // Ввод объекта
-    friend std::ostream& operator<<(std::ostream& stream, const PassengerVehicle& object); // Вывод объекта
+    friend std::istream& operator>>(std::istream& stream, PassengerVehicle& object);
+    friend std::ostream& operator<<(std::ostream& stream, const PassengerVehicle& object);
 };

@@ -14,9 +14,9 @@ void Bus::set_route(int value)
 }
 
 // Изменение выбранного поля
-void Bus::change_field(int field)
+void Bus::change_field(VehicleField field)
 {
-    if (field != 6)
+    if (field != VehicleField::Route)
     {
         PassengerVehicle::change_field(field);
         return;
@@ -28,40 +28,34 @@ void Bus::change_field(int field)
     this->set_route(value);
 }
 
-// Ввод полей
-void Bus::read(std::istream& stream)
+// Вывод подсказки ввода
+Bus& Bus::print_read_info(std::ostream& stream)
 {
-    PassengerVehicle::read(stream);
-    int new_route = 0;
-    stream >> new_route;
-    this->set_route(new_route);
+    stream << "Автобус (марка, год, количество мест, номер маршрута): ";
+
+    return *this;
 }
 
-// Вывод строки таблицы
-void Bus::write(std::ostream& stream) const
+// Вывод шапки таблицы
+void Bus::print_header(std::ostream& stream) const
 {
-    stream << std::format(VEHICLE_TABLE_FORMAT,
-        "Автобус",
-        this->get_brand(),
-        this->get_year(),
-        "", "",
-        this->get_seats(),
-        std::to_string(this->get_route()),
-        "");
+    PassengerVehicle::print_header(stream);
+    stream << std::format(BUS_TABLE_FORMAT, "Маршрут");
 }
 
-// Ввод объекта
+
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
-    object.read(stream);
+    stream >> static_cast<PassengerVehicle&>(object) >> object.route;
 
     return stream;
 }
 
-// Вывод объекта
+
 std::ostream& operator<<(std::ostream& stream, const Bus& object)
 {
-    object.write(stream);
+    stream << static_cast<const PassengerVehicle&>(object);
+    stream << std::format(BUS_TABLE_FORMAT, std::to_string(object.get_route()));
 
     return stream;
 }

@@ -14,9 +14,9 @@ void DumpTruck::set_body_volume(double value)
 }
 
 // Изменение выбранного поля
-void DumpTruck::change_field(int field)
+void DumpTruck::change_field(VehicleField field)
 {
-    if (field != 4)
+    if (field != VehicleField::BodyVolume)
     {
         CargoVehicle::change_field(field);
         return;
@@ -28,39 +28,34 @@ void DumpTruck::change_field(int field)
     this->set_body_volume(value);
 }
 
-// Ввод полей
-void DumpTruck::read(std::istream& stream)
+// Вывод подсказки ввода
+DumpTruck& DumpTruck::print_read_info(std::ostream& stream)
 {
-    CargoVehicle::read(stream);
-    double new_body_volume = 0;
-    stream >> new_body_volume;
-    this->set_body_volume(new_body_volume);
+    stream << "Самосвал (марка, год, грузоподъёмность (т), объём кузова (м3)): ";
+
+    return *this;
 }
 
-// Вывод строки таблицы
-void DumpTruck::write(std::ostream& stream) const
+// Вывод шапки таблицы
+void DumpTruck::print_header(std::ostream& stream) const
 {
-    stream << std::format(VEHICLE_TABLE_FORMAT,
-        "Самосвал",
-        this->get_brand(),
-        this->get_year(),
-        std::format("{:.1f}", this->get_payload()),
-        std::format("{:.1f}", this->get_body_volume()),
-        "", "", "");
+    CargoVehicle::print_header(stream);
+    stream << std::format(DUMP_TRUCK_TABLE_FORMAT, "Кузов (м3)");
 }
 
-// Ввод объекта
+
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
-    object.read(stream);
+    stream >> static_cast<CargoVehicle&>(object) >> object.body_volume;
 
     return stream;
 }
 
-// Вывод объекта
+
 std::ostream& operator<<(std::ostream& stream, const DumpTruck& object)
 {
-    object.write(stream);
+    stream << static_cast<const CargoVehicle&>(object);
+    stream << std::format(DUMP_TRUCK_TABLE_FORMAT, std::format("{:.1f}", object.get_body_volume()));
 
     return stream;
 }
