@@ -13,14 +13,14 @@ public:
     Trolleybus(const String& brand, int year, int seats, double battery_capacity)
         : PassengerVehicle(brand, year, seats), battery_capacity(battery_capacity)
     {
-        cout << "+ Trolleybus [" << this->get_brand() << "]" << '\n';
+        std::cout << "+ Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 
     Trolleybus(const Trolleybus& other) : Trolleybus(other.get_brand(), other.get_year(), other.get_seats(), other.get_battery_capacity()) {}
 
     ~Trolleybus() override
     {
-        cout << "- Trolleybus [" << this->get_brand() << "]" << '\n';
+        std::cout << "- Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 
     double get_battery_capacity() const;                                                            // Получение ёмкости аккумулятора
