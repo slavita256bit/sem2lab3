@@ -27,7 +27,7 @@ public:
     void set_seats(int value);                                                                      // Изменение числа мест
 
     void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    PassengerVehicle& print_read_info(std::ostream& stream) override;                               // Вывод подсказки ввода
+    PassengerVehicle& print_read_info(std::istream& stream) override;                               // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
     friend std::istream& operator>>(std::istream& stream, PassengerVehicle& object);

@@ -28,10 +28,11 @@ void Trolleybus::change_field(VehicleField field)
     this->set_battery_capacity(value);
 }
 
-// Вывод подсказки ввода
-Trolleybus& Trolleybus::print_read_info(std::ostream& stream)
+// Ввод объекта с подсказкой
+Trolleybus& Trolleybus::print_read_info(std::istream& stream)
 {
-    stream << "Троллейбус (марка, год, количество мест, ёмкость аккумулятора (кВт·ч)): ";
+    std::cout << "Троллейбус (марка, год, количество мест, ёмкость аккумулятора (кВт·ч)): ";
+    stream >> *this;
 
     return *this;
 }

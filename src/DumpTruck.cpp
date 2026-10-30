@@ -28,10 +28,11 @@ void DumpTruck::change_field(VehicleField field)
     this->set_body_volume(value);
 }
 
-// Вывод подсказки ввода
-DumpTruck& DumpTruck::print_read_info(std::ostream& stream)
+// Ввод объекта с подсказкой
+DumpTruck& DumpTruck::print_read_info(std::istream& stream)
 {
-    stream << "Самосвал (марка, год, грузоподъёмность (т), объём кузова (м3)): ";
+    std::cout << "Самосвал (марка, год, грузоподъёмность (т), объём кузова (м3)): ";
+    stream >> *this;
 
     return *this;
 }
@@ -43,14 +44,12 @@ void DumpTruck::print_header(std::ostream& stream) const
     stream << std::format(DUMP_TRUCK_TABLE_FORMAT, "Кузов (м3)");
 }
 
-
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
     stream >> static_cast<CargoVehicle&>(object) >> object.body_volume;
 
     return stream;
 }
-
 
 std::ostream& operator<<(std::ostream& stream, const DumpTruck& object)
 {

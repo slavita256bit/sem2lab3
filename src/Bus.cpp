@@ -28,10 +28,11 @@ void Bus::change_field(VehicleField field)
     this->set_route(value);
 }
 
-// Вывод подсказки ввода
-Bus& Bus::print_read_info(std::ostream& stream)
+// Ввод объекта с подсказкой
+Bus& Bus::print_read_info(std::istream& stream)
 {
-    stream << "Автобус (марка, год, количество мест, номер маршрута): ";
+    std::cout << "Автобус (марка, год, количество мест, номер маршрута): ";
+    stream >> *this;
 
     return *this;
 }

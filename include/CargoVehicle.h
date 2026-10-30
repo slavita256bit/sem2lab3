@@ -6,7 +6,7 @@
 class CargoVehicle : public Vehicle
 {
 private:
-    double payload = 0;                                                                             // Грузоподъёмность, т
+    double payload = 0;  // Грузоподъёмность, т
 
 public:
     CargoVehicle() : CargoVehicle(String("Без марки"), 2020, 1.0) {}
@@ -26,7 +26,7 @@ public:
     void set_payload(double value);                                                                 // Изменение грузоподъёмности
 
     void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    CargoVehicle& print_read_info(std::ostream& stream) override;                                   // Вывод подсказки ввода
+    CargoVehicle& print_read_info(std::istream& stream) override;                                   // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
     friend std::istream& operator>>(std::istream& stream, CargoVehicle& object);

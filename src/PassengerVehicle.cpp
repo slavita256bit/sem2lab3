@@ -28,10 +28,11 @@ void PassengerVehicle::change_field(VehicleField field)
     this->set_seats(value);
 }
 
-// Вывод подсказки ввода
-PassengerVehicle& PassengerVehicle::print_read_info(std::ostream& stream)
+// Ввод объекта с подсказкой
+PassengerVehicle& PassengerVehicle::print_read_info(std::istream& stream)
 {
-    stream << "Пассажирский (марка, год, количество мест): ";
+    std::cout << "Пассажирский (марка, год, количество мест): ";
+    stream >> *this;
 
     return *this;
 }
@@ -43,14 +44,12 @@ void PassengerVehicle::print_header(std::ostream& stream) const
     stream << std::format(PASSENGER_VEHICLE_TABLE_FORMAT, "Мест");
 }
 
-
 std::istream& operator>>(std::istream& stream, PassengerVehicle& object)
 {
     stream >> static_cast<Vehicle&>(object) >> object.seats;
 
     return stream;
 }
-
 
 std::ostream& operator<<(std::ostream& stream, const PassengerVehicle& object)
 {

@@ -6,7 +6,7 @@
 class DumpTruck : public CargoVehicle
 {
 private:
-    double body_volume = 0;                                                                         // Объём кузова, м3
+    double body_volume = 0; // Объём кузова, м3
 
 public:
     DumpTruck() : DumpTruck(String("Без марки"), 2020, 1.0, 1.0) {}
@@ -27,7 +27,7 @@ public:
     void set_body_volume(double value);                                                             // Изменение объёма кузова
 
     void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    DumpTruck& print_read_info(std::ostream& stream) override;                                      // Вывод подсказки ввода
+    DumpTruck& print_read_info(std::istream& stream) override;                                      // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
     friend std::istream& operator>>(std::istream& stream, DumpTruck& object);

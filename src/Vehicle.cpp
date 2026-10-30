@@ -52,10 +52,11 @@ void Vehicle::change_field(VehicleField field)
         std::cout << "У этого типа транспорта нет такого параметра.\n";
 }
 
-// Вывод подсказки ввода
-Vehicle& Vehicle::print_read_info(std::ostream& stream)
+// Ввод объекта с подсказкой
+Vehicle& Vehicle::print_read_info(std::istream& stream)
 {
-    stream << "Транспорт (марка, год выпуска): ";
+    std::cout << "Транспорт (марка, год выпуска): ";
+    stream >> *this;
 
     return *this;
 }

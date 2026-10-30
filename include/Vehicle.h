@@ -28,8 +28,8 @@ enum class VehicleField
 class Vehicle
 {
 private:
-    String brand;                                                                                   // Марка
-    int year = 0;                                                                                   // Год выпуска
+    String brand;   // Марка
+    int year = 0;   // Год выпуска
 
 public:
     Vehicle() : Vehicle(String("Без марки"), 2020) {}
@@ -52,7 +52,7 @@ public:
     void set_year(int value);                                                                       // Изменение года выпуска
 
     virtual void change_field(VehicleField field);                                                  // Изменение выбранного поля
-    virtual Vehicle& print_read_info(std::ostream& stream);                                         // Вывод подсказки ввода
+    virtual Vehicle& print_read_info(std::istream& stream);                                         // Ввод объекта с подсказкой
     virtual void print_header(std::ostream& stream) const;                                          // Вывод шапки таблицы
 
     static void print_table(std::ostream& stream, Vehicle* const objects[], std::size_t count, const std::type_info& class_type);  // Вывод таблицы

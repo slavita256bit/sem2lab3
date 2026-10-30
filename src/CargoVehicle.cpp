@@ -28,10 +28,11 @@ void CargoVehicle::change_field(VehicleField field)
     this->set_payload(value);
 }
 
-// Вывод подсказки ввода
-CargoVehicle& CargoVehicle::print_read_info(std::ostream& stream)
+// Ввод объекта с подсказкой
+CargoVehicle& CargoVehicle::print_read_info(std::istream& stream)
 {
-    stream << "Грузовой (марка, год, грузоподъёмность (т)): ";
+    std::cout << "Грузовой (марка, год, грузоподъёмность (т)): ";
+    stream >> *this;
 
     return *this;
 }
