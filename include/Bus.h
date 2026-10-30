@@ -13,14 +13,14 @@ public:
     Bus(const String& brand, int year, int seats, int route)
         : PassengerVehicle(brand, year, seats), route(route)
     {
-        std::cout << "+ Bus [" << this->get_brand() << "]" << '\n';
+        colored::green << "+ Bus [" << this->get_brand() << "]" << '\n';
     }
 
     Bus(const Bus& other) : Bus(other.get_brand(), other.get_year(), other.get_seats(), other.get_route()) {}
 
     ~Bus() override
     {
-        std::cout << "- Bus [" << this->get_brand() << "]" << '\n';
+        colored::red << "- Bus [" << this->get_brand() << "]" << '\n';
     }
 
     int get_route() const;                                                                          // Получение номера маршрута

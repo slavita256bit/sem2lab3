@@ -14,6 +14,7 @@ add_executable(sem2lab3
     src/PassengerVehicle.cpp
     src/Bus.cpp
     src/Trolleybus.cpp
+        include/Colors.h
 )
 
 target_include_directories(sem2lab3 PRIVATE include)

@@ -12,6 +12,8 @@
 #include <cstddef>
 #include <typeinfo>
 
+#include "Colors.h"
+
 #define VEHICLE_TABLE_FORMAT "{:<18.18}  {:<4}  "
 
 enum class VehicleField
@@ -35,14 +37,14 @@ public:
     Vehicle() : Vehicle(String("Без марки"), 2020) {}
     Vehicle(const String& brand, int year) : brand(brand), year(year)
     {
-        std::cout << "+ Vehicle [" << this->get_brand() << "]" << '\n';
+        colored::green << "+ Vehicle [" << this->get_brand() << "]" << '\n';
     }
 
     Vehicle(const Vehicle& other) : Vehicle(other.get_brand(), other.get_year()) {}
 
     virtual ~Vehicle()
     {
-        std::cout << "- Vehicle [" << this->get_brand() << "]" << '\n';
+        colored::red << "- Vehicle [" << this->get_brand() << "]" << '\n';
     }
 
     const String& get_brand() const;                                                                // Получение марки

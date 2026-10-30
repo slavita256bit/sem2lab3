@@ -100,15 +100,16 @@ int main()
             Vehicle* new_object = nullptr;
             switch (type)
             {
-                case 1: new_object = &(new Vehicle)->print_read_info(std::cin); break;
-                case 2: new_object = &(new CargoVehicle)->print_read_info(std::cin); break;
-                case 3: new_object = &(new DumpTruck)->print_read_info(std::cin); break;
-                case 4: new_object = &(new PassengerVehicle)->print_read_info(std::cin); break;
-                case 5: new_object = &(new Bus)->print_read_info(std::cin); break;
-                case 6: new_object = &(new Trolleybus)->print_read_info(std::cin); break;
+                case 1: new_object = new Vehicle; break;
+                case 2: new_object = new CargoVehicle; break;
+                case 3: new_object = new DumpTruck; break;
+                case 4: new_object = new PassengerVehicle; break;
+                case 5: new_object = new Bus; break;
+                case 6: new_object = new Trolleybus; break;
                 default: continue;
             }
 
+            new_object->print_read_info(std::cin);
             objects[count++] = new_object;
         }
 

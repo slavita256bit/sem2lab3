@@ -51,7 +51,7 @@ int main()
             break;
 
         case 'r':
-            std::cout << "++A -> " << ++a << " (A = " << a << ")" << std::endl;
+            colored::green << "++A -> " << ++a << " (A = " << a << ")" << std::endl;
             std::cout << "A++ -> " << a++ << " (A = " << a << ")" << std::endl;
             std::cout << "--A -> " << --a << " (A = " << a << ")" << std::endl;
             std::cout << "A-- -> " << a-- << " (A = " << a << ")" << std::endl;
