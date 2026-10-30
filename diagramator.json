@@ -53,8 +53,12 @@
       "y": 830.8899622977292
     },
     "classCargoVehicle": {
-      "x": 202.48745371655863,
-      "y": 501.4677350455646
+      "x": 203.73994799389993,
+      "y": 505.22521787758853
+    },
+    "classColored": {
+      "x": 1375.3578443069737,
+      "y": -209.8196976955692
     },
     "classDumpTruck": {
       "x": 147.95857444964236,
@@ -76,6 +80,10 @@
       "x": 373.58716724601777,
       "y": 76.04013210977367
     },
+    "classcolored_1_1Color": {
+      "x": 1368.0,
+      "y": 0.0
+    },
     "structstd_1_1formatter_3_01String_01_4": {
       "x": 888.0,
       "y": 0.0
@@ -87,6 +95,10 @@
       "methods": false
     },
     "classCargoVehicle": {
+      "attributes": false,
+      "methods": false
+    },
+    "classColored": {
       "attributes": false,
       "methods": false
     },
@@ -110,6 +122,10 @@
       "attributes": false,
       "methods": false
     },
+    "classcolored_1_1Color": {
+      "attributes": false,
+      "methods": false
+    },
     "structstd_1_1formatter_3_01String_01_4": {
       "attributes": false,
       "methods": false
@@ -118,11 +134,13 @@
   "hidden": {
     "classBus": false,
     "classCargoVehicle": false,
+    "classColored": true,
     "classDumpTruck": false,
     "classPassengerVehicle": false,
     "classString": true,
     "classTrolleybus": false,
     "classVehicle": false,
+    "classcolored_1_1Color": true,
     "structstd_1_1formatter_3_01String_01_4": true
   },
   "connections": [

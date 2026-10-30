@@ -44,14 +44,12 @@ void Bus::print_header(std::ostream& stream) const
     stream << std::format(BUS_TABLE_FORMAT, "Маршрут");
 }
 
-
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object) >> object.route;
 
     return stream;
 }
-
 
 std::ostream& operator<<(std::ostream& stream, const Bus& object)
 {

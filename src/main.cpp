@@ -5,11 +5,13 @@
 #include <cctype>
 #include <iterator>
 
-#define MAX_VEHICLE_LENGTH 20
+#define ADD_DEFAULTS
+#define MAX_VEHICLE_LENGTH 25
 
 int main()
 {
     Vehicle* objects[MAX_VEHICLE_LENGTH] = {
+#ifdef ADD_DEFAULTS
         new Vehicle(String("Mercedes"), 2020),
         new Vehicle(String("Toyota"), 2021),
         new CargoVehicle(String("МАЗ"), 2021, 12.0),
@@ -22,6 +24,7 @@ int main()
         new Bus(String("Неман"), 2025, 45, 7),
         new Trolleybus(String("Гомсельмаш"), 2025, 40, 80.0),
         new Trolleybus(String("Трансформер"), 2024, 35, 60.5)
+#endif
     };
 
     std::size_t count = 0;
@@ -48,21 +51,7 @@ int main()
         int action = 0;
         std::cin >> action;
 
-        if (action == 0)
-        {
-            // char choice = 'y';
-            // std::cout << "Завершить программу? (y/n): ";
-            // std::cin >> choice;
-            // std::cout << '\n';
-            //
-            // if (std::tolower(static_cast<unsigned char>(choice)) == 'y')
-            //     break;
-
-            // continue;
-
-            break;
-        }
-
+        if (action == 0) break;
         if (action < 1 || action > 3)
         {
             std::cout << "Нет действия с таким номером.\n";
@@ -91,12 +80,6 @@ int main()
 
         if (action == 2)
         {
-            if (count == MAX_VEHICLE_LENGTH)
-            {
-                std::cout << "Массив транспорта заполнен.\n";
-                continue;
-            }
-
             Vehicle* new_object = nullptr;
             switch (type)
             {
