@@ -12,14 +12,14 @@ public:
     CargoVehicle() : CargoVehicle(String("Без марки"), 2020, 1.0) {}
     CargoVehicle(const String& brand, int year, double payload) : Vehicle(brand, year), payload(payload)
     {
-        colored::green << "+ CargoVehicle [" << this->get_brand() << "]" << '\n';
+        cout << "+ CargoVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     CargoVehicle(const CargoVehicle& other) : CargoVehicle(other.get_brand(), other.get_year(), other.get_payload()) {}
 
     ~CargoVehicle() override
     {
-        colored::red << "- CargoVehicle [" << this->get_brand() << "]" << '\n';
+        cout << "- CargoVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     double get_payload() const;                                                                     // Получение грузоподъёмности

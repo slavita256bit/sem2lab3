@@ -13,14 +13,14 @@ public:
     DumpTruck(const String& brand, int year, double payload, double body_volume)
         : CargoVehicle(brand, year, payload), body_volume(body_volume)
     {
-        colored::green << "+ DumpTruck [" << this->get_brand() << "]" << '\n';
+        cout << "+ DumpTruck [" << this->get_brand() << "]" << '\n';
     }
 
     DumpTruck(const DumpTruck& other) : DumpTruck(other.get_brand(), other.get_year(), other.get_payload(), other.get_body_volume()) {}
 
     ~DumpTruck() override
     {
-        colored::red << "- DumpTruck [" << this->get_brand() << "]" << '\n';
+        cout << "- DumpTruck [" << this->get_brand() << "]" << '\n';
     }
 
     double get_body_volume() const;                                                                 // Получение объёма кузова

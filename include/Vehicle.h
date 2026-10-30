@@ -37,14 +37,14 @@ public:
     Vehicle() : Vehicle(String("Без марки"), 2020) {}
     Vehicle(const String& brand, int year) : brand(brand), year(year)
     {
-        colored::green << "+ Vehicle [" << this->get_brand() << "]" << '\n';
+        cout << "+ Vehicle [" << this->get_brand() << "]" << '\n';
     }
 
     Vehicle(const Vehicle& other) : Vehicle(other.get_brand(), other.get_year()) {}
 
     virtual ~Vehicle()
     {
-        colored::red << "- Vehicle [" << this->get_brand() << "]" << '\n';
+        cout << "- Vehicle [" << this->get_brand() << "]" << '\n';
     }
 
     const String& get_brand() const;                                                                // Получение марки

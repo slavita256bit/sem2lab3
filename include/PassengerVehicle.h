@@ -13,14 +13,14 @@ public:
     PassengerVehicle(const String& brand, int year, int seats)
         : Vehicle(brand, year), seats(seats)
     {
-        colored::green << "+ PassengerVehicle [" << this->get_brand() << "]" << '\n';
+        cout << "+ PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     PassengerVehicle(const PassengerVehicle& other) : PassengerVehicle(other.get_brand(), other.get_year(), other.get_seats()) {}
 
     ~PassengerVehicle() override
     {
-        colored::red << "- PassengerVehicle [" << this->get_brand() << "]" << '\n';
+        cout << "- PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     int get_seats() const;                                                                          // Получение числа мест
