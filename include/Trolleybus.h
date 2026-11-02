@@ -30,6 +30,13 @@ public:
     Trolleybus& print_read_info(std::istream& stream) override;                                     // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
+    bool operator<(const Trolleybus& other) const;                                                  // Сравнение ёмкости аккумулятора
+    bool operator>(const Trolleybus& other) const;                                                  // Сравнение ёмкости аккумулятора
+    bool operator<=(const Trolleybus& other) const;                                                 // Сравнение ёмкости аккумулятора
+    bool operator>=(const Trolleybus& other) const;                                                 // Сравнение ёмкости аккумулятора
+    bool operator==(const Trolleybus& other) const;                                                 // Равенство всех полей
+    bool operator!=(const Trolleybus& other) const;                                                 // Неравенство полей
+
     friend std::istream& operator>>(std::istream& stream, Trolleybus& object);
     friend std::ostream& operator<<(std::ostream& stream, const Trolleybus& object);
 };

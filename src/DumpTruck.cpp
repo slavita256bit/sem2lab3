@@ -44,6 +44,42 @@ void DumpTruck::print_header(std::ostream& stream) const
     stream << std::format(DUMP_TRUCK_TABLE_FORMAT, "Кузов (м3)");
 }
 
+// Сравнение объёма кузова
+bool DumpTruck::operator<(const DumpTruck& other) const
+{
+    return this->body_volume < other.body_volume;
+}
+
+// Сравнение объёма кузова
+bool DumpTruck::operator>(const DumpTruck& other) const
+{
+    return other < *this;
+}
+
+// Сравнение объёма кузова
+bool DumpTruck::operator<=(const DumpTruck& other) const
+{
+    return !(other < *this);
+}
+
+// Сравнение объёма кузова
+bool DumpTruck::operator>=(const DumpTruck& other) const
+{
+    return !(*this < other);
+}
+
+// Равенство всех полей
+bool DumpTruck::operator==(const DumpTruck& other) const
+{
+    return static_cast<const CargoVehicle&>(*this) == static_cast<const CargoVehicle&>(other) && this->body_volume == other.body_volume;
+}
+
+// Неравенство полей
+bool DumpTruck::operator!=(const DumpTruck& other) const
+{
+    return !(*this == other);
+}
+
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
     stream >> static_cast<CargoVehicle&>(object) >> object.body_volume;

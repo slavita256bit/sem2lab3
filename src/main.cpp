@@ -1,44 +1,25 @@
 #include "DumpTruck.h"
 #include "Bus.h"
 #include "Trolleybus.h"
-#include <typeinfo>
-#include <cctype>
-#include <iterator>
+#include "BinaryTree.h"
+#include <stdexcept>
 
 #define ADD_DEFAULTS
-#define MAX_VEHICLE_LENGTH 25
 
 int main()
 {
-    Vehicle* objects[MAX_VEHICLE_LENGTH] = {
+    BinaryTree<DumpTruck> dump_trucks;
+    BinaryTree<Bus> buses;
+    BinaryTree<Trolleybus> trolleybuses;
+
 #ifdef ADD_DEFAULTS
-        new Vehicle(String("Mercedes"), 2020),
-        new Vehicle(String("Toyota"), 2021),
-        new CargoVehicle(String("МАЗ"), 2021, 12.0),
-        new CargoVehicle(String("КамАЗ"), 2022, 15.0),
-        new DumpTruck(String("БелАЗ"), 2022, 40.0, 25.0),
-        new DumpTruck(String("Caterpillar"), 2023, 50.0, 30.0),
-        new PassengerVehicle(String("ВАЗ"), 2023, 18),
-        new PassengerVehicle(String("Ford"), 2024, 16),
-        new Bus(String("FlixBus"), 2024, 30, 15),
-        new Bus(String("Неман"), 2025, 45, 7),
-        new Trolleybus(String("Гомсельмаш"), 2025, 40, 80.0),
-        new Trolleybus(String("Трансформер"), 2024, 35, 60.5)
+    dump_trucks.add(new DumpTruck(String("БелАЗ"), 2022, 40.0, 25.0));
+    dump_trucks.add(new DumpTruck(String("Caterpillar"), 2023, 50.0, 30.0));
+    buses.add(new Bus(String("FlixBus"), 2024, 30, 15));
+    buses.add(new Bus(String("Неман"), 2025, 45, 7));
+    trolleybuses.add(new Trolleybus(String("Гомсельмаш"), 2025, 40, 80.0));
+    trolleybuses.add(new Trolleybus(String("Трансформер"), 2024, 35, 60.5));
 #endif
-    };
-
-    std::size_t count = 0;
-    while (count < MAX_VEHICLE_LENGTH && objects[count])
-        count++;
-
-    const std::type_info* class_types[] = {
-        &typeid(Vehicle),
-        &typeid(CargoVehicle),
-        &typeid(DumpTruck),
-        &typeid(PassengerVehicle),
-        &typeid(Bus),
-        &typeid(Trolleybus)
-    };
 
     while (true)
     {
@@ -51,7 +32,9 @@ int main()
         int action = 0;
         std::cin >> action;
 
-        if (action == 0) break;
+        if (action == 0)
+            break;
+
         if (action < 1 || action > 3)
         {
             std::cout << "Нет действия с таким номером.\n";
@@ -59,12 +42,9 @@ int main()
         }
 
         std::cout << std::endl;
-        std::cout << "1 - транспорт (Vehicle)\n";
-        std::cout << "2 - грузовой (CargoVehicle)\n";
-        std::cout << "3 - самосвал (DumpTruck)\n";
-        std::cout << "4 - пассажирский (PassengerVehicle)\n";
-        std::cout << "5 - автобус (Bus)\n";
-        std::cout << "6 - троллейбус (Trolleybus)\n";
+        std::cout << "1 - самосвал (DumpTruck)\n";
+        std::cout << "2 - автобус (Bus)\n";
+        std::cout << "3 - троллейбус (Trolleybus)\n";
         std::cout << "Класс (0 - отмена): ";
 
         int type = 0;
@@ -72,78 +52,115 @@ int main()
         if (type == 0)
             continue;
 
-        if (type < 1 || static_cast<std::size_t>(type) > std::size(class_types))
+        if (type < 1 || type > 3)
         {
             std::cout << "Нет класса с таким номером.\n";
             continue;
         }
 
+        Vehicle* object = nullptr;
         if (action == 2)
         {
-            Vehicle* new_object = nullptr;
             switch (type)
             {
-                case 1: new_object = new Vehicle; break;
-                case 2: new_object = new CargoVehicle; break;
-                case 3: new_object = new DumpTruck; break;
-                case 4: new_object = new PassengerVehicle; break;
-                case 5: new_object = new Bus; break;
-                case 6: new_object = new Trolleybus; break;
-                default: continue;
+            case 1: object = new DumpTruck; break;
+            case 2: object = new Bus; break;
+            case 3: object = new Trolleybus; break;
+            default: continue;
             }
 
-            new_object->print_read_info(std::cin);
-            objects[count++] = new_object;
+            object->print_read_info(std::cin);
+        }
+        else if (action == 3)
+        {
+            switch (type)
+            {
+            case 1: std::cout << dump_trucks; break;
+            case 2: std::cout << buses; break;
+            case 3: std::cout << trolleybuses; break;
+            default: continue;
+            }
+
+            std::cout << "Номер объекта (0 - отмена): ";
+            int number = 0;
+            std::cin >> number;
+            if (number == 0)
+                continue;
+
+            try
+            {
+                switch (type)
+                {
+                case 1: object = new DumpTruck(dump_trucks[number]); break;
+                case 2: object = new Bus(buses[number]); break;
+                case 3: object = new Trolleybus(trolleybuses[number]); break;
+                default: continue;
+                }
+            }
+            catch (const std::out_of_range&)
+            {
+                std::cout << "Нет объекта с таким номером.\n";
+                continue;
+            }
+
+            std::cout << static_cast<int>(VehicleField::Brand) << " - марка\n";
+            std::cout << static_cast<int>(VehicleField::Year) << " - год\n";
+            std::cout << static_cast<int>(VehicleField::Payload) << " - грузоподъёмность\n";
+            std::cout << static_cast<int>(VehicleField::BodyVolume) << " - объём кузова\n";
+            std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
+            std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
+            std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - ёмкость аккумулятора\n";
+            std::cout << "Параметр (0 - отмена): ";
+
+            int field_number = 0;
+            std::cin >> field_number;
+            if (field_number == 0)
+            {
+                delete object;
+                continue;
+            }
+
+            switch (type)
+            {
+            case 1: dump_trucks.find(*dynamic_cast<DumpTruck*>(object))->remove(); break;
+            case 2: buses.find(*dynamic_cast<Bus*>(object))->remove(); break;
+            case 3: trolleybuses.find(*dynamic_cast<Trolleybus*>(object))->remove(); break;
+            default: break;
+            }
+
+            object->change_field(static_cast<VehicleField>(field_number));
+        }
+
+        if (object)
+        {
+            switch (type)
+            {
+            case 1: dump_trucks.add(dynamic_cast<DumpTruck*>(object)); break;
+            case 2: buses.add(dynamic_cast<Bus*>(object)); break;
+            case 3: trolleybuses.add(dynamic_cast<Trolleybus*>(object)); break;
+            default: break;
+            }
         }
 
         std::cout << std::endl;
-        Vehicle::print_table(std::cout, objects, count, *class_types[type - 1]);
-
-        if (action != 3)
-            continue;
-
-        std::cout << "Номер объекта (0 - отмена): ";
-        int index = 0;
-        std::cin >> index;
-
-        if (index == 0)
-            continue;
-
-        if (index < 1 || static_cast<std::size_t>(index) > count)
+        switch (type)
         {
-            std::cout << "Нет объекта с таким номером.\n";
-            continue;
+        case 1: std::cout << dump_trucks; break;
+        case 2: std::cout << buses; break;
+        case 3: std::cout << trolleybuses; break;
+        default: break;
         }
-
-        if (typeid(*objects[index - 1]) != *class_types[type - 1])
-        {
-            std::cout << "Объект не относится к выбранному классу.\n";
-            continue;
-        }
-
-        std::cout << static_cast<int>(VehicleField::Brand) << " - марка\n";
-        std::cout << static_cast<int>(VehicleField::Year) << " - год\n";
-        std::cout << static_cast<int>(VehicleField::Payload) << " - грузоподъёмность\n";
-        std::cout << static_cast<int>(VehicleField::BodyVolume) << " - объём кузова\n";
-        std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
-        std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
-        std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - ёмкость аккумулятора\n";
-        std::cout << "Параметр (0 - отмена): ";
-
-        int field_number = 0;
-        std::cin >> field_number;
-        if (field_number == 0)
-            continue;
-
-        objects[index - 1]->change_field(static_cast<VehicleField>(field_number));
-        Vehicle::print_table(std::cout, objects, count, *class_types[type - 1]);
     }
-
-    for (std::size_t i = count; i > 0; i--)
-        delete objects[i - 1];
 
     return 0;
 }
 
 /*
+1 1
+2 2 NewBus 2020 30 10
+3 2 1 2 2019
+1 1
+1 2
+1 3
+0
 */

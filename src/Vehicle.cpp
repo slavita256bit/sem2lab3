@@ -1,10 +1,4 @@
 #include "Vehicle.h"
-#include "CargoVehicle.h"
-#include "PassengerVehicle.h"
-#include "DumpTruck.h"
-#include "Bus.h"
-#include "Trolleybus.h"
-#include <typeinfo>
 #include <format>
 
 // Получение марки
@@ -52,58 +46,46 @@ void Vehicle::change_field(VehicleField field)
         std::cout << "У этого типа транспорта нет такого параметра.\n";
 }
 
-// Ввод объекта с подсказкой
-Vehicle& Vehicle::print_read_info(std::istream& stream)
-{
-    std::cout << "Транспорт (марка, год выпуска): ";
-    stream >> *this;
-
-    return *this;
-}
-
 // Вывод шапки таблицы
 void Vehicle::print_header(std::ostream& stream) const
 {
     stream << std::format(VEHICLE_TABLE_FORMAT, "Марка", "Год");
 }
 
-// Вывод таблицы класса
-void Vehicle::print_table(std::ostream& stream, Vehicle* const objects[], std::size_t count, const std::type_info& class_type)
+// Сравнение года выпуска
+bool Vehicle::operator<(const Vehicle& other) const
 {
-    bool header_printed = false;
-    for (std::size_t i = 0; i < count; i++)
-    {
-        const Vehicle* object = objects[i];
-        if (typeid(*object) != class_type)
-            continue;
+    return this->year < other.year;
+}
 
-        if (!header_printed)
-        {
-            stream << std::format("{:<3}  ", "№");
-            object->print_header(stream);
-            stream << '\n';
-            header_printed = true;
-        }
+// Сравнение года выпуска
+bool Vehicle::operator>(const Vehicle& other) const
+{
+    return other < *this;
+}
 
-        stream << std::format("{:<3}  ", i + 1);
-        if (typeid(*object) == typeid(DumpTruck))
-            stream << *dynamic_cast<const DumpTruck*>(object);
-        else if (typeid(*object) == typeid(CargoVehicle))
-            stream << *dynamic_cast<const CargoVehicle*>(object);
-        else if (typeid(*object) == typeid(Bus))
-            stream << *dynamic_cast<const Bus*>(object);
-        else if (typeid(*object) == typeid(Trolleybus))
-            stream << *dynamic_cast<const Trolleybus*>(object);
-        else if (typeid(*object) == typeid(PassengerVehicle))
-            stream << *dynamic_cast<const PassengerVehicle*>(object);
-        else
-            stream << *object;
+// Сравнение года выпуска
+bool Vehicle::operator<=(const Vehicle& other) const
+{
+    return !(other < *this);
+}
 
-        stream << '\n';
-    }
+// Сравнение года выпуска
+bool Vehicle::operator>=(const Vehicle& other) const
+{
+    return !(*this < other);
+}
 
-    if (!header_printed)
-        stream << "Нет объектов для вывода.\n";
+// Равенство всех полей
+bool Vehicle::operator==(const Vehicle& other) const
+{
+    return this->brand == other.brand && this->year == other.year;
+}
+
+// Неравенство полей
+bool Vehicle::operator!=(const Vehicle& other) const
+{
+    return !(*this == other);
 }
 
 std::istream& operator>>(std::istream& stream, Vehicle& object)

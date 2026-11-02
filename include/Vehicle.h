@@ -9,10 +9,6 @@
 */
 #include "String.h"
 #include <format>
-#include <cstddef>
-#include <typeinfo>
-
-#include "Colors.h"
 
 #define VEHICLE_TABLE_FORMAT "{:<18.18}  {:<4}  "
 
@@ -54,10 +50,15 @@ public:
     void set_year(int value);                                                                       // Изменение года выпуска
 
     virtual void change_field(VehicleField field);                                                  // Изменение выбранного поля
-    virtual Vehicle& print_read_info(std::istream& stream);                                         // Ввод объекта с подсказкой
+    virtual Vehicle& print_read_info(std::istream& stream) = 0;                                     // Ввод объекта с подсказкой
     virtual void print_header(std::ostream& stream) const;                                          // Вывод шапки таблицы
 
-    static void print_table(std::ostream& stream, Vehicle* const objects[], std::size_t count, const std::type_info& class_type);  // Вывод таблицы
+    bool operator<(const Vehicle& other) const;                                                     // Сравнение года выпуска
+    bool operator>(const Vehicle& other) const;                                                     // Сравнение года выпуска
+    bool operator<=(const Vehicle& other) const;                                                    // Сравнение года выпуска
+    bool operator>=(const Vehicle& other) const;                                                    // Сравнение года выпуска
+    bool operator==(const Vehicle& other) const;                                                    // Равенство всех полей
+    bool operator!=(const Vehicle& other) const;                                                    // Неравенство полей
 
     friend std::istream& operator>>(std::istream& stream, Vehicle& object);
     friend std::ostream& operator<<(std::ostream& stream, const Vehicle& object);

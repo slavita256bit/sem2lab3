@@ -44,6 +44,42 @@ void Bus::print_header(std::ostream& stream) const
     stream << std::format(BUS_TABLE_FORMAT, "Маршрут");
 }
 
+// Сравнение номера маршрута
+bool Bus::operator<(const Bus& other) const
+{
+    return this->route < other.route;
+}
+
+// Сравнение номера маршрута
+bool Bus::operator>(const Bus& other) const
+{
+    return other < *this;
+}
+
+// Сравнение номера маршрута
+bool Bus::operator<=(const Bus& other) const
+{
+    return !(other < *this);
+}
+
+// Сравнение номера маршрута
+bool Bus::operator>=(const Bus& other) const
+{
+    return !(*this < other);
+}
+
+// Равенство всех полей
+bool Bus::operator==(const Bus& other) const
+{
+    return static_cast<const PassengerVehicle&>(*this) == static_cast<const PassengerVehicle&>(other) && this->route == other.route;
+}
+
+// Неравенство полей
+bool Bus::operator!=(const Bus& other) const
+{
+    return !(*this == other);
+}
+
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object) >> object.route;

@@ -28,20 +28,23 @@ void PassengerVehicle::change_field(VehicleField field)
     this->set_seats(value);
 }
 
-// Ввод объекта с подсказкой
-PassengerVehicle& PassengerVehicle::print_read_info(std::istream& stream)
-{
-    std::cout << "Пассажирский (марка, год, количество мест): ";
-    stream >> *this;
-
-    return *this;
-}
-
 // Вывод шапки таблицы
 void PassengerVehicle::print_header(std::ostream& stream) const
 {
     Vehicle::print_header(stream);
     stream << std::format(PASSENGER_VEHICLE_TABLE_FORMAT, "Мест");
+}
+
+// Равенство всех полей
+bool PassengerVehicle::operator==(const PassengerVehicle& other) const
+{
+    return static_cast<const Vehicle&>(*this) == static_cast<const Vehicle&>(other) && this->seats == other.seats;
+}
+
+// Неравенство полей
+bool PassengerVehicle::operator!=(const PassengerVehicle& other) const
+{
+    return !(*this == other);
 }
 
 std::istream& operator>>(std::istream& stream, PassengerVehicle& object)

@@ -88,6 +88,8 @@ public:
     friend String operator+(const String& a, const char* b);                                        // Сложение строк
     friend String operator+(const char* a, const String& b);                                        // Сложение строк
 
+    friend bool operator==(const String& a, const String& b);                                       // Равенство строк
+    friend bool operator!=(const String& a, const String& b);                                       // Неравенство строк
     friend bool operator<(const String& a, const String& b);                                        // Сравнение строк
     friend bool operator>(const String& a, const String& b);                                        // Сравнение строк
     friend bool operator<=(const String& a, const String& b);                                       // Сравнение строк

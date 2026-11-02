@@ -44,6 +44,42 @@ void Trolleybus::print_header(std::ostream& stream) const
     stream << std::format(TROLLEYBUS_TABLE_FORMAT, "АКБ (кВт·ч)");
 }
 
+// Сравнение ёмкости аккумулятора
+bool Trolleybus::operator<(const Trolleybus& other) const
+{
+    return this->battery_capacity < other.battery_capacity;
+}
+
+// Сравнение ёмкости аккумулятора
+bool Trolleybus::operator>(const Trolleybus& other) const
+{
+    return other < *this;
+}
+
+// Сравнение ёмкости аккумулятора
+bool Trolleybus::operator<=(const Trolleybus& other) const
+{
+    return !(other < *this);
+}
+
+// Сравнение ёмкости аккумулятора
+bool Trolleybus::operator>=(const Trolleybus& other) const
+{
+    return !(*this < other);
+}
+
+// Равенство всех полей
+bool Trolleybus::operator==(const Trolleybus& other) const
+{
+    return static_cast<const PassengerVehicle&>(*this) == static_cast<const PassengerVehicle&>(other) && this->battery_capacity == other.battery_capacity;
+}
+
+// Неравенство полей
+bool Trolleybus::operator!=(const Trolleybus& other) const
+{
+    return !(*this == other);
+}
+
 std::istream& operator>>(std::istream& stream, Trolleybus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object) >> object.battery_capacity;

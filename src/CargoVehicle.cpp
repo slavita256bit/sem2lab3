@@ -28,15 +28,6 @@ void CargoVehicle::change_field(VehicleField field)
     this->set_payload(value);
 }
 
-// Ввод объекта с подсказкой
-CargoVehicle& CargoVehicle::print_read_info(std::istream& stream)
-{
-    std::cout << "Грузовой (марка, год, грузоподъёмность (т)): ";
-    stream >> *this;
-
-    return *this;
-}
-
 // Вывод шапки таблицы
 void CargoVehicle::print_header(std::ostream& stream) const
 {
@@ -44,6 +35,18 @@ void CargoVehicle::print_header(std::ostream& stream) const
     stream << std::format(CARGO_VEHICLE_TABLE_FORMAT, "Груз (т)");
 }
 
+
+// Равенство всех полей
+bool CargoVehicle::operator==(const CargoVehicle& other) const
+{
+    return static_cast<const Vehicle&>(*this) == static_cast<const Vehicle&>(other) && this->payload == other.payload;
+}
+
+// Неравенство полей
+bool CargoVehicle::operator!=(const CargoVehicle& other) const
+{
+    return !(*this == other);
+}
 
 std::istream& operator>>(std::istream& stream, CargoVehicle& object)
 {

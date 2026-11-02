@@ -166,6 +166,18 @@ String operator+(const char* a, const String& b)
     return String(a) + b;
 }
 
+// Равенство строк
+bool operator==(const String& a, const String& b)
+{
+    return a.length == b.length && (a.length == 0 || std::equal(a.data, a.data + a.length, b.data));
+}
+
+// Неравенство строк
+bool operator!=(const String& a, const String& b)
+{
+    return !(a == b);
+}
+
 // Сравнение строк
 bool operator<(const String& a, const String& b)
 {

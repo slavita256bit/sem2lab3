@@ -7,6 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(sem2lab3
     src/main.cpp
+    src/BinaryTree.cpp
     src/String.cpp
     src/Vehicle.cpp
     src/CargoVehicle.cpp

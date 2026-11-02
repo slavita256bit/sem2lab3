@@ -30,6 +30,13 @@ public:
     DumpTruck& print_read_info(std::istream& stream) override;                                      // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
+    bool operator<(const DumpTruck& other) const;                                                   // Сравнение объёма кузова
+    bool operator>(const DumpTruck& other) const;                                                   // Сравнение объёма кузова
+    bool operator<=(const DumpTruck& other) const;                                                  // Сравнение объёма кузова
+    bool operator>=(const DumpTruck& other) const;                                                  // Сравнение объёма кузова
+    bool operator==(const DumpTruck& other) const;                                                  // Равенство всех полей
+    bool operator!=(const DumpTruck& other) const;                                                  // Неравенство полей
+
     friend std::istream& operator>>(std::istream& stream, DumpTruck& object);
     friend std::ostream& operator<<(std::ostream& stream, const DumpTruck& object);
 };

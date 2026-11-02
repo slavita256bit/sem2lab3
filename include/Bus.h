@@ -30,6 +30,13 @@ public:
     Bus& print_read_info(std::istream& stream) override;                                            // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
 
+    bool operator<(const Bus& other) const;                                                         // Сравнение номера маршрута
+    bool operator>(const Bus& other) const;                                                         // Сравнение номера маршрута
+    bool operator<=(const Bus& other) const;                                                        // Сравнение номера маршрута
+    bool operator>=(const Bus& other) const;                                                        // Сравнение номера маршрута
+    bool operator==(const Bus& other) const;                                                        // Равенство всех полей
+    bool operator!=(const Bus& other) const;                                                        // Неравенство полей
+
     friend std::istream& operator>>(std::istream& stream, Bus& object);
     friend std::ostream& operator<<(std::ostream& stream, const Bus& object);
 };
