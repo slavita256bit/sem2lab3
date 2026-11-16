@@ -75,9 +75,9 @@ int main()
         {
             switch (type)
             {
-            case 1: std::cout << dump_trucks; break;
-            case 2: std::cout << buses; break;
-            case 3: std::cout << trolleybuses; break;
+            case 1: dump_trucks.print_header(std::cout); std::cout << dump_trucks; break;
+            case 2: buses.print_header(std::cout); std::cout << buses; break;
+            case 3: trolleybuses.print_header(std::cout); std::cout << trolleybuses; break;
             default: continue;
             }
 
@@ -161,9 +161,9 @@ int main()
         std::cout << std::endl;
         switch (type)
         {
-        case 1: std::cout << dump_trucks; break;
-        case 2: std::cout << buses; break;
-        case 3: std::cout << trolleybuses; break;
+        case 1: dump_trucks.print_header(std::cout); std::cout << dump_trucks; break;
+        case 2: buses.print_header(std::cout); std::cout << buses; break;
+        case 3: trolleybuses.print_header(std::cout); std::cout << trolleybuses; break;
         default: break;
         }
     }

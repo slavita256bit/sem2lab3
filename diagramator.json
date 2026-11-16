@@ -48,9 +48,13 @@
     "showMethodReturnType": true
   },
   "positions": {
+    "classBinaryTree": {
+      "x": -73.38787998365373,
+      "y": 21.682782722443136
+    },
     "classBus": {
-      "x": 703.6826248330092,
-      "y": 830.8899622977292
+      "x": 717.025875739128,
+      "y": 834.225775024259
     },
     "classCargoVehicle": {
       "x": 203.73994799389993,
@@ -61,8 +65,8 @@
       "y": -209.8196976955692
     },
     "classDumpTruck": {
-      "x": 147.95857444964236,
-      "y": 840.6785937254616
+      "x": 158.6419903482887,
+      "y": 825.9835824144197
     },
     "classPassengerVehicle": {
       "x": 899.1137309863625,
@@ -77,8 +81,8 @@
       "y": 835.8509372961237
     },
     "classVehicle": {
-      "x": 373.58716724601777,
-      "y": 76.04013210977367
+      "x": 575.4038372010655,
+      "y": -70.73562785753376
     },
     "classcolored_1_1Color": {
       "x": 1368.0,
@@ -90,6 +94,10 @@
     }
   },
   "collapsed": {
+    "classBinaryTree": {
+      "attributes": false,
+      "methods": false
+    },
     "classBus": {
       "attributes": false,
       "methods": false
@@ -132,6 +140,7 @@
     }
   },
   "hidden": {
+    "classBinaryTree": false,
     "classBus": false,
     "classCargoVehicle": false,
     "classColored": true,
@@ -144,6 +153,21 @@
     "structstd_1_1formatter_3_01String_01_4": true
   },
   "connections": [
+    {
+      "source": "classBinaryTree",
+      "target": "classBinaryTree",
+      "type": "association",
+      "anchors": {
+        "source": {
+          "side": "bottom",
+          "offset": 0.5
+        },
+        "target": {
+          "side": "top",
+          "offset": 0.4364798667082923
+        }
+      }
+    },
     {
       "source": "classPassengerVehicle",
       "target": "classVehicle",

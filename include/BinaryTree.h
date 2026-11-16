@@ -7,12 +7,13 @@
 Итераторы
 */
 #include <ostream>
+#include "BinaryTreeIterator.h"
 
 template<typename T>
 class BinaryTree;
 
 template<typename T>
-std::ostream& operator<<(std::ostream& stream, const BinaryTree<T>& tree);                          // Вывод таблицы класса
+std::ostream& operator<<(std::ostream& stream, const BinaryTree<T>& tree);        // Вывод таблицы класса
 
 template<typename T>
 class BinaryTree
@@ -26,9 +27,7 @@ private:
 
     T* extract();                                                // Извлечение объекта текущего узла
     void swap(BinaryTree& other) noexcept;                       // Поменять дваподдерева местами
-    BinaryTree* find_number(int& number);                        // Поиск узла по номеру строки
     BinaryTree* find_smallest();                                 // Поиск наименьшего узла
-    void print_rows(std::ostream& stream, int& number) const;    // Вывод строк таблицы
 
 public:
     BinaryTree() = default;                               // Создание пустого дерева
@@ -49,6 +48,10 @@ public:
     bool remove();                                       // Удаление элемента текущего узла
     BinaryTree* find(const T& object);                   // Поиск объекта по всем полям
     void clear();                                        // Удаление объектов и поддеревьев
+    void print_header(std::ostream& stream) const;       // Вывод шапки таблицы
 
+    friend std::generator<const T&> iterate<T>(const BinaryTree& tree);                // Обход по порядку ключа
     friend std::ostream& operator<< <T>(std::ostream& stream, const BinaryTree& tree); // Вывод таблицы класса
 };
+
+#include "BinaryTree.tpp"
