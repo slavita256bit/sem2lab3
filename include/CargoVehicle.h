@@ -22,15 +22,15 @@ public:
         std::cout << "- CargoVehicle [" << this->get_brand() << "]" << '\n';
     }
 
-    double get_payload() const;                                                                     // Получение грузоподъёмности
-    void set_payload(double value);                                                                 // Изменение грузоподъёмности
+    double get_payload() const;                                              // Получение грузоподъёмности
+    void set_payload(double value);                                          // Изменение грузоподъёмности
 
-    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    CargoVehicle& print_read_info(std::istream& stream) override = 0;                               // Ввод объекта с подсказкой
-    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
+    void change_field(VehicleField field) override;                          // Изменение выбранного поля
+    CargoVehicle& print_read_info(std::istream& stream) override = 0;        // Ввод объекта с подсказкой
+    void print_header(std::ostream& stream) const override;                  // Вывод шапки таблицы
 
-    bool operator==(const CargoVehicle& other) const;                                               // Равенство всех полей
-    bool operator!=(const CargoVehicle& other) const;                                               // Неравенство полей
+    bool operator==(const CargoVehicle& other) const;                        // Равенство всех полей
+    bool operator!=(const CargoVehicle& other) const;                        // Неравенство полей
 
     friend std::istream& operator>>(std::istream& stream, CargoVehicle& object);
     friend std::ostream& operator<<(std::ostream& stream, const CargoVehicle& object);

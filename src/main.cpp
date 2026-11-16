@@ -2,7 +2,6 @@
 #include "Bus.h"
 #include "Trolleybus.h"
 #include "BinaryTree.h"
-#include <stdexcept>
 
 #define ADD_DEFAULTS
 
@@ -27,6 +26,7 @@ int main()
         std::cout << "1 - выбрать таблицу класса\n";
         std::cout << "2 - добавить объект\n";
         std::cout << "3 - изменить объект\n";
+        std::cout << "4 - удалить объект\n";
         std::cout << "0 - завершить программу\n";
         std::cout << "Действие: ";
         int action = 0;
@@ -35,7 +35,7 @@ int main()
         if (action == 0)
             break;
 
-        if (action < 1 || action > 3)
+        if (action < 1 || action > 4)
         {
             std::cout << "Нет действия с таким номером.\n";
             continue;
@@ -71,7 +71,7 @@ int main()
 
             object->print_read_info(std::cin);
         }
-        else if (action == 3)
+        else if (action == 3 || action == 4)
         {
             switch (type)
             {
@@ -87,37 +87,47 @@ int main()
             if (number == 0)
                 continue;
 
-            try
+            int count = 0;
+            switch (type)
             {
-                switch (type)
-                {
-                case 1: object = new DumpTruck(dump_trucks[number]); break;
-                case 2: object = new Bus(buses[number]); break;
-                case 3: object = new Trolleybus(trolleybuses[number]); break;
-                default: continue;
-                }
+            case 1: count = dump_trucks.size(); break;
+            case 2: count = buses.size(); break;
+            case 3: count = trolleybuses.size(); break;
+            default: continue;
             }
-            catch (const std::out_of_range&)
+
+            if (number < 1 || number > count)
             {
                 std::cout << "Нет объекта с таким номером.\n";
                 continue;
             }
 
-            std::cout << static_cast<int>(VehicleField::Brand) << " - марка\n";
-            std::cout << static_cast<int>(VehicleField::Year) << " - год\n";
-            std::cout << static_cast<int>(VehicleField::Payload) << " - грузоподъёмность\n";
-            std::cout << static_cast<int>(VehicleField::BodyVolume) << " - объём кузова\n";
-            std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
-            std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
-            std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - ёмкость аккумулятора\n";
-            std::cout << "Параметр (0 - отмена): ";
+            switch (type)
+            {
+            case 1: object = new DumpTruck(dump_trucks[number]); break;
+            case 2: object = new Bus(buses[number]); break;
+            case 3: object = new Trolleybus(trolleybuses[number]); break;
+            default: continue;
+            }
 
             int field_number = 0;
-            std::cin >> field_number;
-            if (field_number == 0)
+            if (action == 3)
             {
-                delete object;
-                continue;
+                std::cout << static_cast<int>(VehicleField::Brand) << " - марка\n";
+                std::cout << static_cast<int>(VehicleField::Year) << " - год\n";
+                std::cout << static_cast<int>(VehicleField::Payload) << " - грузоподъёмность\n";
+                std::cout << static_cast<int>(VehicleField::BodyVolume) << " - объём кузова\n";
+                std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
+                std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
+                std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - ёмкость аккумулятора\n";
+                std::cout << "Параметр (0 - отмена): ";
+
+                std::cin >> field_number;
+                if (field_number == 0)
+                {
+                    delete object;
+                    continue;
+                }
             }
 
             switch (type)
@@ -128,7 +138,13 @@ int main()
             default: break;
             }
 
-            object->change_field(static_cast<VehicleField>(field_number));
+            if (action == 4)
+            {
+                delete object;
+                object = nullptr;
+            }
+            else
+                object->change_field(static_cast<VehicleField>(field_number));
         }
 
         if (object)
@@ -159,6 +175,7 @@ int main()
 1 1
 2 2 NewBus 2020 30 10
 3 2 1 2 2019
+4 2 1
 1 1
 1 2
 1 3

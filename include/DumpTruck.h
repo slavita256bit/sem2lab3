@@ -23,19 +23,19 @@ public:
         std::cout << "- DumpTruck [" << this->get_brand() << "]" << '\n';
     }
 
-    double get_body_volume() const;                                                                 // Получение объёма кузова
-    void set_body_volume(double value);                                                             // Изменение объёма кузова
+    double get_body_volume() const;                                  // Получение объёма кузова
+    void set_body_volume(double value);                              // Изменение объёма кузова
 
-    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    DumpTruck& print_read_info(std::istream& stream) override;                                      // Ввод объекта с подсказкой
-    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
+    void change_field(VehicleField field) override;                  // Изменение выбранного поля
+    DumpTruck& print_read_info(std::istream& stream) override;       // Ввод объекта с подсказкой
+    void print_header(std::ostream& stream) const override;          // Вывод шапки таблицы
 
-    bool operator<(const DumpTruck& other) const;                                                   // Сравнение объёма кузова
-    bool operator>(const DumpTruck& other) const;                                                   // Сравнение объёма кузова
-    bool operator<=(const DumpTruck& other) const;                                                  // Сравнение объёма кузова
-    bool operator>=(const DumpTruck& other) const;                                                  // Сравнение объёма кузова
-    bool operator==(const DumpTruck& other) const;                                                  // Равенство всех полей
-    bool operator!=(const DumpTruck& other) const;                                                  // Неравенство полей
+    bool operator<(const DumpTruck& other) const;
+    bool operator>(const DumpTruck& other) const;
+    bool operator<=(const DumpTruck& other) const;
+    bool operator>=(const DumpTruck& other) const;
+    bool operator==(const DumpTruck& other) const;
+    bool operator!=(const DumpTruck& other) const;
 
     friend std::istream& operator>>(std::istream& stream, DumpTruck& object);
     friend std::ostream& operator<<(std::ostream& stream, const DumpTruck& object);

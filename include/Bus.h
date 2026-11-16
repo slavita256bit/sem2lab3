@@ -23,19 +23,19 @@ public:
         std::cout << "- Bus [" << this->get_brand() << "]" << '\n';
     }
 
-    int get_route() const;                                                                          // Получение номера маршрута
-    void set_route(int value);                                                                      // Изменение номера маршрута
+    int get_route() const;                                          // Получение номера маршрута
+    void set_route(int value);                                      // Изменение номера маршрута
 
-    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    Bus& print_read_info(std::istream& stream) override;                                            // Ввод объекта с подсказкой
-    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
+    void change_field(VehicleField field) override;                 // Изменение выбранного поля
+    Bus& print_read_info(std::istream& stream) override;            // Ввод объекта с подсказкой
+    void print_header(std::ostream& stream) const override;         // Вывод шапки таблицы
 
-    bool operator<(const Bus& other) const;                                                         // Сравнение номера маршрута
-    bool operator>(const Bus& other) const;                                                         // Сравнение номера маршрута
-    bool operator<=(const Bus& other) const;                                                        // Сравнение номера маршрута
-    bool operator>=(const Bus& other) const;                                                        // Сравнение номера маршрута
-    bool operator==(const Bus& other) const;                                                        // Равенство всех полей
-    bool operator!=(const Bus& other) const;                                                        // Неравенство полей
+    bool operator<(const Bus& other) const;
+    bool operator>(const Bus& other) const;
+    bool operator<=(const Bus& other) const;
+    bool operator>=(const Bus& other) const;
+    bool operator==(const Bus& other) const;
+    bool operator!=(const Bus& other) const;
 
     friend std::istream& operator>>(std::istream& stream, Bus& object);
     friend std::ostream& operator<<(std::ostream& stream, const Bus& object);

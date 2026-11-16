@@ -3,7 +3,6 @@
 #include "Bus.h"
 #include "Trolleybus.h"
 #include <format>
-#include <stdexcept>
 #include <utility>
 
 // Добавление с передачей владения
@@ -13,17 +12,24 @@ void BinaryTree<T>::add(T* object)
     if (!object)
         return;
 
-    if (this->empty())
+    if (empty())
     {
-        this->value = object;
+        value = object;
         return;
     }
 
-    BinaryTree*& node = *object < *this->value ? this->left : this->right;
+    BinaryTree*& node = *object < *value ? left : right;
     if (node)
         node->add(object);
     else
         node = new BinaryTree(object);
+}
+
+// Проверка непустого потомка
+template<typename T>
+bool BinaryTree<T>::has_child(const BinaryTree* child)
+{
+    return child && !child->empty();
 }
 
 // Поиск наименьшего узла
@@ -31,7 +37,7 @@ template<typename T>
 BinaryTree<T>* BinaryTree<T>::find_smallest()
 {
     BinaryTree* node = this;
-    while (node->left && !node->left->empty())
+    while (has_child(node->left))
         node = node->left;
 
     return node;
@@ -41,34 +47,25 @@ BinaryTree<T>* BinaryTree<T>::find_smallest()
 template<typename T>
 T* BinaryTree<T>::extract()
 {
-    if (this->empty())
+    if (empty())
         return nullptr;
 
-    T* object = std::exchange(this->value, nullptr);
-    bool has_left = this->left && !this->left->empty();
-    bool has_right = this->right && !this->right->empty();
+    T* object = std::exchange(value, nullptr);
+    bool has_left = has_child(left);
+    bool has_right = has_child(right);
     if (has_left && has_right)
     {
-        BinaryTree* smallest_right = this->right->find_smallest();
-        this->value = smallest_right->extract();
+        BinaryTree* smallest_right = right->find_smallest();
+        value = smallest_right->extract();
     }
     else
     {
-        BinaryTree* replacement = has_left ? this->left : (has_right ? this->right : nullptr);
-        T* next_value = nullptr;
-        BinaryTree* next_left = nullptr;
-        BinaryTree* next_right = nullptr;
+        BinaryTree* replacement = has_left ? left : (has_right ? right : nullptr);
+        BinaryTree next;
         if (replacement)
-        {
-            next_value = std::exchange(replacement->value, nullptr);
-            next_left = std::exchange(replacement->left, nullptr);
-            next_right = std::exchange(replacement->right, nullptr);
-        }
+            next.swap(*replacement);
 
-        this->clear();
-        this->value = next_value;
-        this->left = next_left;
-        this->right = next_right;
+        swap(next);
     }
 
     return object;
@@ -78,10 +75,10 @@ T* BinaryTree<T>::extract()
 template<typename T>
 bool BinaryTree<T>::remove()
 {
-    if (this->empty())
+    if (empty())
         return false;
 
-    delete this->extract();
+    delete extract();
 
     return true;
 }
@@ -90,12 +87,12 @@ bool BinaryTree<T>::remove()
 template<typename T>
 BinaryTree<T>* BinaryTree<T>::find_number(int& number)
 {
-    if (this->empty())
+    if (empty())
         return nullptr;
 
-    if (this->left)
+    if (left)
     {
-        if (auto* node = this->left->find_number(number))
+        if (auto* node = left->find_number(number))
             return node;
     }
 
@@ -103,25 +100,23 @@ BinaryTree<T>* BinaryTree<T>::find_number(int& number)
     if (number == 0)
         return this;
 
-    return this->right ? this->right->find_number(number) : nullptr;
+    return right ? right->find_number(number) : nullptr;
 }
 
-// Получение узла по номеру строки
+// Поменять дваподдерева местами
 template<typename T>
-BinaryTree<T>* BinaryTree<T>::get_node(int number)
+void BinaryTree<T>::swap(BinaryTree& other) noexcept
 {
-    return number > 0 ? this->find_number(number) : nullptr;
+    std::swap(value, other.value);
+    std::swap(left, other.left);
+    std::swap(right, other.right);
 }
 
 // Копирование объекта по номеру строки
 template<typename T>
 T BinaryTree<T>::operator[](int number)
 {
-    auto* node = this->get_node(number);
-    if (!node)
-        throw std::out_of_range("Нет объекта с таким номером.");
-
-    return *node->value;
+    return *find_number(number)->value;
 }
 
 // Поиск объекта по всем полям
@@ -144,16 +139,16 @@ BinaryTree<T>* BinaryTree<T>::find(const T& object)
 template<typename T>
 void BinaryTree<T>::print_rows(std::ostream& stream, int& number) const
 {
-    if (this->empty())
+    if (empty())
         return;
 
-    if (this->left)
-        this->left->print_rows(stream, number);
+    if (left)
+        left->print_rows(stream, number);
 
-    stream << std::format("{:<3}  ", number++) << *this->value << '\n';
+    stream << std::format("{:<3}  ", number++) << *value << '\n';
 
-    if (this->right)
-        this->right->print_rows(stream, number);
+    if (right)
+        right->print_rows(stream, number);
 }
 
 // Вывод таблицы класса
@@ -179,19 +174,29 @@ std::ostream& operator<<(std::ostream& stream, const BinaryTree<T>& tree)
 template<typename T>
 bool BinaryTree<T>::empty() const
 {
-    return this->value == nullptr;
+    return value == nullptr;
+}
+
+// Получение количества объектов
+template<typename T>
+int BinaryTree<T>::size() const
+{
+    if (empty())
+        return 0;
+
+    return 1 + (left ? left->size() : 0) + (right ? right->size() : 0);
 }
 
 // Удаление объектов и поддеревьев
 template<typename T>
 void BinaryTree<T>::clear()
 {
-    delete this->left;
-    delete this->right;
-    delete this->value;
-    this->value = nullptr;
-    this->left = nullptr;
-    this->right = nullptr;
+    delete left;
+    delete right;
+    delete value;
+    value = nullptr;
+    left = nullptr;
+    right = nullptr;
 }
 
 // Типы деревьев текущего проекта

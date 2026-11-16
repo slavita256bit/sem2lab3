@@ -23,19 +23,19 @@ public:
         std::cout << "- Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 
-    double get_battery_capacity() const;                                                            // Получение ёмкости аккумулятора
-    void set_battery_capacity(double value);                                                        // Изменение ёмкости аккумулятора
+    double get_battery_capacity() const;                               // Получение ёмкости аккумулятора
+    void set_battery_capacity(double value);                           // Изменение ёмкости аккумулятора
 
-    void change_field(VehicleField field) override;                                                 // Изменение выбранного поля
-    Trolleybus& print_read_info(std::istream& stream) override;                                     // Ввод объекта с подсказкой
-    void print_header(std::ostream& stream) const override;                                         // Вывод шапки таблицы
+    void change_field(VehicleField field) override;                    // Изменение выбранного поля
+    Trolleybus& print_read_info(std::istream& stream) override;        // Ввод объекта с подсказкой
+    void print_header(std::ostream& stream) const override;            // Вывод шапки таблицы
 
-    bool operator<(const Trolleybus& other) const;                                                  // Сравнение ёмкости аккумулятора
-    bool operator>(const Trolleybus& other) const;                                                  // Сравнение ёмкости аккумулятора
-    bool operator<=(const Trolleybus& other) const;                                                 // Сравнение ёмкости аккумулятора
-    bool operator>=(const Trolleybus& other) const;                                                 // Сравнение ёмкости аккумулятора
-    bool operator==(const Trolleybus& other) const;                                                 // Равенство всех полей
-    bool operator!=(const Trolleybus& other) const;                                                 // Неравенство полей
+    bool operator<(const Trolleybus& other) const;
+    bool operator>(const Trolleybus& other) const;
+    bool operator<=(const Trolleybus& other) const;
+    bool operator>=(const Trolleybus& other) const;
+    bool operator==(const Trolleybus& other) const;
+    bool operator!=(const Trolleybus& other) const;
 
     friend std::istream& operator>>(std::istream& stream, Trolleybus& object);
     friend std::ostream& operator<<(std::ostream& stream, const Trolleybus& object);
