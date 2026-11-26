@@ -1,0 +1,4 @@
+interface:
+  display_name: "Slavita C/C++ Style"
+  short_description: "Simple coursework C/C++: plan, style, and review"
+  default_prompt: "Use $slavita-cpp-style to choose simple components, reassess the design, implement in my style, and verify the result."
