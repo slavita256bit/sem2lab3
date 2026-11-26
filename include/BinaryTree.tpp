@@ -81,7 +81,7 @@ bool BinaryTree<T>::remove()
     return true;
 }
 
-// Поменять дваподдерева местами
+// Поменять два поддерева местами
 template<typename T>
 void BinaryTree<T>::swap(BinaryTree& other) noexcept
 {
@@ -96,7 +96,7 @@ T BinaryTree<T>::operator[](int number)
 {
     auto objects = iterate(*this);
 
-    return *std::ranges::next(objects.begin(), number - 1);
+    return *std::ranges::next(objects.begin(), number);
 }
 
 // Поиск объекта по всем полям
@@ -137,9 +137,8 @@ std::ostream& operator<<(std::ostream& stream, const BinaryTree<T>& tree)
         return stream;
     }
 
-    int number = 1;
-    for (const T& object : iterate(tree))
-        stream << std::format("{:<3}  ", number++) << object << '\n';
+    for (auto [index, object] : std::views::enumerate(iterate(tree)))
+        stream << std::format("{:<3}  ", index) << object << '\n';
 
     return stream;
 }

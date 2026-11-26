@@ -6,9 +6,9 @@
     "styleVersion": 2,
     "name": "GOST",
     "font": [
-      "Times New Roman",
-      "Liberation Serif",
-      "serif"
+      "Arial",
+      "Liberation Sans",
+      "sans-serif"
     ],
     "fontSize": 13.0,
     "nameFontSize": 14.0,
@@ -29,7 +29,7 @@
       "badge": "#add1b2"
     },
     "orthogonalEdges": true,
-    "edgeMergeTargets": true,
+    "edgeMergeTargets": false,
     "edgeEditable": true,
     "edgeClearance": 12.0,
     "edgePortSpacing": 20.0,
@@ -57,7 +57,7 @@
       "y": 834.225775024259
     },
     "classCargoVehicle": {
-      "x": 203.73994799389993,
+      "x": 207.9885321211384,
       "y": 505.22521787758853
     },
     "classColored": {
@@ -65,24 +65,24 @@
       "y": -209.8196976955692
     },
     "classDumpTruck": {
-      "x": 158.6419903482887,
-      "y": 825.9835824144197
+      "x": 157.21804047692478,
+      "y": 834.093692427793
     },
     "classPassengerVehicle": {
-      "x": 899.1137309863625,
-      "y": 483.8360865706176
+      "x": 897.4347252813784,
+      "y": 458.6510009958539
     },
     "classString": {
-      "x": 0.0,
-      "y": 0.0
+      "x": 1569.6897684621783,
+      "y": -129.2315396705593
     },
     "classTrolleybus": {
       "x": 1111.4160705378172,
       "y": 835.8509372961237
     },
     "classVehicle": {
-      "x": 575.4038372010655,
-      "y": -70.73562785753376
+      "x": 577.5281292646847,
+      "y": -26.125494521528992
     },
     "classcolored_1_1Color": {
       "x": 1368.0,
@@ -164,7 +164,7 @@
         },
         "target": {
           "side": "top",
-          "offset": 0.4364798667082923
+          "offset": 0.42358740752589447
         }
       }
     },

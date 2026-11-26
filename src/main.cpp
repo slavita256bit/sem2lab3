@@ -45,13 +45,10 @@ int main()
         std::cout << "1 - самосвал (DumpTruck)\n";
         std::cout << "2 - автобус (Bus)\n";
         std::cout << "3 - троллейбус (Trolleybus)\n";
-        std::cout << "Класс (0 - отмена): ";
+        std::cout << "Класс: ";
 
         int type = 0;
         std::cin >> type;
-        if (type == 0)
-            continue;
-
         if (type < 1 || type > 3)
         {
             std::cout << "Нет класса с таким номером.\n";
@@ -81,12 +78,9 @@ int main()
             default: continue;
             }
 
-            std::cout << "Номер объекта (0 - отмена): ";
+            std::cout << "Номер объекта: ";
             int number = 0;
             std::cin >> number;
-            if (number == 0)
-                continue;
-
             int count = 0;
             switch (type)
             {
@@ -96,7 +90,7 @@ int main()
             default: continue;
             }
 
-            if (number < 1 || number > count)
+            if (number < 0 || number >= count)
             {
                 std::cout << "Нет объекта с таким номером.\n";
                 continue;
@@ -120,11 +114,12 @@ int main()
                 std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
                 std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
                 std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - ёмкость аккумулятора\n";
-                std::cout << "Параметр (0 - отмена): ";
+                std::cout << "Параметр: ";
 
                 std::cin >> field_number;
-                if (field_number == 0)
+                if (field_number < static_cast<int>(VehicleField::Brand) || field_number > static_cast<int>(VehicleField::BatteryCapacity))
                 {
+                    std::cout << "Нет параметра с таким номером.\n";
                     delete object;
                     continue;
                 }
@@ -174,8 +169,8 @@ int main()
 /*
 1 1
 2 2 NewBus 2020 30 10
-3 2 1 2 2019
-4 2 1
+3 2 0 2 2019
+4 2 0
 1 1
 1 2
 1 3
