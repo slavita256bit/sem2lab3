@@ -7,6 +7,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(sem2lab3
     src/main.cpp
+    src/Error.cpp
+    src/InputError.cpp
+    src/ContainerError.cpp
+    src/Input.cpp
     src/String.cpp
     src/Vehicle.cpp
     src/CargoVehicle.cpp

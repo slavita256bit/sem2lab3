@@ -1,5 +1,7 @@
 #include "PassengerVehicle.h"
+#include "Input.h"
 #include <format>
+#include <limits>
 
 // Получение числа мест
 int PassengerVehicle::get_seats() const
@@ -10,6 +12,7 @@ int PassengerVehicle::get_seats() const
 // Изменение числа мест
 void PassengerVehicle::set_seats(int value)
 {
+    input::check_int(value, 1, std::numeric_limits<int>::max(), "число мест");
     this->seats = value;
 }
 
@@ -22,10 +25,8 @@ void PassengerVehicle::change_field(VehicleField field)
         return;
     }
 
-    int value = 0;
     std::cout << "Новое значение: ";
-    std::cin >> value;
-    this->set_seats(value);
+    this->set_seats(input::read_int(std::cin, 1, std::numeric_limits<int>::max(), "число мест"));
 }
 
 // Вывод шапки таблицы
@@ -49,7 +50,9 @@ bool PassengerVehicle::operator!=(const PassengerVehicle& other) const
 
 std::istream& operator>>(std::istream& stream, PassengerVehicle& object)
 {
-    stream >> static_cast<Vehicle&>(object) >> object.seats;
+    stream >> static_cast<Vehicle&>(object);
+    std::cout << "Число мест: ";
+    object.set_seats(input::read_int(stream, 1, std::numeric_limits<int>::max(), "число мест"));
 
     return stream;
 }

@@ -9,10 +9,11 @@ private:
     int route = 0;                                                                                  // Номер маршрута
 
 public:
-    Bus() : Bus(String("Без марки"), 2020, 1, 1) {}
+    Bus() : Bus(String("Безмарки"), 2020, 1, 1) {}
     Bus(const String& brand, int year, int seats, int route)
         : PassengerVehicle(brand, year, seats), route(route)
     {
+        this->set_route(this->route);
         std::cout << "+ Bus [" << this->get_brand() << "]" << '\n';
     }
 

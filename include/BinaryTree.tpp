@@ -2,25 +2,38 @@
 #include <format>
 #include <ranges>
 #include <utility>
+#include "ContainerError.h"
 
 // Добавление с передачей владения
 template<typename T>
 void BinaryTree<T>::add(T* object)
 {
     if (!object)
-        return;
+        throw ContainerError(ErrorCode::NullObject, "Пустой указатель на объект", 0);
 
+    insertion_node(*object)->value = object;
+}
+
+// Добавление копии объекта
+template<typename T>
+void BinaryTree<T>::add(const T& object)
+{
+    BinaryTree* node = insertion_node(object);
+    node->value = new T(object);
+}
+
+// Поиск места для вставки
+template<typename T>
+BinaryTree<T>* BinaryTree<T>::insertion_node(const T& object)
+{
     if (empty())
-    {
-        value = object;
-        return;
-    }
+        return this;
 
-    BinaryTree*& node = *object < *value ? left : right;
-    if (node)
-        node->add(object);
-    else
-        node = new BinaryTree(object);
+    BinaryTree*& node = object < *value ? left : right;
+    if (!node)
+        node = new BinaryTree;
+
+    return node->insertion_node(object);
 }
 
 // Проверка непустого потомка
@@ -94,6 +107,9 @@ void BinaryTree<T>::swap(BinaryTree& other) noexcept
 template<typename T>
 T BinaryTree<T>::operator[](int number)
 {
+    if (number < 0 || number >= size())
+        throw ContainerError(ErrorCode::InvalidIndex, "Неверный номер объекта", number);
+
     auto objects = iterate(*this);
 
     return *std::ranges::next(objects.begin(), number);

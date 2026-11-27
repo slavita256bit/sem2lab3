@@ -1,4 +1,5 @@
 #include "Trolleybus.h"
+#include "Input.h"
 #include <format>
 
 // Получение ёмкости аккумулятора
@@ -10,6 +11,7 @@ double Trolleybus::get_battery_capacity() const
 // Изменение ёмкости аккумулятора
 void Trolleybus::set_battery_capacity(double value)
 {
+    input::check_positive(value, "ёмкость аккумулятора");
     this->battery_capacity = value;
 }
 
@@ -22,16 +24,14 @@ void Trolleybus::change_field(VehicleField field)
         return;
     }
 
-    double value = 0;
-    std::cout << "Новое значение: ";
-    std::cin >> value;
-    this->set_battery_capacity(value);
+    std::cout << "Новое значение (десятичная точка): ";
+    this->set_battery_capacity(input::read_positive(std::cin, "ёмкость аккумулятора"));
 }
 
 // Ввод объекта с подсказкой
 Trolleybus& Trolleybus::print_read_info(std::istream& stream)
 {
-    std::cout << "Троллейбус (марка, год, количество мест, ёмкость аккумулятора (кВт·ч)): ";
+    std::cout << "Троллейбус. Вводите по одному полю на строку. Для дробных чисел используйте точку.\n";
     stream >> *this;
 
     return *this;
@@ -82,7 +82,9 @@ bool Trolleybus::operator!=(const Trolleybus& other) const
 
 std::istream& operator>>(std::istream& stream, Trolleybus& object)
 {
-    stream >> static_cast<PassengerVehicle&>(object) >> object.battery_capacity;
+    stream >> static_cast<PassengerVehicle&>(object);
+    std::cout << "Ёмкость аккумулятора (кВт·ч): ";
+    object.set_battery_capacity(input::read_positive(stream, "ёмкость аккумулятора"));
 
     return stream;
 }

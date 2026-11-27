@@ -27,6 +27,20 @@ allocations; a short expression does not eliminate state or cost.
 
 ## Recheck technical traps observed in earlier work
 
+- In coursework that already provides `String`, use its length and indexed
+  access for text validation. Use a bounded character array for token parsing
+  and consume the entire token on overflow. Avoid introducing `std::string`
+  or exposing `c_str()` just to validate a field.
+- Prefer a standard character predicate when it matches the specified alphabet
+  and works with the input encoding. For a fixed alphabet, use direct range
+  comparisons and isolated exceptions where possible. For UTF-8, a small helper
+  can compare byte ranges using character literals as bounds. Avoid enumerating
+  and scanning a whole alphabet for each letter, and avoid raw encoding masks
+  in field validation. Use short, complete messages for fixed error buffers
+  and a readable fallback for oversized messages.
+- Trace reported unreachable branches to the operation that can fail, including
+  implicit allocation failures. Remove redundant cleanup wrappers when ownership
+  can be established at allocation. Verify the failure path before dropping cleanup.
 - vector<Base> slices derived objects; typeid cannot restore discarded fields.
   A fixed-length Base array has the same issue. Resolve value storage, polymorphism,
   and ownership requirements before selecting the container.

@@ -28,6 +28,7 @@ private:
     T* extract();                                                // Извлечение объекта текущего узла
     void swap(BinaryTree& other) noexcept;                       // Поменять дваподдерева местами
     BinaryTree* find_smallest();                                 // Поиск наименьшего узла
+    BinaryTree* insertion_node(const T& object);                 // Поиск места для вставки
 
 public:
     BinaryTree() = default;                               // Создание пустого дерева
@@ -43,7 +44,8 @@ public:
 
     bool empty() const;                                  // Проверка пустого дерева
     int size() const;                                    // Получение количества объектов
-    void add(T* object);                                 // Добавление с передачей владения
+    void add(T* object);                                 // Передача владения при успешном добавлении
+    void add(const T& object);                            // Добавление копии объекта
     T operator[](int number);                            // Копирование объекта по номеру строки
     bool remove();                                       // Удаление элемента текущего узла
     BinaryTree* find(const T& object);                   // Поиск объекта по всем полям

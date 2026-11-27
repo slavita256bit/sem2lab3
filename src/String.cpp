@@ -5,8 +5,14 @@
 // Выделение памяти под строку длины new_length
 void String::allocate(int new_length)
 {
+    this->data = new char[new_length + 1]{};
     this->length = new_length;
-    this->data = new char[this->length + 1]{};
+}
+
+// Получение длины строки
+int String::get_length() const
+{
+    return this->length;
 }
 
 bool String::is_a(char c)
@@ -134,6 +140,12 @@ String String::operator--(int)
 
 // Получение символа по индексу
 char& String::operator[](int i)
+{
+    return this->data[i];
+}
+
+// Чтение символа по индексу
+const char& String::operator[](int i) const
 {
     return this->data[i];
 }

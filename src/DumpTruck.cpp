@@ -1,4 +1,5 @@
 #include "DumpTruck.h"
+#include "Input.h"
 #include <format>
 
 // Получение объёма кузова
@@ -10,6 +11,7 @@ double DumpTruck::get_body_volume() const
 // Изменение объёма кузова
 void DumpTruck::set_body_volume(double value)
 {
+    input::check_positive(value, "объём кузова");
     this->body_volume = value;
 }
 
@@ -22,16 +24,14 @@ void DumpTruck::change_field(VehicleField field)
         return;
     }
 
-    double value = 0;
-    std::cout << "Объём кузова, м3: ";
-    std::cin >> value;
-    this->set_body_volume(value);
+    std::cout << "Объём кузова, м3 (десятичная точка): ";
+    this->set_body_volume(input::read_positive(std::cin, "объём кузова"));
 }
 
 // Ввод объекта с подсказкой
 DumpTruck& DumpTruck::print_read_info(std::istream& stream)
 {
-    std::cout << "Самосвал (марка, год, грузоподъёмность (т), объём кузова (м3)): ";
+    std::cout << "Самосвал. Вводите по одному полю на строку. Для дробных чисел используйте точку.\n";
     stream >> *this;
 
     return *this;
@@ -82,7 +82,9 @@ bool DumpTruck::operator!=(const DumpTruck& other) const
 
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
-    stream >> static_cast<CargoVehicle&>(object) >> object.body_volume;
+    stream >> static_cast<CargoVehicle&>(object);
+    std::cout << "Объём кузова (м3): ";
+    object.set_body_volume(input::read_positive(stream, "объём кузова"));
 
     return stream;
 }

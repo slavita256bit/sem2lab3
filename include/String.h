@@ -62,11 +62,18 @@ public:
         allocate(new_length);
     }
 
-    String(const String& copy) : String(copy.data) {}                                               // Конструктор копирования
+    String(const String& copy) : String(copy.length)                                                 // Конструктор копирования
+    {
+        if (copy.length > 0)
+            std::copy_n(copy.data, copy.length, this->data);
+    }
+
     String(String&& other) noexcept                                                                 // Конструктор перемещения
         : length(std::exchange(other.length, 0)), data(std::exchange(other.data, nullptr)) {}
 
     String& operator=(const String& other);                                                         // Оператор присваивания
+
+    int get_length() const;                                                                        // Получение длины строки
 
     String operator-(const String& other) const;                                                    // Удаление всех вхождений other из строки
     String& operator+=(const String& other);                                                        // Добавление other к строке
@@ -77,6 +84,7 @@ public:
     String operator--(int);                                                                         // Уменьшение последнего символа
 
     char& operator[](int i);                                                                        // Получение символа по индексу
+    const char& operator[](int i) const;                                                            // Чтение символа по индексу
     String operator()(int from, int count) const;                                                   // Получение подстроки длины count с индекса from
 
     ~String()                                                                                       // Освобождение массива символов

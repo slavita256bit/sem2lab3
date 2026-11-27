@@ -38,9 +38,12 @@ For a substantive task, briefly establish:
 
 Design for the current assignment rather than hypothetical future labs. A local edit
 needs only a few sentences, not a large plan.md. Write a plan file when requested or
-when the project maintains one. Wait for approval before implementation only when the
-user explicitly requires it or a genuine authorization boundary applies; planning
-itself does not introduce an additional approval gate.
+when the project maintains one. If the user has left a structural choice open,
+ask before replacing functions with a class, changing who owns the menu flow,
+or splitting a handler into several methods. Briefly present the options and
+your recommendation. Continue independent work while waiting for that choice.
+An explicit request for the structure already answers the question. Routine
+local fixes do not need confirmation.
 
 ## 2. Reassess the design before implementation
 

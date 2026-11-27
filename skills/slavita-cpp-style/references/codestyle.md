@@ -19,6 +19,9 @@ override them. Do not clean up incidental old inconsistencies throughout a repos
   by one blank line. In cpp, include its own header first; alphabetical sorting is optional.
 - Classes use PascalCase; methods, variables, and fields use snake_case; macros use
   UPPER_SNAKE_CASE; enum class enumerators use PascalCase. Preserve existing C module names.
+- Use `#define` for named lab limits when the student specifies macros, including
+  fixed buffer sizes and domain limits such as the minimum vehicle year. Prefer
+  direct getters for a standalone coursework error API, such as `get_message()`.
 - Place private before public. Keep fields private and initialize them at declaration.
   Keep getter/setter pairs together. Reading methods are const; input objects usually const&.
 - Use this-> in domain classes. A compact container may consistently omit redundant

@@ -9,10 +9,11 @@ private:
     double battery_capacity = 0;  // Ёмкость аккумулятора, кВт·ч
 
 public:
-    Trolleybus() : Trolleybus(String("Без марки"), 2020, 1, 60.0) {}
+    Trolleybus() : Trolleybus(String("Безмарки"), 2020, 1, 60.0) {}
     Trolleybus(const String& brand, int year, int seats, double battery_capacity)
         : PassengerVehicle(brand, year, seats), battery_capacity(battery_capacity)
     {
+        this->set_battery_capacity(this->battery_capacity);
         std::cout << "+ Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 

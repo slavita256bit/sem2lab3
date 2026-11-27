@@ -1,4 +1,6 @@
 #include "Vehicle.h"
+#include "Input.h"
+#include "InputError.h"
 #include <format>
 
 // Получение марки
@@ -10,6 +12,7 @@ const String& Vehicle::get_brand() const
 // Изменение марки
 void Vehicle::set_brand(const String& value)
 {
+    input::check_brand(value);
     this->brand = value;
 }
 
@@ -22,6 +25,7 @@ int Vehicle::get_year() const
 // Изменение года выпуска
 void Vehicle::set_year(int value)
 {
+    input::check_int(value, MIN_YEAR, input::current_year(), "год");
     this->year = value;
 }
 
@@ -30,20 +34,16 @@ void Vehicle::change_field(VehicleField field)
 {
     if (field == VehicleField::Brand)
     {
-        String value;
         std::cout << "Новая марка: ";
-        std::cin >> value;
-        this->set_brand(value);
+        this->set_brand(input::read_brand(std::cin));
     }
     else if (field == VehicleField::Year)
     {
-        int value = 0;
         std::cout << "Новое значение: ";
-        std::cin >> value;
-        this->set_year(value);
+        this->set_year(input::read_int(std::cin, MIN_YEAR, input::current_year(), "год"));
     }
     else
-        std::cout << "У этого типа транспорта нет такого параметра.\n";
+        throw InputError(ErrorCode::InvalidField, "У транспорта нет такого параметра", "параметр");
 }
 
 // Вывод шапки таблицы
@@ -90,7 +90,10 @@ bool Vehicle::operator!=(const Vehicle& other) const
 
 std::istream& operator>>(std::istream& stream, Vehicle& object)
 {
-    stream >> object.brand >> object.year;
+    std::cout << "Марка: ";
+    object.set_brand(input::read_brand(stream));
+    std::cout << "Год выпуска: ";
+    object.set_year(input::read_int(stream, MIN_YEAR, input::current_year(), "год"));
 
     return stream;
 }

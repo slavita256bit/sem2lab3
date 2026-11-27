@@ -30,9 +30,11 @@ private:
     int year = 0;   // Год выпуска
 
 public:
-    Vehicle() : Vehicle(String("Без марки"), 2020) {}
+    Vehicle() : Vehicle(String("Безмарки"), 2020) {}
     Vehicle(const String& brand, int year) : brand(brand), year(year)
     {
+        this->set_brand(this->brand);
+        this->set_year(this->year);
         std::cout << "+ Vehicle [" << this->get_brand() << "]" << '\n';
     }
 

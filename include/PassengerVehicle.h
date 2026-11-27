@@ -9,10 +9,11 @@ private:
     int seats = 0;  // Количество мест
 
 public:
-    PassengerVehicle() : PassengerVehicle(String("Без марки"), 2020, 1) {}
+    PassengerVehicle() : PassengerVehicle(String("Безмарки"), 2020, 1) {}
     PassengerVehicle(const String& brand, int year, int seats)
         : Vehicle(brand, year), seats(seats)
     {
+        this->set_seats(this->seats);
         std::cout << "+ PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 

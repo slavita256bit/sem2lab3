@@ -1,5 +1,7 @@
 #include "Bus.h"
+#include "Input.h"
 #include <format>
+#include <limits>
 
 // Получение номера маршрута
 int Bus::get_route() const
@@ -10,6 +12,7 @@ int Bus::get_route() const
 // Изменение номера маршрута
 void Bus::set_route(int value)
 {
+    input::check_int(value, 1, std::numeric_limits<int>::max(), "маршрут");
     this->route = value;
 }
 
@@ -22,16 +25,14 @@ void Bus::change_field(VehicleField field)
         return;
     }
 
-    int value = 0;
     std::cout << "Новое значение: ";
-    std::cin >> value;
-    this->set_route(value);
+    this->set_route(input::read_int(std::cin, 1, std::numeric_limits<int>::max(), "маршрут"));
 }
 
 // Ввод объекта с подсказкой
 Bus& Bus::print_read_info(std::istream& stream)
 {
-    std::cout << "Автобус (марка, год, количество мест, номер маршрута): ";
+    std::cout << "Автобус. Вводите по одному полю на строку.\n";
     stream >> *this;
 
     return *this;
@@ -82,7 +83,9 @@ bool Bus::operator!=(const Bus& other) const
 
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
-    stream >> static_cast<PassengerVehicle&>(object) >> object.route;
+    stream >> static_cast<PassengerVehicle&>(object);
+    std::cout << "Маршрут: ";
+    object.set_route(input::read_int(stream, 1, std::numeric_limits<int>::max(), "маршрут"));
 
     return stream;
 }
