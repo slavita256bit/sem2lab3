@@ -10,6 +10,7 @@ add_executable(sem2lab3
     src/Error.cpp
     src/InputError.cpp
     src/ContainerError.cpp
+    include/ErrorFile.h
     src/Input.cpp
     src/Interaction.cpp
     src/String.cpp

@@ -4,7 +4,7 @@
 #include "InputError.h"
 
 // Выбор и ввод поля
-void interaction::edit_field(Vehicle& object)
+void edit_field(Vehicle& object)
 {
     std::cout << static_cast<int>(VehicleField::Brand) << " - " << BRAND_FIELD_NAME << '\n';
     std::cout << static_cast<int>(VehicleField::Year) << " - " << YEAR_FIELD_NAME << '\n';

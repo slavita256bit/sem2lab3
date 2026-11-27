@@ -48,12 +48,13 @@ int main()
         std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
     }
 #else
-    BinaryTree<DumpTruck> dump_trucks;
-    BinaryTree<Bus> buses;
-    BinaryTree<Trolleybus> trolleybuses;
 
     try
     {
+        BinaryTree<Trolleybus> trolleybuses;
+        BinaryTree<Bus> buses;
+        BinaryTree<DumpTruck> dump_trucks;
+
 #ifdef ADD_DEFAULTS
         dump_trucks.add(DumpTruck("BelAZ", 2022, 40.0, 25.0));
         dump_trucks.add(DumpTruck("Caterpillar", 2023, 50.0, 30.0));
@@ -125,27 +126,5 @@ int main()
 }
 
 /*
-1
-1
-2
-2
-NewBus
-2020
-30
-10
-3
-2
-0
-2
-2019
-4
-2
-0
-1
-1
-1
-2
-1
-3
-0
+
 */

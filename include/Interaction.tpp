@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SEM2LAB3_INTERACTION_TPP
+#define SEM2LAB3_INTERACTION_TPP
+#include "Interaction.h"
 #include "Input.h"
 #include <iostream>
 
@@ -68,7 +70,7 @@ void Interaction<T>::edit_object(int number)
     try
     {
         original = this->tree.find(*object);
-        interaction::edit_field(*object);
+        edit_field(*object);
         this->tree.add(object);
     }
     catch (...)
@@ -87,3 +89,5 @@ void Interaction<T>::remove_object(int number)
     T object = this->tree[number];
     this->tree.find(object)->remove();
 }
+
+#endif

@@ -1,12 +1,10 @@
-#pragma once
+#ifndef SEM2LAB3_INTERACTION_H
+#define SEM2LAB3_INTERACTION_H
 #include "BinaryTree.h"
 
 class Vehicle;
 
-namespace interaction
-{
-    void edit_field(Vehicle& object);                                                               // Выбор и ввод поля
-}
+void edit_field(Vehicle& object);      // Выбор и ввод поля
 
 template<typename T>
 class Interaction
@@ -26,3 +24,5 @@ public:
 };
 
 #include "Interaction.tpp"
+
+#endif

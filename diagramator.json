@@ -65,24 +65,28 @@
       "y": -209.8196976955692
     },
     "classContainerError": {
-      "x": 1571.6376914226846,
-      "y": 141.8703991056349
+      "x": 1361.0728585584409,
+      "y": 223.27483951825465
     },
     "classDumpTruck": {
       "x": 157.21804047692478,
       "y": 834.093692427793
     },
     "classError": {
-      "x": 1923.2838073343817,
-      "y": -144.43393170571585
+      "x": 1920.9676405868704,
+      "y": -137.02510754870545
+    },
+    "classErrorFile": {
+      "x": 2391.3724387866487,
+      "y": 235.48356490228943
     },
     "classInputError": {
-      "x": 2208.5606095646954,
-      "y": 139.59615391517096
+      "x": 1849.981951511355,
+      "y": 222.01394866670248
     },
     "classInteraction": {
-      "x": -317.8939117885028,
-      "y": 606.6674469874526
+      "x": -323.4506695357401,
+      "y": 602.9629418226277
     },
     "classPassengerVehicle": {
       "x": 846.8565160481558,
@@ -138,6 +142,10 @@
       "attributes": false,
       "methods": false
     },
+    "classErrorFile": {
+      "attributes": false,
+      "methods": false
+    },
     "classInputError": {
       "attributes": false,
       "methods": false
@@ -179,6 +187,7 @@
     "classContainerError": false,
     "classDumpTruck": false,
     "classError": false,
+    "classErrorFile": false,
     "classInputError": false,
     "classInteraction": false,
     "classPassengerVehicle": false,
@@ -213,6 +222,43 @@
         "target": {
           "side": "bottom",
           "offset": 0.32577083721049244
+        }
+      }
+    },
+    {
+      "source": "classContainerError",
+      "target": "classError",
+      "type": "inheritance",
+      "anchors": {
+        "target": {
+          "side": "bottom",
+          "offset": 0.41449838126777194
+        }
+      }
+    },
+    {
+      "source": "classErrorFile",
+      "target": "classError",
+      "type": "inheritance",
+      "anchors": {
+        "source": {
+          "side": "top",
+          "offset": 0.5
+        },
+        "target": {
+          "side": "bottom",
+          "offset": 0.5892008821501246
+        }
+      }
+    },
+    {
+      "source": "classInputError",
+      "target": "classError",
+      "type": "inheritance",
+      "anchors": {
+        "target": {
+          "side": "bottom",
+          "offset": 0.5
         }
       }
     },

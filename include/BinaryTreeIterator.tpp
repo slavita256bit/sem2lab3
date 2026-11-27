@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SEM2LAB3_BINARY_TREE_ITERATOR_TPP
+#define SEM2LAB3_BINARY_TREE_ITERATOR_TPP
+#include "BinaryTreeIterator.h"
 #include <ranges>
 
 // Обход по порядку ключа
@@ -34,3 +36,5 @@ std::generator<const T&> iterate_reverse(const BinaryTree<T>& tree)
         co_yield std::ranges::elements_of(iterate_reverse(*tree.left));
 }
 */
+
+#endif

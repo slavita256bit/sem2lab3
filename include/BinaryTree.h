@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SEM2LAB3_BINARY_TREE_H
+#define SEM2LAB3_BINARY_TREE_H
 /*
 Лабораторная работа 4 | Шаблоны | Бинарное дерево
 
@@ -59,3 +60,5 @@ public:
 };
 
 #include "BinaryTree.tpp"
+
+#endif

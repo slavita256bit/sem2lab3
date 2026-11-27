@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SEM2LAB3_BINARY_TREE_TPP
+#define SEM2LAB3_BINARY_TREE_TPP
+#include "BinaryTree.h"
 #include <format>
 #include <ranges>
 #include <utility>
@@ -192,3 +194,5 @@ void BinaryTree<T>::clear()
     left = nullptr;
     right = nullptr;
 }
+
+#endif
