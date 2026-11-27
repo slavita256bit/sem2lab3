@@ -1,5 +1,6 @@
 #pragma once
 #include "Vehicle.h"
+#include <iostream>
 
 #define MAX_SEATS 200
 #define PASSENGER_VEHICLE_TABLE_FORMAT "{:<5}  "

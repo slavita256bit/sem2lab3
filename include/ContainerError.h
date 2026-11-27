@@ -9,5 +9,5 @@ private:
 public:
     ContainerError(ErrorCode code, const char* message, int number) : Error(code, message), number(number) {}
 
-    int get_number() const;                                                                         // Получение номера объекта
+    int get_number() const;     // Получение номера объекта
 };

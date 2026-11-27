@@ -1,5 +1,6 @@
 #pragma once
 #include "CargoVehicle.h"
+#include <iostream>
 
 #define DUMP_TRUCK_TABLE_FORMAT "{:<10.10}  "
 

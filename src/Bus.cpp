@@ -1,4 +1,5 @@
 #include "Bus.h"
+#include <iostream>
 #include "Input.h"
 #include <format>
 
@@ -76,7 +77,7 @@ bool Bus::operator>(const Bus& other) const
 // Сравнение номера маршрута
 bool Bus::operator<=(const Bus& other) const
 {
-    return !(other < *this);
+    return other >= *this;
 }
 
 // Сравнение номера маршрута

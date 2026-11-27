@@ -1,5 +1,6 @@
 #pragma once
 #include "Input.h"
+#include <iostream>
 
 // Выполнение действия меню
 template<typename T>

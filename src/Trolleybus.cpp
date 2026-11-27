@@ -1,4 +1,5 @@
 #include "Trolleybus.h"
+#include <iostream>
 #include "Input.h"
 #include <format>
 
@@ -82,7 +83,7 @@ bool Trolleybus::operator>(const Trolleybus& other) const
 // Сравнение ёмкости аккумулятора
 bool Trolleybus::operator<=(const Trolleybus& other) const
 {
-    return !(other < *this);
+    return other >= *this;
 }
 
 // Сравнение ёмкости аккумулятора

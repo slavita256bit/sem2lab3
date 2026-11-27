@@ -49,8 +49,8 @@
   },
   "positions": {
     "classBinaryTree": {
-      "x": -73.38787998365373,
-      "y": 21.682782722443136
+      "x": -364.49126436303624,
+      "y": 14.86004715105139
     },
     "classBus": {
       "x": 717.025875739128,
@@ -64,13 +64,29 @@
       "x": 1375.3578443069737,
       "y": -209.8196976955692
     },
+    "classContainerError": {
+      "x": 1571.6376914226846,
+      "y": 141.8703991056349
+    },
     "classDumpTruck": {
       "x": 157.21804047692478,
       "y": 834.093692427793
     },
+    "classError": {
+      "x": 1923.2838073343817,
+      "y": -144.43393170571585
+    },
+    "classInputError": {
+      "x": 2208.5606095646954,
+      "y": 139.59615391517096
+    },
+    "classInteraction": {
+      "x": -317.8939117885028,
+      "y": 606.6674469874526
+    },
     "classPassengerVehicle": {
-      "x": 897.4347252813784,
-      "y": 458.6510009958539
+      "x": 846.8565160481558,
+      "y": 475.5104040735948
     },
     "classString": {
       "x": 1569.6897684621783,
@@ -81,8 +97,8 @@
       "y": 835.8509372961237
     },
     "classVehicle": {
-      "x": 577.5281292646847,
-      "y": -26.125494521528992
+      "x": 593.037999402547,
+      "y": -136.16806127464395
     },
     "classcolored_1_1Color": {
       "x": 1368.0,
@@ -110,7 +126,23 @@
       "attributes": false,
       "methods": false
     },
+    "classContainerError": {
+      "attributes": false,
+      "methods": false
+    },
     "classDumpTruck": {
+      "attributes": false,
+      "methods": false
+    },
+    "classError": {
+      "attributes": false,
+      "methods": false
+    },
+    "classInputError": {
+      "attributes": false,
+      "methods": false
+    },
+    "classInteraction": {
       "attributes": false,
       "methods": false
     },
@@ -144,7 +176,11 @@
     "classBus": false,
     "classCargoVehicle": false,
     "classColored": true,
+    "classContainerError": false,
     "classDumpTruck": false,
+    "classError": false,
+    "classInputError": false,
+    "classInteraction": false,
     "classPassengerVehicle": false,
     "classString": true,
     "classTrolleybus": false,
@@ -152,6 +188,7 @@
     "classcolored_1_1Color": true,
     "structstd_1_1formatter_3_01String_01_4": true
   },
+  "hiddenRelationTypes": [],
   "connections": [
     {
       "source": "classBinaryTree",
@@ -169,13 +206,24 @@
       }
     },
     {
+      "source": "classCargoVehicle",
+      "target": "classVehicle",
+      "type": "inheritance",
+      "anchors": {
+        "target": {
+          "side": "bottom",
+          "offset": 0.32577083721049244
+        }
+      }
+    },
+    {
       "source": "classPassengerVehicle",
       "target": "classVehicle",
       "type": "inheritance",
       "anchors": {
         "target": {
           "side": "bottom",
-          "offset": 0.5
+          "offset": 0.52123255114281
         }
       }
     }

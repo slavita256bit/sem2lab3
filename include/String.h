@@ -1,6 +1,6 @@
 #pragma once
-#include <iostream>
 #include <algorithm>
+#include <iosfwd>
 #include <utility>
 #include <format>
 #include <string_view>

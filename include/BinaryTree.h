@@ -6,8 +6,8 @@
 
 Итераторы
 */
-#include <ostream>
 #include "BinaryTreeIterator.h"
+#include <ostream>
 
 template<typename T>
 class BinaryTree;
