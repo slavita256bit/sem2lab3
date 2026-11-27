@@ -60,8 +60,7 @@ public:
     void set_year(int value);                                                                       // Изменение года выпуска
 
     virtual void change_field(VehicleField field);                                                  // Изменение выбранного поля
-    virtual Vehicle& print_read_info(std::istream& stream) = 0;                                     // Ввод объекта с подсказкой
-    virtual void print_header(std::ostream& stream) const;                                          // Вывод шапки таблицы
+    virtual void print_header(std::ostream& stream) const = 0;                                          // Вывод шапки таблицы
 
     bool operator<(const Vehicle& other) const;                                                     // Сравнение года выпуска
     bool operator>(const Vehicle& other) const;                                                     // Сравнение года выпуска

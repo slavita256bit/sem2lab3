@@ -28,8 +28,7 @@ public:
     void set_payload(double value);                                          // Изменение грузоподъёмности
 
     void change_field(VehicleField field) override;                          // Изменение выбранного поля
-    CargoVehicle& print_read_info(std::istream& stream) override = 0;        // Ввод объекта с подсказкой
-    void print_header(std::ostream& stream) const override;                  // Вывод шапки таблицы
+    void print_header(std::ostream& stream) const override = 0;                  // Вывод шапки таблицы
 
     bool operator==(const CargoVehicle& other) const;                        // Равенство всех полей
     bool operator!=(const CargoVehicle& other) const;                        // Неравенство полей

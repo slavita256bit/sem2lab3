@@ -35,15 +35,6 @@ void Trolleybus::change_field(VehicleField field)
     this->read_battery_capacity(std::cin);
 }
 
-// Ввод объекта с подсказкой
-Trolleybus& Trolleybus::print_read_info(std::istream& stream)
-{
-    std::cout << "Введите характеристики троллейбуса.\n";
-    stream >> *this;
-
-    return *this;
-}
-
 // Вывод шапки таблицы
 void Trolleybus::print_header(std::ostream& stream) const
 {
@@ -53,6 +44,7 @@ void Trolleybus::print_header(std::ostream& stream) const
 
 std::istream& operator>>(std::istream& stream, Trolleybus& object)
 {
+    std::cout << "Введите характеристики троллейбуса.\n";
     stream >> static_cast<PassengerVehicle&>(object);
     std::cout << BATTERY_CAPACITY_FIELD_NAME << " (кВт·ч) ";
     object.read_battery_capacity(stream);

@@ -31,7 +31,6 @@ public:
     void set_battery_capacity(double value);                           // Изменение ёмкости аккумулятора
 
     void change_field(VehicleField field) override;                    // Изменение выбранного поля
-    Trolleybus& print_read_info(std::istream& stream) override;        // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;            // Вывод шапки таблицы
 
     bool operator<(const Trolleybus& other) const;

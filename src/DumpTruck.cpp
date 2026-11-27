@@ -29,15 +29,6 @@ void DumpTruck::change_field(VehicleField field)
     this->set_body_volume(input::read_positive(std::cin, BODY_VOLUME_FIELD_NAME));
 }
 
-// Ввод объекта с подсказкой
-DumpTruck& DumpTruck::print_read_info(std::istream& stream)
-{
-    std::cout << "Введите характеристики самосвала.\n";
-    stream >> *this;
-
-    return *this;
-}
-
 // Вывод шапки таблицы
 void DumpTruck::print_header(std::ostream& stream) const
 {
@@ -47,6 +38,7 @@ void DumpTruck::print_header(std::ostream& stream) const
 
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
+    std::cout << "Введите характеристики самосвала.\n";
     stream >> static_cast<CargoVehicle&>(object);
     std::cout << BODY_VOLUME_FIELD_NAME << " (м3) ";
     object.set_body_volume(input::read_positive(stream, BODY_VOLUME_FIELD_NAME));

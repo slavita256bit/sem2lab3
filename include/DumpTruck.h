@@ -29,7 +29,6 @@ public:
     void set_body_volume(double value);                              // Изменение объёма кузова
 
     void change_field(VehicleField field) override;                  // Изменение выбранного поля
-    DumpTruck& print_read_info(std::istream& stream) override;       // Ввод объекта с подсказкой
     void print_header(std::ostream& stream) const override;          // Вывод шапки таблицы
 
     bool operator<(const DumpTruck& other) const;

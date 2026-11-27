@@ -51,7 +51,7 @@ void Interaction<T>::add_object()
     T* object = new T;
     try
     {
-        object->print_read_info(std::cin);
+        std::cin >> *object;
         this->tree.add(object);
     }
     catch (...)

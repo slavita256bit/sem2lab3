@@ -45,17 +45,6 @@ namespace input
         std::cout << "Повторите ввод ";
     }
 
-    // Проверка результата преобразования числа
-    static void check_conversion(const std::from_chars_result& result, const char* end, const String& field)
-    {
-        if (result.ec == std::errc::invalid_argument)
-            throw InputError(ErrorCode::InvalidNumber, "Введите число", field);
-        if (result.ec == std::errc::result_out_of_range)
-            throw InputError(ErrorCode::NumberOverflow, "Число слишком велико", field);
-        if (result.ptr != end)
-            throw InputError(ErrorCode::TrailingCharacters, "Лишние символы после числа", field);
-    }
-
     /*
     // Проверка марки с латинскими буквами
     static bool is_english(const String& text, bool allow_uppercase = true, bool allow_lowercase = true)
@@ -149,8 +138,15 @@ namespace input
             {
                 const String line = read_line(stream, field);
                 T value = 0;
+
                 auto result = std::from_chars(line.begin(), line.end(), value);
-                check_conversion(result, line.end(), field);
+                if (result.ec == std::errc::invalid_argument)
+                    throw InputError(ErrorCode::InvalidNumber, "Введите число", field);
+                if (result.ec == std::errc::result_out_of_range)
+                    throw InputError(ErrorCode::NumberOverflow, "Число слишком велико", field);
+                if (result.ptr != line.end())
+                    throw InputError(ErrorCode::TrailingCharacters, "Лишние символы после числа", field);
+
                 check(value);
                 return value;
             }

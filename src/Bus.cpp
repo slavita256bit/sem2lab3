@@ -29,15 +29,6 @@ void Bus::change_field(VehicleField field)
     this->set_route(input::read_int(std::cin, 1, MAX_ROUTE, ROUTE_FIELD_NAME));
 }
 
-// Ввод объекта с подсказкой
-Bus& Bus::print_read_info(std::istream& stream)
-{
-    std::cout << "Введите характеристики автобуса.\n";
-    stream >> *this;
-
-    return *this;
-}
-
 // Вывод шапки таблицы
 void Bus::print_header(std::ostream& stream) const
 {
@@ -47,6 +38,7 @@ void Bus::print_header(std::ostream& stream) const
 
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
+    std::cout << "Введите характеристики автобуса.\n";
     stream >> static_cast<PassengerVehicle&>(object);
     std::cout << ROUTE_FIELD_NAME << ' ';
     object.set_route(input::read_int(stream, 1, MAX_ROUTE, ROUTE_FIELD_NAME));
