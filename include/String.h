@@ -74,10 +74,10 @@ public:
     String& operator=(const String& other);                                                         // Оператор присваивания
 
     int get_length() const;                                                                        // Получение длины строки
-    char* begin() noexcept;                                                                        // Начало строки
-    char* end() noexcept;                                                                          // Конец строки
-    const char* begin() const noexcept;                                                            // Начало строки для чтения
-    const char* end() const noexcept;                                                              // Конец строки для чтения
+    char* begin();                                                                                  // Начало строки
+    char* end();                                                                                    // Конец строки
+    const char* begin() const;                                                                      // Начало строки для чтения
+    const char* end() const;                                                                        // Конец строки для чтения
 
     String operator-(const String& other) const;                                                    // Удаление всех вхождений other из строки
     String& operator+=(const String& other);                                                        // Добавление other к строке

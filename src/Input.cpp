@@ -1,5 +1,6 @@
 #include "Input.h"
 #include "InputError.h"
+#include "Vehicle.h"
 #include <charconv>
 #include <cctype>
 #include <cmath>
@@ -98,10 +99,10 @@ namespace input
     void check_brand(const String& brand)
     {
         if (brand.get_length() > MAX_LENGTH)
-            throw InputError(ErrorCode::TextTooLong, "Марка длиннее 80 байт", "марка");
+            throw InputError(ErrorCode::TextTooLong, "Марка длиннее 80 байт", BRAND_FIELD_NAME);
 
         if (!is_english(brand))
-            throw InputError(ErrorCode::InvalidBrand, "Нужна марка с латинскими буквами", "марка");
+            throw InputError(ErrorCode::InvalidBrand, "Нужна марка с латинскими буквами", BRAND_FIELD_NAME);
     }
 
     // Проверка диапазона целого числа
@@ -126,7 +127,7 @@ namespace input
             std::cout << "(1–" << MAX_LENGTH << " байт, латинские буквы, можно цифры и дефис): ";
             try
             {
-                String brand = read_line(stream, "марка");
+                String brand = read_line(stream, BRAND_FIELD_NAME);
                 check_brand(brand);
                 return brand;
             }

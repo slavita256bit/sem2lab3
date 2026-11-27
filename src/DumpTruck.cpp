@@ -11,7 +11,7 @@ double DumpTruck::get_body_volume() const
 // Изменение объёма кузова
 void DumpTruck::set_body_volume(double value)
 {
-    input::check_positive(value, "объём кузова");
+    input::check_positive(value, BODY_VOLUME_FIELD_NAME);
     this->body_volume = value;
 }
 
@@ -24,8 +24,8 @@ void DumpTruck::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Объём кузова, м3 ";
-    this->set_body_volume(input::read_positive(std::cin, "объём кузова"));
+    std::cout << BODY_VOLUME_FIELD_NAME << ", м3 ";
+    this->set_body_volume(input::read_positive(std::cin, BODY_VOLUME_FIELD_NAME));
 }
 
 // Ввод объекта с подсказкой
@@ -83,8 +83,8 @@ bool DumpTruck::operator!=(const DumpTruck& other) const
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
     stream >> static_cast<CargoVehicle&>(object);
-    std::cout << "Объём кузова (м3) ";
-    object.set_body_volume(input::read_positive(stream, "объём кузова"));
+    std::cout << BODY_VOLUME_FIELD_NAME << " (м3) ";
+    object.set_body_volume(input::read_positive(stream, BODY_VOLUME_FIELD_NAME));
 
     return stream;
 }

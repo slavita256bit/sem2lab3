@@ -11,7 +11,7 @@ double CargoVehicle::get_payload() const
 // Изменение грузоподъёмности
 void CargoVehicle::set_payload(double value)
 {
-    input::check_positive(value, "грузоподъёмность");
+    input::check_positive(value, PAYLOAD_FIELD_NAME);
     this->payload = value;
 }
 
@@ -24,8 +24,8 @@ void CargoVehicle::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Грузоподъёмность, т ";
-    this->set_payload(input::read_positive(std::cin, "грузоподъёмность"));
+    std::cout << PAYLOAD_FIELD_NAME << ", т ";
+    this->set_payload(input::read_positive(std::cin, PAYLOAD_FIELD_NAME));
 }
 
 // Вывод шапки таблицы
@@ -51,8 +51,8 @@ bool CargoVehicle::operator!=(const CargoVehicle& other) const
 std::istream& operator>>(std::istream& stream, CargoVehicle& object)
 {
     stream >> static_cast<Vehicle&>(object);
-    std::cout << "Грузоподъёмность (т) ";
-    object.set_payload(input::read_positive(stream, "грузоподъёмность"));
+    std::cout << PAYLOAD_FIELD_NAME << " (т) ";
+    object.set_payload(input::read_positive(stream, PAYLOAD_FIELD_NAME));
 
     return stream;
 }

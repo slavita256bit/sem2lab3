@@ -11,7 +11,7 @@ int Bus::get_route() const
 // Изменение номера маршрута
 void Bus::set_route(int value)
 {
-    input::check_int(value, 1, MAX_ROUTE, "маршрут");
+    input::check_int(value, 1, MAX_ROUTE, ROUTE_FIELD_NAME);
     this->route = value;
 }
 
@@ -25,7 +25,7 @@ void Bus::change_field(VehicleField field)
     }
 
     std::cout << "Новое значение ";
-    this->set_route(input::read_int(std::cin, 1, MAX_ROUTE, "маршрут"));
+    this->set_route(input::read_int(std::cin, 1, MAX_ROUTE, ROUTE_FIELD_NAME));
 }
 
 // Ввод объекта с подсказкой
@@ -83,8 +83,8 @@ bool Bus::operator!=(const Bus& other) const
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object);
-    std::cout << "Маршрут ";
-    object.set_route(input::read_int(stream, 1, MAX_ROUTE, "маршрут"));
+    std::cout << ROUTE_FIELD_NAME << ' ';
+    object.set_route(input::read_int(stream, 1, MAX_ROUTE, ROUTE_FIELD_NAME));
 
     return stream;
 }

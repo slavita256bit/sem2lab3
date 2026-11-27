@@ -11,7 +11,13 @@
 #include <format>
 
 #define VEHICLE_TABLE_FORMAT "{:<18.18}  {:<4}  "
-#define BATTERY_CAPACITY_FIELD "ёмкость аккумулятора"
+#define BRAND_FIELD_NAME "марка"
+#define YEAR_FIELD_NAME "год"
+#define PAYLOAD_FIELD_NAME "грузоподъёмность"
+#define BODY_VOLUME_FIELD_NAME "объём кузова"
+#define SEATS_FIELD_NAME "число мест"
+#define ROUTE_FIELD_NAME "маршрут"
+#define BATTERY_CAPACITY_FIELD_NAME "ёмкость аккумулятора"
 
 enum class VehicleField
 {

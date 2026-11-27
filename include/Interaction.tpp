@@ -104,13 +104,13 @@ BinaryTree<T>& Interaction<T>::find_object(const T& object, int number)
 template<typename T>
 void Interaction<T>::edit_field(T& object)
 {
-    std::cout << static_cast<int>(VehicleField::Brand) << " - марка\n";
-    std::cout << static_cast<int>(VehicleField::Year) << " - год\n";
-    std::cout << static_cast<int>(VehicleField::Payload) << " - грузоподъёмность\n";
-    std::cout << static_cast<int>(VehicleField::BodyVolume) << " - объём кузова\n";
-    std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
-    std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
-    std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - " << BATTERY_CAPACITY_FIELD << '\n';
+    std::cout << static_cast<int>(VehicleField::Brand) << " - " << BRAND_FIELD_NAME << '\n';
+    std::cout << static_cast<int>(VehicleField::Year) << " - " << YEAR_FIELD_NAME << '\n';
+    std::cout << static_cast<int>(VehicleField::Payload) << " - " << PAYLOAD_FIELD_NAME << '\n';
+    std::cout << static_cast<int>(VehicleField::BodyVolume) << " - " << BODY_VOLUME_FIELD_NAME << '\n';
+    std::cout << static_cast<int>(VehicleField::Seats) << " - " << SEATS_FIELD_NAME << '\n';
+    std::cout << static_cast<int>(VehicleField::Route) << " - " << ROUTE_FIELD_NAME << '\n';
+    std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - " << BATTERY_CAPACITY_FIELD_NAME << '\n';
     while (true)
     {
         std::cout << "Параметр ";

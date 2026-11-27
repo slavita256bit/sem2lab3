@@ -11,7 +11,7 @@ int PassengerVehicle::get_seats() const
 // Изменение числа мест
 void PassengerVehicle::set_seats(int value)
 {
-    input::check_int(value, 1, MAX_SEATS, "число мест");
+    input::check_int(value, 1, MAX_SEATS, SEATS_FIELD_NAME);
     this->seats = value;
 }
 
@@ -25,7 +25,7 @@ void PassengerVehicle::change_field(VehicleField field)
     }
 
     std::cout << "Новое значение ";
-    this->set_seats(input::read_int(std::cin, 1, MAX_SEATS, "число мест"));
+    this->set_seats(input::read_int(std::cin, 1, MAX_SEATS, SEATS_FIELD_NAME));
 }
 
 // Вывод шапки таблицы
@@ -50,8 +50,8 @@ bool PassengerVehicle::operator!=(const PassengerVehicle& other) const
 std::istream& operator>>(std::istream& stream, PassengerVehicle& object)
 {
     stream >> static_cast<Vehicle&>(object);
-    std::cout << "Число мест ";
-    object.set_seats(input::read_int(stream, 1, MAX_SEATS, "число мест"));
+    std::cout << SEATS_FIELD_NAME << ' ';
+    object.set_seats(input::read_int(stream, 1, MAX_SEATS, SEATS_FIELD_NAME));
 
     return stream;
 }

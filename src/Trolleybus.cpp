@@ -11,8 +11,14 @@ double Trolleybus::get_battery_capacity() const
 // Изменение ёмкости аккумулятора
 void Trolleybus::set_battery_capacity(double value)
 {
-    input::check_positive(value, BATTERY_CAPACITY_FIELD);
+    input::check_positive(value, BATTERY_CAPACITY_FIELD_NAME);
     this->battery_capacity = value;
+}
+
+// Ввод ёмкости аккумулятора
+void Trolleybus::read_battery_capacity(std::istream& stream)
+{
+    this->set_battery_capacity(input::read_positive(stream, BATTERY_CAPACITY_FIELD_NAME));
 }
 
 // Изменение выбранного поля
@@ -25,7 +31,7 @@ void Trolleybus::change_field(VehicleField field)
     }
 
     std::cout << "Новое значение ";
-    this->set_battery_capacity(input::read_positive(std::cin, BATTERY_CAPACITY_FIELD));
+    this->read_battery_capacity(std::cin);
 }
 
 // Ввод объекта с подсказкой
@@ -83,8 +89,8 @@ bool Trolleybus::operator!=(const Trolleybus& other) const
 std::istream& operator>>(std::istream& stream, Trolleybus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object);
-    std::cout << "Ёмкость аккумулятора (кВт·ч) ";
-    object.set_battery_capacity(input::read_positive(stream, BATTERY_CAPACITY_FIELD));
+    std::cout << BATTERY_CAPACITY_FIELD_NAME << " (кВт·ч) ";
+    object.read_battery_capacity(stream);
 
     return stream;
 }

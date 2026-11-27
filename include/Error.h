@@ -30,6 +30,6 @@ public:
         std::copy_n(message, length + 1, this->message);
     }
 
-    int get_code() const noexcept;                                                                  // Получение кода ошибки
-    const char* get_message() const noexcept;                                                       // Получение сообщения
+    int get_code() const;                                                                           // Получение кода ошибки
+    const char* get_message() const;                                                                // Получение сообщения
 };

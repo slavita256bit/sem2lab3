@@ -8,6 +8,8 @@ class Trolleybus : virtual public PassengerVehicle
 private:
     double battery_capacity = 0;  // Ёмкость аккумулятора, кВт·ч
 
+    void read_battery_capacity(std::istream& stream);                                                // Ввод ёмкости аккумулятора
+
 public:
     Trolleybus() : Trolleybus("NoBrand", 2020, 1, 60.0) {}
     Trolleybus(const String& brand, int year, int seats, double battery_capacity)

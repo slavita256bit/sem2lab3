@@ -16,25 +16,25 @@ int String::get_length() const
 }
 
 // Начало строки
-char* String::begin() noexcept
+char* String::begin()
 {
     return this->data;
 }
 
 // Конец строки
-char* String::end() noexcept
+char* String::end()
 {
     return this->data + this->length;
 }
 
 // Начало строки для чтения
-const char* String::begin() const noexcept
+const char* String::begin() const
 {
     return this->data;
 }
 
 // Конец строки для чтения
-const char* String::end() const noexcept
+const char* String::end() const
 {
     return this->data + this->length;
 }
