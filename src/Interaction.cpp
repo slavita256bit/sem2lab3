@@ -26,7 +26,7 @@ void edit_field(Vehicle& object)
         {
             if (error.get_code() != static_cast<int>(ErrorCode::InvalidField))
                 throw;
-            std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+            std::cerr << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
         }
     }
 }

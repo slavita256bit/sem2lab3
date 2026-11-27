@@ -13,6 +13,7 @@
 int main()
 {
     std::clog.rdbuf(nullptr);
+    std::cerr.rdbuf(std::cout.rdbuf());
 
 #ifdef DEMONSTRATE_ERRORS
     // Ошибка 8: сбой входного потока
@@ -24,7 +25,7 @@ int main()
     }
     catch (const InputError& error)
     {
-        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+        std::cerr << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
     }
 
     BinaryTree<Bus> tree;
@@ -36,7 +37,7 @@ int main()
     }
     catch (const ContainerError& error)
     {
-        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+        std::cerr << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
     }
 
     // Ошибка 203: нужного для операции объекта нет в дереве
@@ -47,7 +48,7 @@ int main()
     }
     catch (const ContainerError& error)
     {
-        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+        std::cerr << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
     }
 #else
 
@@ -98,27 +99,27 @@ int main()
             }
             catch (const ContainerError& error)
             {
-                std::cout << "Ошибка " << error.get_code() << ": " << error.get_message();
+                std::cerr << "Ошибка " << error.get_code() << ": " << error.get_message();
                 if (error.get_code() != static_cast<int>(ErrorCode::ObjectNotFound))
-                    std::cout << " (" << error.get_number() << ")";
-                std::cout << ".\n";
+                    std::cerr << " (" << error.get_number() << ")";
+                std::cerr << ".\n";
             }
         }
     }
     catch (const InputError& error)
     {
-        std::cout << "Ошибка " << error.get_code() << " (" << error.get_field() << "): " << error.get_message() << ".\n";
+        std::cerr << "Ошибка " << error.get_code() << " (" << error.get_field() << "): " << error.get_message() << ".\n";
         if (error.get_code() != static_cast<int>(ErrorCode::EndOfInput))
             return 1;
     }
     catch (const Error& error)
     {
-        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+        std::cerr << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
         return 1;
     }
     catch (const std::bad_alloc&)
     {
-        std::cout << "Недостаточно памяти.\n";
+        std::cerr << "Недостаточно памяти.\n";
         return 1;
     }
 

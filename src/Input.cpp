@@ -43,7 +43,7 @@ namespace input
         if (code == static_cast<int>(ErrorCode::EndOfInput) || code == static_cast<int>(ErrorCode::StreamFailure))
             throw;
 
-        std::cout << "Ошибка " << code << " (" << error.get_field() << "): " << error.get_message() << ".\n";
+        std::cerr << "Ошибка " << code << " (" << error.get_field() << "): " << error.get_message() << ".\n";
         std::cout << "Повторите ввод ";
     }
 
