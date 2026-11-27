@@ -53,6 +53,7 @@ public:
     void print_header(std::ostream& stream) const;       // Вывод шапки таблицы
 
     friend std::generator<const T&> iterate<T>(const BinaryTree& tree);                // Обход по порядку ключа
+    // friend std::generator<const T&> iterate_reverse<T>(const BinaryTree& tree);                   // Обход в обратном порядке
     friend std::ostream& operator<< <T>(std::ostream& stream, const BinaryTree& tree); // Вывод таблицы класса
 };
 
