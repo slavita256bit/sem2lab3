@@ -45,45 +45,6 @@ namespace input
         std::cout << "Повторите ввод ";
     }
 
-    /*
-    // Проверка марки с латинскими буквами
-    static bool is_english(const String& text, bool allow_uppercase = true, bool allow_lowercase = true)
-    {
-        bool has_letter = false;
-        for (int i = 0; i < text.get_length(); i++)
-        {
-            char ch = text[i];
-            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-')
-                continue;
-
-            if (!((allow_uppercase && ch >= 'A' && ch <= 'Z') || (allow_lowercase && ch >= 'a' && ch <= 'z')))
-                return false;
-
-            has_letter = true;
-        }
-
-        return has_letter;
-    }
-    */
-
-    // Проверка марки с латинскими буквами
-    static bool is_english(const String& text)
-    {
-        bool has_letter = false;
-        for (char ch : text)
-        {
-            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-')
-                continue;
-
-            if (!((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')))
-                return false;
-
-            has_letter = true;
-        }
-
-        return has_letter;
-    }
-
     // Проверка марки
     void check_brand(const String& brand)
     {
@@ -127,27 +88,32 @@ namespace input
         }
     }
 
-    // Ввод числа с повтором и проверкой значения
-    template<typename T, typename PrintRange, typename Check>
-    static T read_number(std::istream& stream, const String& field, PrintRange print_range, Check check)
+    // Преобразование всей строки в число
+    template<typename T>
+    static T parse_number(const String& line, const String& field)
+    {
+        T value = 0;
+        auto result = std::from_chars(line.begin(), line.end(), value);
+        if (result.ec == std::errc::invalid_argument)
+            throw InputError(ErrorCode::InvalidNumber, "Введите число", field);
+        if (result.ec == std::errc::result_out_of_range)
+            throw InputError(ErrorCode::NumberOverflow, "Число слишком велико", field);
+        if (result.ptr != line.end())
+            throw InputError(ErrorCode::TrailingCharacters, "Лишние символы после числа", field);
+
+        return value;
+    }
+
+    // Ввод целого числа с повтором
+    int read_int(std::istream& stream, int min, int max, const String& field)
     {
         while (true)
         {
-            print_range();
+            std::cout << "(целое число, " << min << ".." << max << "): ";
             try
             {
-                const String line = read_line(stream, field);
-                T value = 0;
-
-                auto result = std::from_chars(line.begin(), line.end(), value);
-                if (result.ec == std::errc::invalid_argument)
-                    throw InputError(ErrorCode::InvalidNumber, "Введите число", field);
-                if (result.ec == std::errc::result_out_of_range)
-                    throw InputError(ErrorCode::NumberOverflow, "Число слишком велико", field);
-                if (result.ptr != line.end())
-                    throw InputError(ErrorCode::TrailingCharacters, "Лишние символы после числа", field);
-
-                check(value);
+                int value = parse_number<int>(read_line(stream, field), field);
+                check_int(value, min, max, field);
                 return value;
             }
             catch (const InputError& error)
@@ -157,27 +123,78 @@ namespace input
         }
     }
 
-    // Ввод целого числа с повтором
-    int read_int(std::istream& stream, int min, int max, const String& field)
-    {
-        return read_number<int>(stream, field,
-            [min, max] { std::cout << "(целое число, " << min << ".." << max << "): "; },
-            [&](int value) { check_int(value, min, max, field); });
-    }
-
     // Ввод индекса с проверкой формата
     int read_index(std::istream& stream, int count, const String& field)
     {
-        return read_number<int>(stream, field,
-            [count] { std::cout << "(целое число, 0.." << count - 1 << "): "; },
-            [](int) {});
+        while (true)
+        {
+            std::cout << "(целое число, 0.." << count - 1 << "): ";
+            try
+            {
+                return parse_number<int>(read_line(stream, field), field);
+            }
+            catch (const InputError& error)
+            {
+                retry_input(error);
+            }
+        }
     }
 
     // Ввод положительного числа с повтором
     double read_positive(std::istream& stream, const String& field)
     {
-        return read_number<double>(stream, field,
-            [] { std::cout << "(конечное число больше 0, десятичная точка): "; },
-            [&](double value) { check_positive(value, field); });
+        while (true)
+        {
+            std::cout << "(конечное число больше 0, десятичная точка): ";
+            try
+            {
+                auto value = parse_number<double>(read_line(stream, field), field);
+                check_positive(value, field);
+                return value;
+            }
+            catch (const InputError& error)
+            {
+                retry_input(error);
+            }
+        }
     }
+
+    // Проверка марки с латинскими буквами
+    static bool is_english(const String& text)
+    {
+        bool has_letter = false;
+        for (char ch : text)
+        {
+            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-')
+                continue;
+
+            if (!((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')))
+                return false;
+
+            has_letter = true;
+        }
+
+        return has_letter;
+    }
+
+    /*
+    // Проверка марки с латинскими буквами
+    static bool is_english(const String& text, bool allow_uppercase = true, bool allow_lowercase = true)
+    {
+        bool has_letter = false;
+        for (int i = 0; i < text.get_length(); i++)
+        {
+            char ch = text[i];
+            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-')
+                continue;
+
+            if (!((allow_uppercase && ch >= 'A' && ch <= 'Z') || (allow_lowercase && ch >= 'a' && ch <= 'z')))
+                return false;
+
+            has_letter = true;
+        }
+
+        return has_letter;
+    }
+    */
 }
