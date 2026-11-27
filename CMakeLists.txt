@@ -11,6 +11,7 @@ add_executable(sem2lab3
     src/InputError.cpp
     src/ContainerError.cpp
     src/Input.cpp
+    src/Interaction.cpp
     src/String.cpp
     src/Vehicle.cpp
     src/CargoVehicle.cpp

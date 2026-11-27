@@ -2,6 +2,13 @@
 #include "BinaryTree.h"
 #include <iostream>
 
+class Vehicle;
+
+namespace interaction
+{
+    void edit_field(Vehicle& object);                                                               // Выбор и ввод поля
+}
+
 template<typename T>
 class Interaction
 {
@@ -12,7 +19,6 @@ private:
     void add_object();                                            // Ввод и добавление объекта
     void edit_object(int number);                                 // Изменение объекта
     void remove_object(int number);                               // Удаление объекта
-    static void edit_field(T& object);                            // Выбор и ввод поля
 
 public:
     explicit Interaction(BinaryTree<T>& tree) : tree(tree) {}

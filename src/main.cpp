@@ -2,6 +2,8 @@
 #include "Bus.h"
 #include "Trolleybus.h"
 #include "Interaction.h"
+#include "InputError.h"
+#include "ContainerError.h"
 #include <sstream>
 
 #define ADD_DEFAULTS

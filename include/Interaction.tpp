@@ -1,8 +1,5 @@
 #pragma once
-#include "Vehicle.h"
 #include "Input.h"
-#include "InputError.h"
-#include "ContainerError.h"
 
 // Выполнение действия меню
 template<typename T>
@@ -70,7 +67,7 @@ void Interaction<T>::edit_object(int number)
     try
     {
         original = this->tree.find(*object);
-        edit_field(*object);
+        interaction::edit_field(*object);
         this->tree.add(object);
     }
     catch (...)
@@ -88,33 +85,4 @@ void Interaction<T>::remove_object(int number)
 {
     T object = this->tree[number];
     this->tree.find(object)->remove();
-}
-
-// Выбор и ввод поля
-template<typename T>
-void Interaction<T>::edit_field(T& object)
-{
-    std::cout << static_cast<int>(VehicleField::Brand) << " - " << BRAND_FIELD_NAME << '\n';
-    std::cout << static_cast<int>(VehicleField::Year) << " - " << YEAR_FIELD_NAME << '\n';
-    std::cout << static_cast<int>(VehicleField::Payload) << " - " << PAYLOAD_FIELD_NAME << '\n';
-    std::cout << static_cast<int>(VehicleField::BodyVolume) << " - " << BODY_VOLUME_FIELD_NAME << '\n';
-    std::cout << static_cast<int>(VehicleField::Seats) << " - " << SEATS_FIELD_NAME << '\n';
-    std::cout << static_cast<int>(VehicleField::Route) << " - " << ROUTE_FIELD_NAME << '\n';
-    std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - " << BATTERY_CAPACITY_FIELD_NAME << '\n';
-    while (true)
-    {
-        std::cout << "Параметр ";
-        int field = input::read_int(std::cin, static_cast<int>(VehicleField::Brand), static_cast<int>(VehicleField::BatteryCapacity), "параметр");
-        try
-        {
-            object.change_field(static_cast<VehicleField>(field));
-            return;
-        }
-        catch (const InputError& error)
-        {
-            if (error.get_code() != static_cast<int>(ErrorCode::InvalidField))
-                throw;
-            std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
-        }
-    }
 }
