@@ -17,14 +17,14 @@ public:
         : PassengerVehicle(brand, year, seats), battery_capacity(battery_capacity)
     {
         this->set_battery_capacity(this->battery_capacity);
-        std::cout << "+ Trolleybus [" << this->get_brand() << "]" << '\n';
+        std::cerr << "+ Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 
     Trolleybus(const Trolleybus& other) : Trolleybus(other.get_brand(), other.get_year(), other.get_seats(), other.get_battery_capacity()) {}
 
     ~Trolleybus() override
     {
-        std::cout << "- Trolleybus [" << this->get_brand() << "]" << '\n';
+        std::cerr << "- Trolleybus [" << this->get_brand() << "]" << '\n';
     }
 
     double get_battery_capacity() const;                               // Получение ёмкости аккумулятора

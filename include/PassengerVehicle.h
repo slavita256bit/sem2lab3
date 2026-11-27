@@ -16,14 +16,14 @@ public:
         : Vehicle(brand, year), seats(seats)
     {
         this->set_seats(this->seats);
-        std::cout << "+ PassengerVehicle [" << this->get_brand() << "]" << '\n';
+        std::cerr << "+ PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     PassengerVehicle(const PassengerVehicle& other) : PassengerVehicle(other.get_brand(), other.get_year(), other.get_seats()) {}
 
     ~PassengerVehicle() override
     {
-        std::cout << "- PassengerVehicle [" << this->get_brand() << "]" << '\n';
+        std::cerr << "- PassengerVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     int get_seats() const;                                                      // Получение числа мест
