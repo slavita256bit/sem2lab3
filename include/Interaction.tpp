@@ -24,7 +24,8 @@ void Interaction<T>::run(int action)
             return;
 
         std::cout << "Номер объекта ";
-        int number = input::read_int(std::cin, 0, count - 1, "номер объекта");
+        // int number = input::read_int(std::cin, 0, count - 1, "номер объекта");
+        int number = input::read_index(std::cin, count, "номер объекта");
         if (action == 3)
             this->edit_object(number);
         else
@@ -68,7 +69,7 @@ void Interaction<T>::edit_object(int number)
     BinaryTree<T>* original = nullptr;
     try
     {
-        original = &this->find_object(*object, number);
+        original = this->tree.find(*object);
         edit_field(*object);
         this->tree.add(object);
     }
@@ -86,18 +87,7 @@ template<typename T>
 void Interaction<T>::remove_object(int number)
 {
     T object = this->tree[number];
-    this->find_object(object, number).remove();
-}
-
-// Поиск узла выбранного объекта
-template<typename T>
-BinaryTree<T>& Interaction<T>::find_object(const T& object, int number)
-{
-    auto* node = this->tree.find(object);
-    if (!node)
-        throw ContainerError(ErrorCode::ObjectNotFound, "Объект не найден", number);
-
-    return *node;
+    this->tree.find(object)->remove();
 }
 
 // Выбор и ввод поля

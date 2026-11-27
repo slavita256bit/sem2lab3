@@ -12,7 +12,6 @@ private:
     void add_object();                                            // Ввод и добавление объекта
     void edit_object(int number);                                 // Изменение объекта
     void remove_object(int number);                               // Удаление объекта
-    BinaryTree<T>& find_object(const T& object, int number);      // Поиск узла выбранного объекта
     static void edit_field(T& object);                            // Выбор и ввод поля
 
 public:

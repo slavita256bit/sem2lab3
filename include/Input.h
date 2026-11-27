@@ -12,5 +12,6 @@ namespace input
     void check_positive(double value, const String& field);
     String read_brand(std::istream& stream);
     int read_int(std::istream& stream, int min, int max, const String& field);
+    int read_index(std::istream& stream, int count, const String& field);
     double read_positive(std::istream& stream, const String& field);
 }

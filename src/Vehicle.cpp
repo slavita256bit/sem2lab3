@@ -52,6 +52,23 @@ void Vehicle::print_header(std::ostream& stream) const
     stream << std::format(VEHICLE_TABLE_FORMAT, "Марка", "Год");
 }
 
+std::istream& operator>>(std::istream& stream, Vehicle& object)
+{
+    std::cout << BRAND_FIELD_NAME << ' ';
+    object.set_brand(input::read_brand(stream));
+    std::cout << YEAR_FIELD_NAME << " выпуска ";
+    object.set_year(input::read_int(stream, MIN_YEAR, CURRENT_YEAR, YEAR_FIELD_NAME));
+
+    return stream;
+}
+
+std::ostream& operator<<(std::ostream& stream, const Vehicle& object)
+{
+    stream << std::format(VEHICLE_TABLE_FORMAT, object.get_brand(), object.get_year());
+
+    return stream;
+}
+
 // Сравнение года выпуска
 bool Vehicle::operator<(const Vehicle& other) const
 {
@@ -86,21 +103,4 @@ bool Vehicle::operator==(const Vehicle& other) const
 bool Vehicle::operator!=(const Vehicle& other) const
 {
     return !(*this == other);
-}
-
-std::istream& operator>>(std::istream& stream, Vehicle& object)
-{
-    std::cout << BRAND_FIELD_NAME << ' ';
-    object.set_brand(input::read_brand(stream));
-    std::cout << YEAR_FIELD_NAME << " выпуска ";
-    object.set_year(input::read_int(stream, MIN_YEAR, CURRENT_YEAR, YEAR_FIELD_NAME));
-
-    return stream;
-}
-
-std::ostream& operator<<(std::ostream& stream, const Vehicle& object)
-{
-    stream << std::format(VEHICLE_TABLE_FORMAT, object.get_brand(), object.get_year());
-
-    return stream;
 }

@@ -50,6 +50,23 @@ void Trolleybus::print_header(std::ostream& stream) const
     stream << std::format(TROLLEYBUS_TABLE_FORMAT, "АКБ (кВт·ч)");
 }
 
+std::istream& operator>>(std::istream& stream, Trolleybus& object)
+{
+    stream >> static_cast<PassengerVehicle&>(object);
+    std::cout << BATTERY_CAPACITY_FIELD_NAME << " (кВт·ч) ";
+    object.read_battery_capacity(stream);
+
+    return stream;
+}
+
+std::ostream& operator<<(std::ostream& stream, const Trolleybus& object)
+{
+    stream << static_cast<const PassengerVehicle&>(object);
+    stream << std::format(TROLLEYBUS_TABLE_FORMAT, std::format("{:.1f}", object.get_battery_capacity()));
+
+    return stream;
+}
+
 // Сравнение ёмкости аккумулятора
 bool Trolleybus::operator<(const Trolleybus& other) const
 {
@@ -84,21 +101,4 @@ bool Trolleybus::operator==(const Trolleybus& other) const
 bool Trolleybus::operator!=(const Trolleybus& other) const
 {
     return !(*this == other);
-}
-
-std::istream& operator>>(std::istream& stream, Trolleybus& object)
-{
-    stream >> static_cast<PassengerVehicle&>(object);
-    std::cout << BATTERY_CAPACITY_FIELD_NAME << " (кВт·ч) ";
-    object.read_battery_capacity(stream);
-
-    return stream;
-}
-
-std::ostream& operator<<(std::ostream& stream, const Trolleybus& object)
-{
-    stream << static_cast<const PassengerVehicle&>(object);
-    stream << std::format(TROLLEYBUS_TABLE_FORMAT, std::format("{:.1f}", object.get_battery_capacity()));
-
-    return stream;
 }

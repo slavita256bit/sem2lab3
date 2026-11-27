@@ -44,6 +44,23 @@ void Bus::print_header(std::ostream& stream) const
     stream << std::format(BUS_TABLE_FORMAT, "Маршрут");
 }
 
+std::istream& operator>>(std::istream& stream, Bus& object)
+{
+    stream >> static_cast<PassengerVehicle&>(object);
+    std::cout << ROUTE_FIELD_NAME << ' ';
+    object.set_route(input::read_int(stream, 1, MAX_ROUTE, ROUTE_FIELD_NAME));
+
+    return stream;
+}
+
+std::ostream& operator<<(std::ostream& stream, const Bus& object)
+{
+    stream << static_cast<const PassengerVehicle&>(object);
+    stream << std::format(BUS_TABLE_FORMAT, object.get_route());
+
+    return stream;
+}
+
 // Сравнение номера маршрута
 bool Bus::operator<(const Bus& other) const
 {
@@ -78,21 +95,4 @@ bool Bus::operator==(const Bus& other) const
 bool Bus::operator!=(const Bus& other) const
 {
     return !(*this == other);
-}
-
-std::istream& operator>>(std::istream& stream, Bus& object)
-{
-    stream >> static_cast<PassengerVehicle&>(object);
-    std::cout << ROUTE_FIELD_NAME << ' ';
-    object.set_route(input::read_int(stream, 1, MAX_ROUTE, ROUTE_FIELD_NAME));
-
-    return stream;
-}
-
-std::ostream& operator<<(std::ostream& stream, const Bus& object)
-{
-    stream << static_cast<const PassengerVehicle&>(object);
-    stream << std::format(BUS_TABLE_FORMAT, object.get_route());
-
-    return stream;
 }

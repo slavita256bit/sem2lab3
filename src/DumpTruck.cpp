@@ -44,6 +44,23 @@ void DumpTruck::print_header(std::ostream& stream) const
     stream << std::format(DUMP_TRUCK_TABLE_FORMAT, "Кузов (м3)");
 }
 
+std::istream& operator>>(std::istream& stream, DumpTruck& object)
+{
+    stream >> static_cast<CargoVehicle&>(object);
+    std::cout << BODY_VOLUME_FIELD_NAME << " (м3) ";
+    object.set_body_volume(input::read_positive(stream, BODY_VOLUME_FIELD_NAME));
+
+    return stream;
+}
+
+std::ostream& operator<<(std::ostream& stream, const DumpTruck& object)
+{
+    stream << static_cast<const CargoVehicle&>(object);
+    stream << std::format(DUMP_TRUCK_TABLE_FORMAT, std::format("{:.1f}", object.get_body_volume()));
+
+    return stream;
+}
+
 // Сравнение объёма кузова
 bool DumpTruck::operator<(const DumpTruck& other) const
 {
@@ -78,21 +95,4 @@ bool DumpTruck::operator==(const DumpTruck& other) const
 bool DumpTruck::operator!=(const DumpTruck& other) const
 {
     return !(*this == other);
-}
-
-std::istream& operator>>(std::istream& stream, DumpTruck& object)
-{
-    stream >> static_cast<CargoVehicle&>(object);
-    std::cout << BODY_VOLUME_FIELD_NAME << " (м3) ";
-    object.set_body_volume(input::read_positive(stream, BODY_VOLUME_FIELD_NAME));
-
-    return stream;
-}
-
-std::ostream& operator<<(std::ostream& stream, const DumpTruck& object)
-{
-    stream << static_cast<const CargoVehicle&>(object);
-    stream << std::format(DUMP_TRUCK_TABLE_FORMAT, std::format("{:.1f}", object.get_body_volume()));
-
-    return stream;
 }

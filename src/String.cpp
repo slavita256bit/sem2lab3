@@ -199,6 +199,31 @@ String operator+(const char* a, const String& b)
     return String(a) + b;
 }
 
+// Ввод строки
+std::istream& operator>>(std::istream& stream, String& s)
+{
+    char buffer[MAX_LENGTH + 1]{};
+    stream >> buffer;
+
+    s = String(buffer);
+
+    return stream;
+}
+
+// Вывод строки
+std::ostream& operator<<(std::ostream& stream, const String& s)
+{
+    stream << (s.data ? s.data : "");
+
+    return stream;
+}
+
+// Форматирование строки
+std::format_context::iterator std::formatter<String>::format(const String& value, std::format_context& ctx) const
+{
+    return std::formatter<std::string_view>::format(std::string_view(value.data ? value.data : ""), ctx);
+}
+
 // Равенство строк
 bool operator==(const String& a, const String& b)
 {
@@ -233,29 +258,4 @@ bool operator<=(const String& a, const String& b)
 bool operator>=(const String& a, const String& b)
 {
     return !(a < b);
-}
-
-// Ввод строки
-std::istream& operator>>(std::istream& stream, String& s)
-{
-    char buffer[MAX_LENGTH + 1]{};
-    stream >> buffer;
-
-    s = String(buffer);
-
-    return stream;
-}
-
-// Вывод строки
-std::ostream& operator<<(std::ostream& stream, const String& s)
-{
-    stream << (s.data ? s.data : "");
-
-    return stream;
-}
-
-// Форматирование строки
-std::format_context::iterator std::formatter<String>::format(const String& value, std::format_context& ctx) const
-{
-    return std::formatter<std::string_view>::format(std::string_view(value.data ? value.data : ""), ctx);
 }

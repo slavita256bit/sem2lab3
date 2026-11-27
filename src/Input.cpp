@@ -31,7 +31,7 @@ namespace input
         stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         if (stream.bad())
             throw InputError(ErrorCode::StreamFailure, "Ошибка потока ввода", field);
-        throw InputError(ErrorCode::TextTooLong, "Строка длиннее 80 байт", field);
+        throw InputError(ErrorCode::TextTooLong, "Строка длиннее 80 символов", field);
     }
 
     // Вывод ошибки, если ввод можно повторить
@@ -99,7 +99,7 @@ namespace input
     void check_brand(const String& brand)
     {
         if (brand.get_length() > MAX_LENGTH)
-            throw InputError(ErrorCode::TextTooLong, "Марка длиннее 80 байт", BRAND_FIELD_NAME);
+            throw InputError(ErrorCode::TextTooLong, "Марка длиннее 80 символов", BRAND_FIELD_NAME);
 
         if (!is_english(brand))
             throw InputError(ErrorCode::InvalidBrand, "Нужна марка с латинскими буквами", BRAND_FIELD_NAME);
@@ -124,7 +124,7 @@ namespace input
     {
         while (true)
         {
-            std::cout << "(1–" << MAX_LENGTH << " байт, латинские буквы, можно цифры и дефис): ";
+            std::cout << "(1–" << MAX_LENGTH << " символов, латинские буквы, можно цифры и дефис): ";
             try
             {
                 String brand = read_line(stream, BRAND_FIELD_NAME);
@@ -167,6 +167,14 @@ namespace input
         return read_number<int>(stream, field,
             [min, max] { std::cout << "(целое число, " << min << ".." << max << "): "; },
             [&](int value) { check_int(value, min, max, field); });
+    }
+
+    // Ввод индекса с проверкой формата
+    int read_index(std::istream& stream, int count, const String& field)
+    {
+        return read_number<int>(stream, field,
+            [count] { std::cout << "(целое число, 0.." << count - 1 << "): "; },
+            [](int) {});
     }
 
     // Ввод положительного числа с повтором

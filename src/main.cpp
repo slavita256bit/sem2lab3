@@ -2,11 +2,49 @@
 #include "Bus.h"
 #include "Trolleybus.h"
 #include "Interaction.h"
+#include <sstream>
 
 #define ADD_DEFAULTS
+// #define DEMONSTRATE_ERRORS
 
 int main()
 {
+#ifdef DEMONSTRATE_ERRORS
+    // Ошибка 8: сбой входного потока
+    try
+    {
+        std::istringstream broken;
+        broken.setstate(std::ios::badbit);
+        input::read_int(broken, 1, 10, "число");
+    }
+    catch (const InputError& error)
+    {
+        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+    }
+
+    BinaryTree<Bus> tree;
+
+    // Ошибка 202: добавление пустого указателя
+    try
+    {
+        tree.add(nullptr);
+    }
+    catch (const ContainerError& error)
+    {
+        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+    }
+
+    // Ошибка 203: нужного для операции объекта нет в дереве
+    try
+    {
+        Bus bus("Test", 2027, 25, 1);
+        tree.find(bus);
+    }
+    catch (const ContainerError& error)
+    {
+        std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << ".\n";
+    }
+#else
     BinaryTree<DumpTruck> dump_trucks;
     BinaryTree<Bus> buses;
     BinaryTree<Trolleybus> trolleybuses;
@@ -54,7 +92,10 @@ int main()
             }
             catch (const ContainerError& error)
             {
-                std::cout << "Ошибка " << error.get_code() << ": " << error.get_message() << " (" << error.get_number() << ").\n";
+                std::cout << "Ошибка " << error.get_code() << ": " << error.get_message();
+                if (error.get_code() != static_cast<int>(ErrorCode::ObjectNotFound))
+                    std::cout << " (" << error.get_number() << ")";
+                std::cout << ".\n";
             }
         }
     }
@@ -74,6 +115,8 @@ int main()
         std::cout << "Недостаточно памяти.\n";
         return 1;
     }
+
+#endif
 
     return 0;
 }

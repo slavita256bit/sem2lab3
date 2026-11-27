@@ -22,6 +22,13 @@ void BinaryTree<T>::add(const T& object)
     node->value = new T(object);
 }
 
+// Выбор ветви по ключу
+template<typename T>
+BinaryTree<T>*& BinaryTree<T>::get_target_child(const T& object)
+{
+    return object < *value ? left : right;
+}
+
 // Поиск места для вставки
 template<typename T>
 BinaryTree<T>* BinaryTree<T>::insertion_node(const T& object)
@@ -29,7 +36,7 @@ BinaryTree<T>* BinaryTree<T>::insertion_node(const T& object)
     if (empty())
         return this;
 
-    BinaryTree*& node = object < *value ? left : right;
+    BinaryTree*& node = get_target_child(object);
     if (!node)
         node = new BinaryTree;
 
@@ -125,10 +132,11 @@ BinaryTree<T>* BinaryTree<T>::find(const T& object)
         if (*node->value == object)
             return node;
 
-        node = object < *node->value ? node->left : node->right;
+        node = node->get_target_child(object);
     }
 
-    return nullptr;
+    // return nullptr;
+    throw ContainerError(ErrorCode::ObjectNotFound, "Объект не найден", -1);
 }
 
 // Вывод шапки таблицы

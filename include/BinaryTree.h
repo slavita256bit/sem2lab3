@@ -28,6 +28,7 @@ private:
     T* extract();                                                // Извлечение объекта текущего узла
     void swap(BinaryTree& other) noexcept;                       // Поменять два поддерева местами
     BinaryTree* find_smallest();                                 // Поиск наименьшего узла
+    BinaryTree*& get_target_child(const T& object);                                                  // Выбор ветви по ключу
     BinaryTree* insertion_node(const T& object);                 // Поиск места для вставки
 
 public:

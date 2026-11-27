@@ -36,18 +36,6 @@ void CargoVehicle::print_header(std::ostream& stream) const
 }
 
 
-// Равенство всех полей
-bool CargoVehicle::operator==(const CargoVehicle& other) const
-{
-    return Vehicle::operator==(other) && this->payload == other.payload;
-}
-
-// Неравенство полей
-bool CargoVehicle::operator!=(const CargoVehicle& other) const
-{
-    return !(*this == other);
-}
-
 std::istream& operator>>(std::istream& stream, CargoVehicle& object)
 {
     stream >> static_cast<Vehicle&>(object);
@@ -64,4 +52,16 @@ std::ostream& operator<<(std::ostream& stream, const CargoVehicle& object)
     stream << std::format(CARGO_VEHICLE_TABLE_FORMAT, std::format("{:.1f}", object.get_payload()));
 
     return stream;
+}
+
+// Равенство всех полей
+bool CargoVehicle::operator==(const CargoVehicle& other) const
+{
+    return Vehicle::operator==(other) && this->payload == other.payload;
+}
+
+// Неравенство полей
+bool CargoVehicle::operator!=(const CargoVehicle& other) const
+{
+    return !(*this == other);
 }
