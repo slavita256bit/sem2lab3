@@ -12,6 +12,8 @@
 
 int main()
 {
+    std::clog.rdbuf(nullptr);
+
 #ifdef DEMONSTRATE_ERRORS
     // Ошибка 8: сбой входного потока
     try

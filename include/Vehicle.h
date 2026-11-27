@@ -43,14 +43,14 @@ public:
     {
         this->set_brand(this->brand);
         this->set_year(this->year);
-        std::cout << "+ Vehicle [" << this->get_brand() << "]" << '\n';
+        std::clog << "+ Vehicle [" << this->get_brand() << "]" << '\n';
     }
 
     Vehicle(const Vehicle& other) : Vehicle(other.get_brand(), other.get_year()) {}
 
     virtual ~Vehicle()
     {
-        std::cout << "- Vehicle [" << this->get_brand() << "]" << '\n';
+        std::clog << "- Vehicle [" << this->get_brand() << "]" << '\n';
     }
 
     const String& get_brand() const;                                                                // Получение марки

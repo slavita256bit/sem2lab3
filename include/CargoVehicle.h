@@ -14,14 +14,14 @@ public:
     CargoVehicle(const String& brand, int year, double payload) : Vehicle(brand, year), payload(payload)
     {
         this->set_payload(this->payload);
-        std::cout << "+ CargoVehicle [" << this->get_brand() << "]" << '\n';
+        std::clog << "+ CargoVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     CargoVehicle(const CargoVehicle& other) : CargoVehicle(other.get_brand(), other.get_year(), other.get_payload()) {}
 
     ~CargoVehicle() override
     {
-        std::cout << "- CargoVehicle [" << this->get_brand() << "]" << '\n';
+        std::clog << "- CargoVehicle [" << this->get_brand() << "]" << '\n';
     }
 
     double get_payload() const;                                              // Получение грузоподъёмности

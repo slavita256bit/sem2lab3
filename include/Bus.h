@@ -16,14 +16,14 @@ public:
         : PassengerVehicle(brand, year, seats), route(route)
     {
         this->set_route(this->route);
-        std::cout << "+ Bus [" << this->get_brand() << "]" << '\n';
+        std::clog << "+ Bus [" << this->get_brand() << "]" << '\n';
     }
 
     Bus(const Bus& other) : Bus(other.get_brand(), other.get_year(), other.get_seats(), other.get_route()) {}
 
     ~Bus() override
     {
-        std::cout << "- Bus [" << this->get_brand() << "]" << '\n';
+        std::clog << "- Bus [" << this->get_brand() << "]" << '\n';
     }
 
     int get_route() const;                                          // Получение номера маршрута

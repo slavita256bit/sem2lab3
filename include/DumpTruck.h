@@ -15,14 +15,14 @@ public:
         : CargoVehicle(brand, year, payload), body_volume(body_volume)
     {
         this->set_body_volume(this->body_volume);
-        std::cout << "+ DumpTruck [" << this->get_brand() << "]" << '\n';
+        std::clog << "+ DumpTruck [" << this->get_brand() << "]" << '\n';
     }
 
     DumpTruck(const DumpTruck& other) : DumpTruck(other.get_brand(), other.get_year(), other.get_payload(), other.get_body_volume()) {}
 
     ~DumpTruck() override
     {
-        std::cout << "- DumpTruck [" << this->get_brand() << "]" << '\n';
+        std::clog << "- DumpTruck [" << this->get_brand() << "]" << '\n';
     }
 
     double get_body_volume() const;                                  // Получение объёма кузова

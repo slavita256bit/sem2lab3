@@ -9,6 +9,8 @@
 
 namespace input
 {
+    static bool is_english(const String& text);
+
     // Чтение одной строки с ограничением длины
     static String read_line(std::istream& stream, const String& field)
     {
