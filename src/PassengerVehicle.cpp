@@ -1,7 +1,6 @@
 #include "PassengerVehicle.h"
 #include "Input.h"
 #include <format>
-#include <limits>
 
 // Получение числа мест
 int PassengerVehicle::get_seats() const
@@ -12,7 +11,7 @@ int PassengerVehicle::get_seats() const
 // Изменение числа мест
 void PassengerVehicle::set_seats(int value)
 {
-    input::check_int(value, 1, std::numeric_limits<int>::max(), "число мест");
+    input::check_int(value, 1, MAX_SEATS, "число мест");
     this->seats = value;
 }
 
@@ -25,8 +24,8 @@ void PassengerVehicle::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Новое значение: ";
-    this->set_seats(input::read_int(std::cin, 1, std::numeric_limits<int>::max(), "число мест"));
+    std::cout << "Новое значение ";
+    this->set_seats(input::read_int(std::cin, 1, MAX_SEATS, "число мест"));
 }
 
 // Вывод шапки таблицы
@@ -39,7 +38,7 @@ void PassengerVehicle::print_header(std::ostream& stream) const
 // Равенство всех полей
 bool PassengerVehicle::operator==(const PassengerVehicle& other) const
 {
-    return static_cast<const Vehicle&>(*this) == static_cast<const Vehicle&>(other) && this->seats == other.seats;
+    return Vehicle::operator==(other) && this->seats == other.seats;
 }
 
 // Неравенство полей
@@ -51,8 +50,8 @@ bool PassengerVehicle::operator!=(const PassengerVehicle& other) const
 std::istream& operator>>(std::istream& stream, PassengerVehicle& object)
 {
     stream >> static_cast<Vehicle&>(object);
-    std::cout << "Число мест: ";
-    object.set_seats(input::read_int(stream, 1, std::numeric_limits<int>::max(), "число мест"));
+    std::cout << "Число мест ";
+    object.set_seats(input::read_int(stream, 1, MAX_SEATS, "число мест"));
 
     return stream;
 }

@@ -9,7 +9,7 @@ private:
     double battery_capacity = 0;  // Ёмкость аккумулятора, кВт·ч
 
 public:
-    Trolleybus() : Trolleybus(String("Безмарки"), 2020, 1, 60.0) {}
+    Trolleybus() : Trolleybus("NoBrand", 2020, 1, 60.0) {}
     Trolleybus(const String& brand, int year, int seats, double battery_capacity)
         : PassengerVehicle(brand, year, seats), battery_capacity(battery_capacity)
     {

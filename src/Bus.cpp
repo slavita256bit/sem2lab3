@@ -1,7 +1,6 @@
 #include "Bus.h"
 #include "Input.h"
 #include <format>
-#include <limits>
 
 // Получение номера маршрута
 int Bus::get_route() const
@@ -12,7 +11,7 @@ int Bus::get_route() const
 // Изменение номера маршрута
 void Bus::set_route(int value)
 {
-    input::check_int(value, 1, std::numeric_limits<int>::max(), "маршрут");
+    input::check_int(value, 1, MAX_ROUTE, "маршрут");
     this->route = value;
 }
 
@@ -25,8 +24,8 @@ void Bus::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Новое значение: ";
-    this->set_route(input::read_int(std::cin, 1, std::numeric_limits<int>::max(), "маршрут"));
+    std::cout << "Новое значение ";
+    this->set_route(input::read_int(std::cin, 1, MAX_ROUTE, "маршрут"));
 }
 
 // Ввод объекта с подсказкой
@@ -72,7 +71,7 @@ bool Bus::operator>=(const Bus& other) const
 // Равенство всех полей
 bool Bus::operator==(const Bus& other) const
 {
-    return static_cast<const PassengerVehicle&>(*this) == static_cast<const PassengerVehicle&>(other) && this->route == other.route;
+    return PassengerVehicle::operator==(other) && this->route == other.route;
 }
 
 // Неравенство полей
@@ -84,8 +83,8 @@ bool Bus::operator!=(const Bus& other) const
 std::istream& operator>>(std::istream& stream, Bus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object);
-    std::cout << "Маршрут: ";
-    object.set_route(input::read_int(stream, 1, std::numeric_limits<int>::max(), "маршрут"));
+    std::cout << "Маршрут ";
+    object.set_route(input::read_int(stream, 1, MAX_ROUTE, "маршрут"));
 
     return stream;
 }
@@ -93,7 +92,7 @@ std::istream& operator>>(std::istream& stream, Bus& object)
 std::ostream& operator<<(std::ostream& stream, const Bus& object)
 {
     stream << static_cast<const PassengerVehicle&>(object);
-    stream << std::format(BUS_TABLE_FORMAT, std::to_string(object.get_route()));
+    stream << std::format(BUS_TABLE_FORMAT, object.get_route());
 
     return stream;
 }

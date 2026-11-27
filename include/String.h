@@ -48,7 +48,7 @@ private:
 
 public:
     String() : String("") {}
-    explicit String(const char* str)
+    String(const char* str)
     {
         auto new_length = static_cast<int>(std::char_traits<char>::length(str ? str : ""));
 
@@ -65,7 +65,7 @@ public:
     String(const String& copy) : String(copy.length)                                                 // Конструктор копирования
     {
         if (copy.length > 0)
-            std::copy_n(copy.data, copy.length, this->data);
+            std::copy(copy.begin(), copy.end(), this->begin());
     }
 
     String(String&& other) noexcept                                                                 // Конструктор перемещения
@@ -74,6 +74,10 @@ public:
     String& operator=(const String& other);                                                         // Оператор присваивания
 
     int get_length() const;                                                                        // Получение длины строки
+    char* begin() noexcept;                                                                        // Начало строки
+    char* end() noexcept;                                                                          // Конец строки
+    const char* begin() const noexcept;                                                            // Начало строки для чтения
+    const char* end() const noexcept;                                                              // Конец строки для чтения
 
     String operator-(const String& other) const;                                                    // Удаление всех вхождений other из строки
     String& operator+=(const String& other);                                                        // Добавление other к строке

@@ -9,7 +9,7 @@ private:
     double payload = 0;  // Грузоподъёмность, т
 
 public:
-    CargoVehicle() : CargoVehicle(String("Безмарки"), 2020, 1.0) {}
+    CargoVehicle() : CargoVehicle("NoBrand", 2020, 1.0) {}
     CargoVehicle(const String& brand, int year, double payload) : Vehicle(brand, year), payload(payload)
     {
         this->set_payload(this->payload);

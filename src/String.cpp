@@ -15,6 +15,30 @@ int String::get_length() const
     return this->length;
 }
 
+// Начало строки
+char* String::begin() noexcept
+{
+    return this->data;
+}
+
+// Конец строки
+char* String::end() noexcept
+{
+    return this->data + this->length;
+}
+
+// Начало строки для чтения
+const char* String::begin() const noexcept
+{
+    return this->data;
+}
+
+// Конец строки для чтения
+const char* String::end() const noexcept
+{
+    return this->data + this->length;
+}
+
 bool String::is_a(char c)
 {
     return c == 'a';
@@ -32,7 +56,7 @@ String& String::operator=(const String& other)
     {
         char* new_data = new char[other.length + 1]{};
         if (other.length > 0)
-            std::copy_n(other.data, other.length, new_data);
+            std::copy(other.begin(), other.end(), new_data);
         delete[] this->data;
         this->data = new_data;
         this->length = other.length;
@@ -47,18 +71,16 @@ String String::operator-(const String& other) const
     if (this->length == 0 || other.length == 0)
         return *this;
 
-    const char* text_end = this->data + this->length;
-    const char* pattern_begin = other.data;
-    const char* pattern_end = other.data + other.length;
+    const char* text_end = this->end();
 
     String result(this->length);
-    char* result_end = result.data;
+    char* result_end = result.begin();
 
-    const char* current = this->data;
+    const char* current = this->begin();
     const char* match;
     do
     {
-        match = std::search(current, text_end, pattern_begin, pattern_end);
+        match = std::search(current, text_end, other.begin(), other.end());
         result_end = std::copy(current, match, result_end);
         if (match != text_end)
             current = match + other.length;
@@ -66,7 +88,7 @@ String String::operator-(const String& other) const
     while (match != text_end);
     *result_end = '\0';
 
-    result.length = static_cast<int>(result_end - result.data);
+    result.length = static_cast<int>(result_end - result.begin());
     return result;
 }
 
@@ -77,9 +99,9 @@ String& String::operator+=(const String& other)
     char* new_data = new char[new_length + 1]{};
 
     if (this->length > 0)
-        std::copy_n(this->data, this->length, new_data);
+        std::copy(this->begin(), this->end(), new_data);
     if (other.length > 0)
-        std::copy_n(other.data, other.length, new_data + this->length);
+        std::copy(other.begin(), other.end(), new_data + this->length);
 
     delete[] this->data;
     this->data = new_data;
@@ -94,8 +116,8 @@ String& String::operator++()
     if (this->length == 0)
         return *this;
 
-    std::reverse_iterator<char*> rbegin(this->data + this->length);
-    std::reverse_iterator<char*> rend(this->data);
+    std::reverse_iterator rbegin(this->end());
+    std::reverse_iterator rend(this->begin());
 
     auto it = std::find_if_not(rbegin, rend, is_z);
     std::fill(rbegin, it, 'a');
@@ -119,8 +141,8 @@ String& String::operator--()
     if (this->length == 0)
         return *this;
 
-    std::reverse_iterator<char*> rbegin(this->data + this->length);
-    std::reverse_iterator<char*> rend(this->data);
+    std::reverse_iterator rbegin(this->end());
+    std::reverse_iterator rend(this->begin());
 
     auto it = std::find_if_not(rbegin, rend, is_a);
     std::fill(rbegin, it, 'z');
@@ -155,8 +177,7 @@ String String::operator()(int from, int count) const
 {
     String result(count);
     if (count > 0)
-        std::copy_n(this->data + from, count, result.data);
-    result.data[count] = '\0';
+        std::copy_n(this->begin() + from, count, result.begin());
     return result;
 }
 
@@ -181,7 +202,7 @@ String operator+(const char* a, const String& b)
 // Равенство строк
 bool operator==(const String& a, const String& b)
 {
-    return a.length == b.length && (a.length == 0 || std::equal(a.data, a.data + a.length, b.data));
+    return a.length == b.length && (a.length == 0 || std::equal(a.begin(), a.end(), b.begin()));
 }
 
 // Неравенство строк
@@ -196,7 +217,7 @@ bool operator<(const String& a, const String& b)
     if (a.length == 0 || b.length == 0)
         return a.length < b.length;
 
-    return std::lexicographical_compare(a.data, a.data + a.length, b.data, b.data + b.length);
+    return std::ranges::lexicographical_compare(a, b);
 }
 
 bool operator>(const String& a, const String& b)

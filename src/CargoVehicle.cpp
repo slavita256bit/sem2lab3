@@ -24,7 +24,7 @@ void CargoVehicle::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Грузоподъёмность, т (десятичная точка): ";
+    std::cout << "Грузоподъёмность, т ";
     this->set_payload(input::read_positive(std::cin, "грузоподъёмность"));
 }
 
@@ -39,7 +39,7 @@ void CargoVehicle::print_header(std::ostream& stream) const
 // Равенство всех полей
 bool CargoVehicle::operator==(const CargoVehicle& other) const
 {
-    return static_cast<const Vehicle&>(*this) == static_cast<const Vehicle&>(other) && this->payload == other.payload;
+    return Vehicle::operator==(other) && this->payload == other.payload;
 }
 
 // Неравенство полей
@@ -51,7 +51,7 @@ bool CargoVehicle::operator!=(const CargoVehicle& other) const
 std::istream& operator>>(std::istream& stream, CargoVehicle& object)
 {
     stream >> static_cast<Vehicle&>(object);
-    std::cout << "Грузоподъёмность (т): ";
+    std::cout << "Грузоподъёмность (т) ";
     object.set_payload(input::read_positive(stream, "грузоподъёмность"));
 
     return stream;

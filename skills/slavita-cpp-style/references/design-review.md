@@ -27,10 +27,16 @@ allocations; a short expression does not eliminate state or cost.
 
 ## Recheck technical traps observed in earlier work
 
-- In coursework that already provides `String`, use its length and indexed
-  access for text validation. Use a bounded character array for token parsing
-  and consume the entire token on overflow. Avoid introducing `std::string`
-  or exposing `c_str()` just to validate a field.
+- In coursework that already provides `String`, use its range and length.
+  When one field per line is agreed, prefer bounded `getline` into a local
+  `String` and return the value. Discard the rest of an oversized line before
+  retrying. Ask before changing between line input and whitespace tokens.
+  Avoid introducing `std::string` or `c_str()` just to validate a field.
+- Use standard number conversion where it fits. With `from_chars`, check the
+  result and that it reached the end, then apply the domain bounds. Share the
+  read, parse, and retry loop for numeric types if only their value checks differ.
+- Validate text against the agreed alphabet and character rules. Keep unused
+  switches, encodings, and general-purpose policies out of the active path.
 - Prefer a standard character predicate when it matches the specified alphabet
   and works with the input encoding. For a fixed alphabet, use direct range
   comparisons and isolated exceptions where possible. For UTF-8, a small helper
@@ -41,6 +47,8 @@ allocations; a short expression does not eliminate state or cost.
 - Trace reported unreachable branches to the operation that can fail, including
   implicit allocation failures. Remove redundant cleanup wrappers when ownership
   can be established at allocation. Verify the failure path before dropping cleanup.
+- Use `noexcept` for an actual exception guarantee, not to silence a diagnostic.
+  Account for allocations, stream operations, and calls into generic types.
 - vector<Base> slices derived objects; typeid cannot restore discarded fields.
   A fixed-length Base array has the same issue. Resolve value storage, polymorphism,
   and ownership requirements before selecting the container.
@@ -85,6 +93,14 @@ when only a compiler was run; name the actual tool. For template/ODR changes, ve
 inclusion from multiple cpp files. For refactoring, compare observable behavior before
 and after; for a semantic change, test the new behavior instead of demanding identical
 old output.
+
+When the student points out a local issue, search the active project for the same
+underlying pattern. Check nearby code, analogous fields and call sites, paired
+operations, and sibling classes. Fix confirmed equivalents in the same pass,
+unless the student explicitly limits the scope. For example, check other repeated
+field labels after extracting one into a named constant, or review both increment
+and decrement after switching one to `begin()` and `end()`. Preserve cases whose
+technical requirements differ, and summarize the related fixes.
 
 Stop once the agreed behavior works, suitable checks pass, formatting has been
 reviewed, and current documentation matches the code. Do not add architectural

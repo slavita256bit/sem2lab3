@@ -9,7 +9,7 @@ private:
     double body_volume = 0; // Объём кузова, м3
 
 public:
-    DumpTruck() : DumpTruck(String("Безмарки"), 2020, 1.0, 1.0) {}
+    DumpTruck() : DumpTruck("NoBrand", 2020, 1.0, 1.0) {}
     DumpTruck(const String& brand, int year, double payload, double body_volume)
         : CargoVehicle(brand, year, payload), body_volume(body_volume)
     {

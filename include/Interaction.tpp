@@ -23,7 +23,7 @@ void Interaction<T>::run(int action)
         if (count == 0)
             return;
 
-        std::cout << "Номер объекта: ";
+        std::cout << "Номер объекта ";
         int number = input::read_int(std::cin, 0, count - 1, "номер объекта");
         if (action == 3)
             this->edit_object(number);
@@ -31,7 +31,7 @@ void Interaction<T>::run(int action)
             this->remove_object(number);
     }
 
-    std::cout << std::endl;
+    std::cout << '\n';
     this->print_table();
 }
 
@@ -110,10 +110,10 @@ void Interaction<T>::edit_field(T& object)
     std::cout << static_cast<int>(VehicleField::BodyVolume) << " - объём кузова\n";
     std::cout << static_cast<int>(VehicleField::Seats) << " - число мест\n";
     std::cout << static_cast<int>(VehicleField::Route) << " - маршрут\n";
-    std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - ёмкость аккумулятора\n";
+    std::cout << static_cast<int>(VehicleField::BatteryCapacity) << " - " << BATTERY_CAPACITY_FIELD << '\n';
     while (true)
     {
-        std::cout << "Параметр: ";
+        std::cout << "Параметр ";
         int field = input::read_int(std::cin, static_cast<int>(VehicleField::Brand), static_cast<int>(VehicleField::BatteryCapacity), "параметр");
         try
         {

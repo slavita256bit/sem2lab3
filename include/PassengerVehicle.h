@@ -1,6 +1,7 @@
 #pragma once
 #include "Vehicle.h"
 
+#define MAX_SEATS 200
 #define PASSENGER_VEHICLE_TABLE_FORMAT "{:<5}  "
 
 class PassengerVehicle : public Vehicle
@@ -9,7 +10,7 @@ private:
     int seats = 0;  // Количество мест
 
 public:
-    PassengerVehicle() : PassengerVehicle(String("Безмарки"), 2020, 1) {}
+    PassengerVehicle() : PassengerVehicle("NoBrand", 2020, 1) {}
     PassengerVehicle(const String& brand, int year, int seats)
         : Vehicle(brand, year), seats(seats)
     {

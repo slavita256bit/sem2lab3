@@ -11,7 +11,7 @@ double Trolleybus::get_battery_capacity() const
 // Изменение ёмкости аккумулятора
 void Trolleybus::set_battery_capacity(double value)
 {
-    input::check_positive(value, "ёмкость аккумулятора");
+    input::check_positive(value, BATTERY_CAPACITY_FIELD);
     this->battery_capacity = value;
 }
 
@@ -24,14 +24,14 @@ void Trolleybus::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Новое значение (десятичная точка): ";
-    this->set_battery_capacity(input::read_positive(std::cin, "ёмкость аккумулятора"));
+    std::cout << "Новое значение ";
+    this->set_battery_capacity(input::read_positive(std::cin, BATTERY_CAPACITY_FIELD));
 }
 
 // Ввод объекта с подсказкой
 Trolleybus& Trolleybus::print_read_info(std::istream& stream)
 {
-    std::cout << "Троллейбус. Вводите по одному полю на строку. Для дробных чисел используйте точку.\n";
+    std::cout << "Троллейбус. Вводите по одному полю на строку.\n";
     stream >> *this;
 
     return *this;
@@ -71,7 +71,7 @@ bool Trolleybus::operator>=(const Trolleybus& other) const
 // Равенство всех полей
 bool Trolleybus::operator==(const Trolleybus& other) const
 {
-    return static_cast<const PassengerVehicle&>(*this) == static_cast<const PassengerVehicle&>(other) && this->battery_capacity == other.battery_capacity;
+    return PassengerVehicle::operator==(other) && this->battery_capacity == other.battery_capacity;
 }
 
 // Неравенство полей
@@ -83,8 +83,8 @@ bool Trolleybus::operator!=(const Trolleybus& other) const
 std::istream& operator>>(std::istream& stream, Trolleybus& object)
 {
     stream >> static_cast<PassengerVehicle&>(object);
-    std::cout << "Ёмкость аккумулятора (кВт·ч): ";
-    object.set_battery_capacity(input::read_positive(stream, "ёмкость аккумулятора"));
+    std::cout << "Ёмкость аккумулятора (кВт·ч) ";
+    object.set_battery_capacity(input::read_positive(stream, BATTERY_CAPACITY_FIELD));
 
     return stream;
 }

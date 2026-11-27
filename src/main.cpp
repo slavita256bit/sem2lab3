@@ -14,32 +14,32 @@ int main()
     try
     {
 #ifdef ADD_DEFAULTS
-        dump_trucks.add(DumpTruck(String("БелАЗ"), 2022, 40.0, 25.0));
-        dump_trucks.add(DumpTruck(String("Caterpillar"), 2023, 50.0, 30.0));
-        buses.add(Bus(String("FlixBus"), 2024, 30, 15));
-        buses.add(Bus(String("Неман"), 2025, 45, 7));
-        trolleybuses.add(Trolleybus(String("Гомсельмаш"), 2025, 40, 80.0));
-        trolleybuses.add(Trolleybus(String("Трансформер"), 2024, 35, 60.5));
+        dump_trucks.add(DumpTruck("BelAZ", 2022, 40.0, 25.0));
+        dump_trucks.add(DumpTruck("Caterpillar", 2023, 50.0, 30.0));
+        buses.add(Bus("FlixBus", 2024, 30, 15));
+        buses.add(Bus("Neman", 2025, 45, 7));
+        trolleybuses.add(Trolleybus("Gomselmash", 2025, 40, 80.0));
+        trolleybuses.add(Trolleybus("Transformer", 2024, 35, 60.5));
 #endif
 
         while (true)
         {
-            std::cout << std::endl;
+            std::cout << '\n';
             std::cout << "1 - выбрать таблицу класса\n";
             std::cout << "2 - добавить объект\n";
             std::cout << "3 - изменить объект\n";
             std::cout << "4 - удалить объект\n";
             std::cout << "0 - завершить программу\n";
-            std::cout << "Действие: ";
+            std::cout << "Действие ";
             int action = input::read_int(std::cin, 0, 4, "действие");
             if (action == 0)
                 break;
 
-            std::cout << std::endl;
+            std::cout << '\n';
             std::cout << "1 - самосвал (DumpTruck)\n";
             std::cout << "2 - автобус (Bus)\n";
             std::cout << "3 - троллейбус (Trolleybus)\n";
-            std::cout << "Класс: ";
+            std::cout << "Класс ";
             int type = input::read_int(std::cin, 1, 3, "класс");
 
             try

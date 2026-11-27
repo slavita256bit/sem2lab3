@@ -24,14 +24,14 @@ void DumpTruck::change_field(VehicleField field)
         return;
     }
 
-    std::cout << "Объём кузова, м3 (десятичная точка): ";
+    std::cout << "Объём кузова, м3 ";
     this->set_body_volume(input::read_positive(std::cin, "объём кузова"));
 }
 
 // Ввод объекта с подсказкой
 DumpTruck& DumpTruck::print_read_info(std::istream& stream)
 {
-    std::cout << "Самосвал. Вводите по одному полю на строку. Для дробных чисел используйте точку.\n";
+    std::cout << "Самосвал. Вводите по одному полю на строку.\n";
     stream >> *this;
 
     return *this;
@@ -71,7 +71,7 @@ bool DumpTruck::operator>=(const DumpTruck& other) const
 // Равенство всех полей
 bool DumpTruck::operator==(const DumpTruck& other) const
 {
-    return static_cast<const CargoVehicle&>(*this) == static_cast<const CargoVehicle&>(other) && this->body_volume == other.body_volume;
+    return CargoVehicle::operator==(other) && this->body_volume == other.body_volume;
 }
 
 // Неравенство полей
@@ -83,7 +83,7 @@ bool DumpTruck::operator!=(const DumpTruck& other) const
 std::istream& operator>>(std::istream& stream, DumpTruck& object)
 {
     stream >> static_cast<CargoVehicle&>(object);
-    std::cout << "Объём кузова (м3): ";
+    std::cout << "Объём кузова (м3) ";
     object.set_body_volume(input::read_positive(stream, "объём кузова"));
 
     return stream;

@@ -104,6 +104,17 @@ override them. Do not clean up incidental old inconsistencies throughout a repos
   interaction/demonstration layers to hide main's complexity.
 - Prefer early return/continue over nesting. Prefer auto when initializing from an
   explicit cast, avoiding repetition of the type name.
+- Reuse existing range operations before repeating storage details. Use
+  `begin()` and `end()` for traversal, and a range-for when the index is unused.
+  Let the compiler deduce an unambiguous iterator type, for example
+  `std::reverse_iterator first(this->end());`. Keep explicit template arguments
+  when they select a type the initializer cannot supply.
+- To reuse a base member comparison, call `Base::operator==(other)` when the
+  upcast is implicit. Keep casts for free stream operators when needed to
+  select the base overload.
+- For checked console input, show the format and bounds in parentheses before
+  the prompt colon. End each error message with a newline and show the same
+  input hint again on retry.
 - Add virtual methods for actual dispatch needs, override for overrides, and a
   virtual destructor for a polymorphic base. Do not make every method virtual.
 - Fix shadowing, incorrect override, use-after-free, and noexcept issues instead

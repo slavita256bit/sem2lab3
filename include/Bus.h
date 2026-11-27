@@ -1,15 +1,16 @@
 #pragma once
 #include "PassengerVehicle.h"
 
-#define BUS_TABLE_FORMAT "{:<7.7}  "
+#define MAX_ROUTE 10000
+#define BUS_TABLE_FORMAT "{:<7}  "
 
 class Bus : virtual public PassengerVehicle
 {
 private:
-    int route = 0;                                                                                  // Номер маршрута
+    int route = 0;    // Номер маршрута
 
 public:
-    Bus() : Bus(String("Безмарки"), 2020, 1, 1) {}
+    Bus() : Bus("NoBrand", 2020, 1, 1) {}
     Bus(const String& brand, int year, int seats, int route)
         : PassengerVehicle(brand, year, seats), route(route)
     {

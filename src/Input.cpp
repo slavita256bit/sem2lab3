@@ -1,8 +1,7 @@
 #include "Input.h"
 #include "InputError.h"
-#include <algorithm>
 #include <charconv>
-#include <chrono>
+#include <cctype>
 #include <cmath>
 #include <iostream>
 #include <limits>
@@ -10,11 +9,15 @@
 namespace input
 {
     // Чтение одной строки с ограничением длины
-    static int read_line(std::istream& stream, char (&line)[MAX_LENGTH + 1], const char* field)
+    static String read_line(std::istream& stream, const String& field)
     {
-        stream.getline(line, sizeof(line));
+        String line(MAX_LENGTH);
+        stream.getline(line.begin(), line.get_length() + 1);
         if (stream)
-            return static_cast<int>(stream.gcount()) - (stream.eof() ? 0 : 1);
+        {
+            int length = static_cast<int>(stream.gcount()) - (stream.eof() ? 0 : 1);
+            return line(0, length);
+        }
 
         if (stream.bad())
             throw InputError(ErrorCode::StreamFailure, "Ошибка потока ввода", field);
@@ -37,11 +40,12 @@ namespace input
         if (code == static_cast<int>(ErrorCode::EndOfInput) || code == static_cast<int>(ErrorCode::StreamFailure))
             throw;
 
-        std::cout << "Ошибка " << code << " (" << error.get_field() << "): " << error.get_message() << ". Повторите ввод: ";
+        std::cout << "Ошибка " << code << " (" << error.get_field() << "): " << error.get_message() << ".\n";
+        std::cout << "Повторите ввод ";
     }
 
     // Проверка результата преобразования числа
-    static void check_conversion(const std::from_chars_result& result, const char* end, const char* field)
+    static void check_conversion(const std::from_chars_result& result, const char* end, const String& field)
     {
         if (result.ec == std::errc::invalid_argument)
             throw InputError(ErrorCode::InvalidNumber, "Введите число", field);
@@ -51,63 +55,64 @@ namespace input
             throw InputError(ErrorCode::TrailingCharacters, "Лишние символы после числа", field);
     }
 
-    // Получение текущего года
-    int current_year()
+    /*
+    // Проверка марки с латинскими буквами
+    static bool is_english(const String& text, bool allow_uppercase = true, bool allow_lowercase = true)
     {
-        auto today = std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now());
-        return static_cast<int>(std::chrono::year_month_day(today).year());
+        bool has_letter = false;
+        for (int i = 0; i < text.get_length(); i++)
+        {
+            char ch = text[i];
+            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-')
+                continue;
+
+            if (!((allow_uppercase && ch >= 'A' && ch <= 'Z') || (allow_lowercase && ch >= 'a' && ch <= 'z')))
+                return false;
+
+            has_letter = true;
+        }
+
+        return has_letter;
     }
+    */
 
-    // Проверка диапазонов русских букв в UTF-8
-    static bool is_russian_letter(char first, char second)
+    // Проверка марки с латинскими буквами
+    static bool is_english(const String& text)
     {
-        auto lead = static_cast<char8_t>(first);
-        auto tail = static_cast<char8_t>(second);
-        if (lead == u8"А"[0])
-            return (tail >= u8"А"[1] && tail <= u8"п"[1]) || tail == u8"Ё"[1];
+        bool has_letter = false;
+        for (char ch : text)
+        {
+            if (std::isdigit(static_cast<unsigned char>(ch)) || ch == '-')
+                continue;
 
-        return lead == u8"р"[0] && ((tail >= u8"р"[1] && tail <= u8"я"[1]) || tail == u8"ё"[1]);
+            if (!((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')))
+                return false;
+
+            has_letter = true;
+        }
+
+        return has_letter;
     }
 
     // Проверка марки
     void check_brand(const String& brand)
     {
-        int length = brand.get_length();
-        if (length > MAX_LENGTH)
+        if (brand.get_length() > MAX_LENGTH)
             throw InputError(ErrorCode::TextTooLong, "Марка длиннее 80 байт", "марка");
 
-        bool latin = false;
-        bool russian = false;
-        for (int i = 0; i < length; i++)
-        {
-            char c = brand[i];
-            if ((c >= '0' && c <= '9') || c == '-')
-                continue;
-
-            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-                latin = true;
-            else if (i + 1 < length && is_russian_letter(c, brand[i + 1]))
-            {
-                russian = true;
-                i++;
-            }
-            else
-                throw InputError(ErrorCode::InvalidBrand, "Недопустимый символ в марке", "марка");
-        }
-
-        if (latin == russian)
-            throw InputError(ErrorCode::InvalidBrand, "Нужны буквы одного алфавита", "марка");
+        if (!is_english(brand))
+            throw InputError(ErrorCode::InvalidBrand, "Нужна марка с латинскими буквами", "марка");
     }
 
     // Проверка диапазона целого числа
-    void check_int(int value, int min, int max, const char* field)
+    void check_int(int value, int min, int max, const String& field)
     {
         if (value < min || value > max)
             throw InputError(ErrorCode::ValueOutOfRange, "Значение вне диапазона", field);
     }
 
     // Проверка положительного числа
-    void check_positive(double value, const char* field)
+    void check_positive(double value, const String& field)
     {
         if (!std::isfinite(value) || value <= 0)
             throw InputError(ErrorCode::ValueOutOfRange, "Нужно положительное конечное число", field);
@@ -118,13 +123,10 @@ namespace input
     {
         while (true)
         {
+            std::cout << "(1–" << MAX_LENGTH << " байт, латинские буквы, можно цифры и дефис): ";
             try
             {
-                char line[MAX_LENGTH + 1]{};
-                int length = read_line(stream, line, "марка");
-                if (std::find(line, line + length, '\0') != line + length)
-                    throw InputError(ErrorCode::InvalidBrand, "Недопустимый символ в марке", "марка");
-                String brand(line);
+                String brand = read_line(stream, "марка");
                 check_brand(brand);
                 return brand;
             }
@@ -135,19 +137,20 @@ namespace input
         }
     }
 
-    // Ввод целого числа с повтором
-    int read_int(std::istream& stream, int min, int max, const char* field)
+    // Ввод числа с повтором и проверкой значения
+    template<typename T, typename PrintRange, typename Check>
+    static T read_number(std::istream& stream, const String& field, PrintRange print_range, Check check)
     {
         while (true)
         {
+            print_range();
             try
             {
-                char line[MAX_LENGTH + 1]{};
-                const char* end = line + read_line(stream, line, field);
-                int value = 0;
-                auto result = std::from_chars(line, end, value);
-                check_conversion(result, end, field);
-                check_int(value, min, max, field);
+                const String line = read_line(stream, field);
+                T value = 0;
+                auto result = std::from_chars(line.begin(), line.end(), value);
+                check_conversion(result, line.end(), field);
+                check(value);
                 return value;
             }
             catch (const InputError& error)
@@ -157,25 +160,19 @@ namespace input
         }
     }
 
-    // Ввод положительного числа с повтором
-    double read_positive(std::istream& stream, const char* field)
+    // Ввод целого числа с повтором
+    int read_int(std::istream& stream, int min, int max, const String& field)
     {
-        while (true)
-        {
-            try
-            {
-                char line[MAX_LENGTH + 1]{};
-                const char* end = line + read_line(stream, line, field);
-                double value = 0;
-                auto result = std::from_chars(line, end, value);
-                check_conversion(result, end, field);
-                check_positive(value, field);
-                return value;
-            }
-            catch (const InputError& error)
-            {
-                retry_input(error);
-            }
-        }
+        return read_number<int>(stream, field,
+            [min, max] { std::cout << "(целое число, " << min << ".." << max << "): "; },
+            [&](int value) { check_int(value, min, max, field); });
+    }
+
+    // Ввод положительного числа с повтором
+    double read_positive(std::istream& stream, const String& field)
+    {
+        return read_number<double>(stream, field,
+            [] { std::cout << "(конечное число больше 0, десятичная точка): "; },
+            [&](double value) { check_positive(value, field); });
     }
 }

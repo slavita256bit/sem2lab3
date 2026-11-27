@@ -11,6 +11,7 @@
 #include <format>
 
 #define VEHICLE_TABLE_FORMAT "{:<18.18}  {:<4}  "
+#define BATTERY_CAPACITY_FIELD "ёмкость аккумулятора"
 
 enum class VehicleField
 {
@@ -30,7 +31,7 @@ private:
     int year = 0;   // Год выпуска
 
 public:
-    Vehicle() : Vehicle(String("Безмарки"), 2020) {}
+    Vehicle() : Vehicle("NoBrand", 2020) {}
     Vehicle(const String& brand, int year) : brand(brand), year(year)
     {
         this->set_brand(this->brand);
