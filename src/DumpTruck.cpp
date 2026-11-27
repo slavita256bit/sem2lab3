@@ -32,7 +32,7 @@ void DumpTruck::change_field(VehicleField field)
 // Ввод объекта с подсказкой
 DumpTruck& DumpTruck::print_read_info(std::istream& stream)
 {
-    std::cout << "Самосвал. Вводите по одному полю на строку.\n";
+    std::cout << "Введите характеристики самосвала.\n";
     stream >> *this;
 
     return *this;

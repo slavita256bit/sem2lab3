@@ -32,7 +32,7 @@ void Bus::change_field(VehicleField field)
 // Ввод объекта с подсказкой
 Bus& Bus::print_read_info(std::istream& stream)
 {
-    std::cout << "Автобус. Вводите по одному полю на строку.\n";
+    std::cout << "Введите характеристики автобуса.\n";
     stream >> *this;
 
     return *this;

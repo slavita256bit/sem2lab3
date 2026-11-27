@@ -29,7 +29,7 @@ private:
     T* extract();                                                // Извлечение объекта текущего узла
     void swap(BinaryTree& other) noexcept;                       // Поменять два поддерева местами
     BinaryTree* find_smallest();                                 // Поиск наименьшего узла
-    BinaryTree*& get_target_child(const T& object);                                                  // Выбор ветви по ключу
+    BinaryTree*& get_target_child(const T& object);              // Выбор ветви по ключу
     BinaryTree* insertion_node(const T& object);                 // Поиск места для вставки
 
 public:
@@ -55,7 +55,7 @@ public:
     void print_header(std::ostream& stream) const;       // Вывод шапки таблицы
 
     friend std::generator<const T&> iterate<T>(const BinaryTree& tree);                // Обход по порядку ключа
-    // friend std::generator<const T&> iterate_reverse<T>(const BinaryTree& tree);                   // Обход в обратном порядке
+    // friend std::generator<const T&> iterate_reverse<T>(const BinaryTree& tree);     // Обход в обратном порядке
     friend std::ostream& operator<< <T>(std::ostream& stream, const BinaryTree& tree); // Вывод таблицы класса
 };
 

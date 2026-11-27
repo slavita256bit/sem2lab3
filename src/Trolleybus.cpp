@@ -38,7 +38,7 @@ void Trolleybus::change_field(VehicleField field)
 // Ввод объекта с подсказкой
 Trolleybus& Trolleybus::print_read_info(std::istream& stream)
 {
-    std::cout << "Троллейбус. Вводите по одному полю на строку.\n";
+    std::cout << "Введите характеристики троллейбуса.\n";
     stream >> *this;
 
     return *this;
