@@ -1,4 +1,5 @@
 #include "DumpTruck.h"
+#include <iostream>
 #include "Input.h"
 #include <format>
 
@@ -76,7 +77,7 @@ bool DumpTruck::operator>(const DumpTruck& other) const
 // Сравнение объёма кузова
 bool DumpTruck::operator<=(const DumpTruck& other) const
 {
-    return !(other < *this);
+    return other >= *this;
 }
 
 // Сравнение объёма кузова

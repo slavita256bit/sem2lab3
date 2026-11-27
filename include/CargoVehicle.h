@@ -1,5 +1,6 @@
 #pragma once
 #include "Vehicle.h"
+#include <iostream>
 
 #define CARGO_VEHICLE_TABLE_FORMAT "{:<8.8}  "
 

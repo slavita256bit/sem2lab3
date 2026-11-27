@@ -1,5 +1,6 @@
 #pragma once
 #include "PassengerVehicle.h"
+#include <iostream>
 
 #define TROLLEYBUS_TABLE_FORMAT "{:<12}  "
 

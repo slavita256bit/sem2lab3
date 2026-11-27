@@ -1,4 +1,6 @@
 #include "String.h"
+#include <istream>
+#include <ostream>
 #include <algorithm>
 #include <iterator>
 

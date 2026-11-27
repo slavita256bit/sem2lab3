@@ -1,4 +1,5 @@
 #include "Vehicle.h"
+#include <iostream>
 #include "Input.h"
 #include "InputError.h"
 #include <format>
@@ -84,7 +85,7 @@ bool Vehicle::operator>(const Vehicle& other) const
 // Сравнение года выпуска
 bool Vehicle::operator<=(const Vehicle& other) const
 {
-    return !(other < *this);
+    return other >= *this;
 }
 
 // Сравнение года выпуска

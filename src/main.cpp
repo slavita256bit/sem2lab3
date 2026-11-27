@@ -1,4 +1,5 @@
 #include "DumpTruck.h"
+#include <iostream>
 #include "Bus.h"
 #include "Trolleybus.h"
 #include "Interaction.h"

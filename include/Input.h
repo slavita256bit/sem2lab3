@@ -1,6 +1,6 @@
 #pragma once
 #include "String.h"
-#include <istream>
+#include <iosfwd>
 
 #define MIN_YEAR 1886
 #define CURRENT_YEAR 2027

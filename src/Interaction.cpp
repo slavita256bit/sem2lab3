@@ -1,4 +1,5 @@
 #include "Interaction.h"
+#include <iostream>
 #include "Vehicle.h"
 #include "InputError.h"
 

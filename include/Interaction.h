@@ -1,6 +1,5 @@
 #pragma once
 #include "BinaryTree.h"
-#include <iostream>
 
 class Vehicle;
 

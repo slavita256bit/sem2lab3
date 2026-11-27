@@ -8,6 +8,7 @@
 с отдельной шапкой, выбор изменяемого параметра. Все методы вызываются.
 */
 #include "String.h"
+#include <iostream>
 #include <format>
 
 #define VEHICLE_TABLE_FORMAT "{:<18.18}  {:<4}  "

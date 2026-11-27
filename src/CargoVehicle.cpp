@@ -1,4 +1,5 @@
 #include "CargoVehicle.h"
+#include <iostream>
 #include "Input.h"
 #include <format>
 
